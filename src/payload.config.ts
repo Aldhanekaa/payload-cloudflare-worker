@@ -10,6 +10,7 @@ import { r2Storage } from '@payloadcms/storage-r2'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { s3Storage } from '@payloadcms/storage-s3'
 // import migrations from './db/migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -65,10 +66,25 @@ export default buildConfig({
   }),
   logger: isProduction ? cloudflareLogger : undefined,
   plugins: [
-    r2Storage({
-      bucket: cloudflare.env.R2,
-      collections: { media: true },
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: 'payload-cloudflare-worker',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+        },
+        endpoint: process.env.S3_ENDPOINT,
+        // region: process.env.S3_REGION,
+        // ... Other S3 configuration
+      },
     }),
+    // r2Storage({
+    //   bucket: cloudflare.env.R2,
+    //   collections: { media: true },
+    // }),
   ],
 })
 
@@ -78,7 +94,7 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: isProduction,
+        // remoteBindings: process.env.REMOTE_BINDINGS !== 'false',
       } satisfies GetPlatformProxyOptions),
   )
 }
