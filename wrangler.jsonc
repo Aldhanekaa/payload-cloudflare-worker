@@ -3,6 +3,7 @@
   "main": ".open-next/worker.js",
   "name": "payload-cloudflare-worker",
   "compatibility_date": "2025-08-15",
+  "account_id": "f50e92329e6f8728de1bf9cf42c4e268",
   "compatibility_flags": [
     // Enable Node.js API
     // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag
@@ -18,7 +19,7 @@
   "d1_databases": [
     {
       "binding": "D1",
-      "database_id": "411dcddO-Oa7e-4ebb-9abb-85bb5ec812a2",
+      "database_id": "9b028650-24b7-459a-a29f-0d911f33302f",
       "database_name": "prod_db",
       "remote": true,
     },
