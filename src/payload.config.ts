@@ -44,6 +44,9 @@ const cloudflare =
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 
+// console.log('cloudflare', cloudflare)
+// console.log('isCLI || !isProduction', isCLI || !isProduction)
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -75,7 +78,7 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: process.env.REMOTE_BINDINGS !== 'false',
+        remoteBindings: isProduction,
       } satisfies GetPlatformProxyOptions),
   )
 }
