@@ -8,7 +8,7 @@ const PORTFOLIO_STATUSES = [
   { label: 'Active', value: 'active' },
   { label: 'Sold Out', value: 'sold-out' },
   { label: 'Coming Soon', value: 'coming-soon' },
-] as const
+]
 
 export const Portfolios: CollectionConfig = {
   slug: 'portfolios',
@@ -29,6 +29,7 @@ export const Portfolios: CollectionConfig = {
       type: 'text',
       label: 'Portfolio Name',
       required: true,
+      localized: true,
       admin: {
         description: 'e.g. Andersen Residences No. 01, The Dago Collection',
       },
@@ -42,6 +43,7 @@ export const Portfolios: CollectionConfig = {
       type: 'text',
       label: 'Tagline',
       required: true,
+      localized: true,
       admin: {
         description:
           'A short, compelling tagline (e.g. "Contemporary tropical living, distilled.")',
@@ -67,6 +69,7 @@ export const Portfolios: CollectionConfig = {
       type: 'text',
       label: 'Category',
       required: true,
+      localized: true,
       admin: {
         position: 'sidebar',
         description: 'e.g. Villa Collection, Residential Houses, Boutique Apartments',
@@ -150,6 +153,7 @@ export const Portfolios: CollectionConfig = {
       type: 'text',
       label: 'Hero Image Alt Text',
       required: true,
+      localized: true,
       admin: {
         description: 'Descriptive alt text for the hero image for accessibility.',
       },
@@ -178,6 +182,7 @@ export const Portfolios: CollectionConfig = {
               type: 'textarea',
               label: 'Description',
               required: true,
+              localized: true,
               admin: {
                 description: 'Detailed description of the portfolio project.',
               },
@@ -205,6 +210,7 @@ export const Portfolios: CollectionConfig = {
                   type: 'text',
                   label: 'Alt Text',
                   required: true,
+                  localized: true,
                 },
               ],
             },
@@ -224,6 +230,7 @@ export const Portfolios: CollectionConfig = {
                   type: 'text',
                   label: 'Highlight',
                   required: true,
+                  localized: true,
                   admin: {
                     description:
                       'e.g. Natural stone and reclaimed timber, Freehold title available',

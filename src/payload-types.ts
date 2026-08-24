@@ -83,6 +83,7 @@ export interface Config {
     'form-submissions': FormSubmission;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
+    'payload-folders': FolderInterface;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -91,6 +92,9 @@ export interface Config {
     cities: {
       portfolios: 'portfolios';
       properties: 'properties';
+    };
+    'payload-folders': {
+      documentsAndFolders: 'payload-folders' | 'media';
     };
   };
   collectionsSelect: {
@@ -110,6 +114,7 @@ export interface Config {
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
+    'payload-folders': PayloadFoldersSelect<false> | PayloadFoldersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -117,10 +122,10 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'id') | ('en' | 'id')[];
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'en' | 'id';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -185,7 +190,24 @@ export interface User {
  */
 export interface Media {
   id: number;
-  alt: string;
+  alt?: string | null;
+  caption?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  blurDataUrl?: string | null;
+  folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -195,6 +217,92 @@ export interface Media {
   filesize?: number | null;
   width?: number | null;
   height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    square?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    small?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    xlarge?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    og?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders".
+ */
+export interface FolderInterface {
+  id: number;
+  name: string;
+  folder?: (number | null) | FolderInterface;
+  documentsAndFolders?: {
+    docs?: (
+      | {
+          relationTo?: 'payload-folders';
+          value: number | FolderInterface;
+        }
+      | {
+          relationTo?: 'media';
+          value: number | Media;
+        }
+    )[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  folderType?: 'media'[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -296,50 +404,6 @@ export interface Post {
 export interface Page {
   id: number;
   title: string;
-  backgroundColor: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-  };
   layout: (
     | CallToActionBlock
     | ContentBlock
@@ -601,7 +665,7 @@ export interface Property {
   /**
    * e.g. The Aruna Residence, Senopati Courtyard House
    */
-  name: string;
+  title: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -610,81 +674,113 @@ export interface Property {
   /**
    * Is this property for sale, rent, or both?
    */
-  listingType: 'buy' | 'rent' | 'both';
-  category: 'houses' | 'villas' | 'apartments' | 'land';
+  listingType: 'sale' | 'rent' | 'both';
   /**
-   * Optional badge to highlight this property.
+   * e.g. Villa, House, Apartment
    */
-  badge?: ('exclusive' | 'new' | 'price-reduced') | null;
+  propertyType: number | PropertyType;
+  /**
+   * e.g. Luxury, Beachfront
+   */
+  category?: (number | null) | PropertyCategory;
+  /**
+   * Active properties are visible to the public.
+   */
+  status: 'active' | 'inactive';
   city: number | City;
   /**
    * Specific area within the city (e.g. Uluwatu, South Jakarta)
    */
   location: string;
-  beds: number;
-  baths: number;
+  bedrooms?: number | null;
+  bathrooms?: number | null;
   /**
-   * e.g. 620 m², 380 m²
+   * Total built-up area in square metres
    */
-  area: string;
+  buildArea?: number | null;
+  /**
+   * Total land/plot area in square metres
+   */
+  landArea?: number | null;
   /**
    * e.g. IDR 28.5 Billion, Price on request
    */
-  salePrice?: string | null;
-  /**
-   * Numeric value in billion IDR for sorting. Leave empty for "Price on request".
-   */
-  salePriceValue?: number | null;
+  purchasePrice?: string | null;
   /**
    * e.g. IDR 85 Juta / month
    */
-  rentPrice?: string | null;
+  rentalPrice?: string | null;
   /**
-   * Numeric value in juta IDR per month for sorting.
+   * Upload images for this property. First image will be used as the hero image.
    */
-  rentPriceValue?: number | null;
-  /**
-   * Main image for property card and hero section.
-   */
-  heroImage: number | Media;
-  /**
-   * Descriptive alt text for the hero image for accessibility.
-   */
-  imageAlt: string;
-  /**
-   * e.g. 850 m², 500 m²
-   */
-  landArea: string;
-  /**
-   * Year the property was built.
-   */
-  yearBuilt: number;
+  images: {
+    image: number | Media;
+    caption?: string | null;
+    id?: string | null;
+  }[];
   /**
    * Detailed description of the property.
    */
-  description: string;
+  description?: string | null;
   /**
-   * Optional note about furnishing or special conditions (e.g. "Fully furnished with bespoke interior design").
+   * Year the property was built.
    */
-  note?: string | null;
+  yearBuilt?: number | null;
   /**
-   * Upload images for the property detail page gallery.
+   * Add custom property details, e.g. "Build Area" → "620 m²", "Garage" → "2 cars".
    */
-  detailImages: {
-    image: number | Media;
-    alt: string;
-    id?: string | null;
-  }[];
+  dataPoints?:
+    | {
+        /**
+         * e.g. Build Area, Garage, Pool Size
+         */
+        dataName: string;
+        /**
+         * e.g. 620 m², 2 cars, 12 m × 6 m
+         */
+        dataDetail: string;
+        id?: string | null;
+      }[]
+    | null;
   /**
    * List all features and amenities this property offers.
    */
-  features: {
-    /**
-     * e.g. Ocean Views, Infinity Pool, Smart Home System
-     */
-    feature: string;
-    id?: string | null;
-  }[];
+  features?:
+    | {
+        /**
+         * e.g. Ocean Views, Infinity Pool, Smart Home System
+         */
+        feature: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "property-types".
+ */
+export interface PropertyType {
+  id: number;
+  /**
+   * e.g. Villa, House, Penthouse
+   */
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "property-categories".
+ */
+export interface PropertyCategory {
+  id: number;
+  /**
+   * e.g. Luxury, Budget, Beachfront, Investment
+   */
+  name: string;
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -703,6 +799,10 @@ export interface City {
    */
   province?: string | null;
   country?: string | null;
+  /**
+   * Detailed description of the city.
+   */
+  description?: string | null;
   /**
    * Representative image for this city.
    */
@@ -801,33 +901,6 @@ export interface Portfolio {
     highlight: string;
     id?: string | null;
   }[];
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "property-types".
- */
-export interface PropertyType {
-  id: number;
-  /**
-   * e.g. Villa, House, Penthouse
-   */
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "property-categories".
- */
-export interface PropertyCategory {
-  id: number;
-  /**
-   * e.g. Luxury, Budget, Beachfront, Investment
-   */
-  name: string;
-  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1228,6 +1301,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'form-submissions';
         value: number | FormSubmission;
+      } | null)
+    | ({
+        relationTo: 'payload-folders';
+        value: number | FolderInterface;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1299,6 +1376,9 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
+  blurDataUrl?: T;
+  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1308,6 +1388,82 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        square?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        small?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        medium?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        large?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        xlarge?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        og?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1361,29 +1517,6 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  backgroundColor?: T;
-  hero?:
-    | T
-    | {
-        type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
-            };
-        media?: T;
-      };
   layout?:
     | T
     | {
@@ -1562,32 +1695,35 @@ export interface StepsBlockSelect<T extends boolean = true> {
  * via the `definition` "properties_select".
  */
 export interface PropertiesSelect<T extends boolean = true> {
-  name?: T;
+  title?: T;
   generateSlug?: T;
   slug?: T;
   listingType?: T;
+  propertyType?: T;
   category?: T;
-  badge?: T;
+  status?: T;
   city?: T;
   location?: T;
-  beds?: T;
-  baths?: T;
-  area?: T;
-  salePrice?: T;
-  salePriceValue?: T;
-  rentPrice?: T;
-  rentPriceValue?: T;
-  heroImage?: T;
-  imageAlt?: T;
+  bedrooms?: T;
+  bathrooms?: T;
+  buildArea?: T;
   landArea?: T;
-  yearBuilt?: T;
-  description?: T;
-  note?: T;
-  detailImages?:
+  purchasePrice?: T;
+  rentalPrice?: T;
+  images?:
     | T
     | {
         image?: T;
-        alt?: T;
+        caption?: T;
+        id?: T;
+      };
+  description?: T;
+  yearBuilt?: T;
+  dataPoints?:
+    | T
+    | {
+        dataName?: T;
+        dataDetail?: T;
         id?: T;
       };
   features?:
@@ -1626,6 +1762,7 @@ export interface CitiesSelect<T extends boolean = true> {
   name?: T;
   province?: T;
   country?: T;
+  description?: T;
   media?: T;
   portfolios?: T;
   properties?: T;
@@ -1880,6 +2017,18 @@ export interface PayloadJobsSelect<T extends boolean = true> {
   queue?: T;
   waitUntil?: T;
   processing?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-folders_select".
+ */
+export interface PayloadFoldersSelect<T extends boolean = true> {
+  name?: T;
+  folder?: T;
+  documentsAndFolders?: T;
+  folderType?: T;
   updatedAt?: T;
   createdAt?: T;
 }

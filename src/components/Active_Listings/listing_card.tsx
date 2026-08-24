@@ -39,7 +39,7 @@ export default function ListingCard({ listing }: { listing: Listing }) {
 
   return (
     <Link
-      href={`/active-listings/${listing.id}`}
+      href={`/active-listings/${listing.slug}`}
       className="block no-underline bg-white cursor-pointer transition-shadow duration-300 shadow-[0_1px_4px_rgba(10,10,10,0.04)] hover:shadow-[0_4px_20px_rgba(10,10,10,0.1)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

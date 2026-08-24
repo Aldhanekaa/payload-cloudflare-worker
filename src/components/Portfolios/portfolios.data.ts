@@ -18,7 +18,7 @@ export type Portfolio = {
 export const PORTFOLIOS: Portfolio[] = [
   {
     id: '1',
-    slug: '1',
+    slug: 'andersen-residences-no-01',
     status: 'active',
     category: 'Villa Collection',
     name: 'Andersen Residences No. 01',
@@ -35,7 +35,7 @@ export const PORTFOLIOS: Portfolio[] = [
   },
   {
     id: '2',
-    slug: '2',
+    slug: 'the-dago-collection',
     status: 'sold-out',
     category: 'Residential Houses',
     name: 'The Dago Collection',
@@ -52,7 +52,7 @@ export const PORTFOLIOS: Portfolio[] = [
   },
   {
     id: '3',
-    slug: '3',
+    slug: 'senopati-urban-residences',
     status: 'sold-out',
     category: 'Boutique Apartments',
     name: 'Senopati Urban Residences',
@@ -69,7 +69,7 @@ export const PORTFOLIOS: Portfolio[] = [
   },
   {
     id: '4',
-    slug: '4',
+    slug: 'lombok-coastal-villas',
     status: 'active',
     category: 'Beachfront Villas',
     name: 'Lombok Coastal Villas',
@@ -86,7 +86,7 @@ export const PORTFOLIOS: Portfolio[] = [
   },
   {
     id: '5',
-    slug: '5',
+    slug: 'ubud-forest-villas',
     status: 'sold-out',
     category: 'Eco Villas',
     name: 'Ubud Forest Villas',
@@ -103,7 +103,7 @@ export const PORTFOLIOS: Portfolio[] = [
   },
   {
     id: '6',
-    slug: '6',
+    slug: 'kemang-creative-quarter',
     status: 'coming-soon',
     category: 'Design Residences',
     name: 'Kemang Creative Quarter',

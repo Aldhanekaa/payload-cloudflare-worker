@@ -1,12 +1,9 @@
 'use client'
 
 import React from 'react'
-import { useConfig } from '@payloadcms/ui'
 
 export default function AfterDashboard() {
-  const { collections } = useConfig()
-
-  // Get counts for different collections (if available)
+  // Collection stats data
   const collectionStats = [
     { name: 'Properties', slug: 'properties' },
     { name: 'Posts', slug: 'posts' },
@@ -25,7 +22,6 @@ export default function AfterDashboard() {
         }}
       >
         {collectionStats.map((stat) => {
-          const collection = collections.find((c) => c.slug === stat.slug)
           return (
             <div
               key={stat.slug}
@@ -39,9 +35,7 @@ export default function AfterDashboard() {
               <h4 style={{ margin: 0, marginBottom: '0.5rem', fontSize: '0.875rem', opacity: 0.7 }}>
                 {stat.name}
               </h4>
-              <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 'bold' }}>
-                {collection ? '—' : '—'}
-              </p>
+              <p style={{ margin: 0, fontSize: '1.5rem', fontWeight: 'bold' }}>—</p>
             </div>
           )
         })}

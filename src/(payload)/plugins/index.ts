@@ -9,10 +9,15 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 
 import RightPanelPlugin from '@shefing/right-panel'
 import { payloadEnhancedSidebar } from '@veiag/payload-enhanced-sidebar'
+// import { importExportPlugin } from '@payloadcms/plugin-import-export'
+import { localization } from '@websolutespa/payload-plugin-localization'
+import { blurDataUrlsPlugin } from '@oversightstudio/blur-data-urls'
+import { fieldsSelect } from '@payload-enchants/fields-select'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 import { sidebarConfig } from '@/(payload)/config/sidebar.config'
+import { Media } from '../collections/Media'
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | IFR Website` : 'Indonesia FIRST Robotik Website'
@@ -25,6 +30,25 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  localization(),
+  fieldsSelect(),
+
+  // importExportPlugin({
+  //   collections: [{ slug: 'properties' }],
+  //   // see below for a list of available options
+  // }),
+
+  blurDataUrlsPlugin({
+    enabled: true,
+    collections: [Media],
+    // Blur data URLs Settings (Optional)
+    blurOptions: {
+      blur: 18,
+      width: 32,
+      height: 'auto',
+    },
+  }),
+
   // Enhanced Sidebar - Organized navigation with tabs
   payloadEnhancedSidebar(sidebarConfig),
 
@@ -61,6 +85,17 @@ export const plugins: Plugin[] = [
 
   formBuilderPlugin({
     fields: {
+      text: true,
+      textarea: true,
+      select: true,
+      radio: true,
+      email: true,
+      state: true,
+      country: true,
+      checkbox: true,
+      number: true,
+      message: true,
+      date: true,
       payment: false,
     },
     formOverrides: {

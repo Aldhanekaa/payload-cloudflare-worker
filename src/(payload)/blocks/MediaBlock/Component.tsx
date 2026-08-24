@@ -6,7 +6,7 @@ import RichText from '@/components/RichText'
 
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 
-import { Media } from '../../components/Media'
+import { Media } from '@/components/Media'
 import Image from 'next/image'
 
 type Props = MediaBlockProps & {
@@ -33,7 +33,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
   // console.log('media', props)
 
   let caption
-  if (media && typeof media === 'object') caption = media.caption
+  if (media && typeof media === 'object' && 'caption' in media) caption = (media as any).caption
 
   return (
     <div
@@ -48,11 +48,10 @@ export const MediaBlock: React.FC<Props> = (props) => {
       {(media || staticImage) && typeof props.media !== 'number' && (
         <Image
           src={props.media.url || ''}
-          blurDataURL={props.media.blurDataUrl || ''}
+          blurDataURL={(props.media as any).blurDataUrl || ''}
           alt={props.media.alt || 'alt data not found'}
           width={props.media.width || 50}
           height={props.media.height || 50}
-
           placeholder="blur"
         />
       )}

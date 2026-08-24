@@ -1,11 +1,11 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { LISTINGS, type City, type Listing } from './data'
+import { LISTINGS, type Listing, type Badge } from './data'
 import ListingsFilterBar, { type FilterState } from './listings_filter_bar'
 import ListingCard from './listing_card'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
-import type { Property, Media, City as PayloadCity } from '@/payload-types'
+import type { Property, Media } from '@/payload-types'
 
 type SortOption = 'Default' | 'Price: Low to High' | 'Price: High to Low' | 'Newest First'
 
@@ -43,23 +43,33 @@ function transformPropertyData(properties: Property[]): Listing[] {
     // Format build area
     const buildAreaText = p.buildArea ? `${p.buildArea} m²` : '0 m²'
 
+    // Extract numeric values for sorting
+    const extractPriceValue = (priceStr: string | undefined): number | null => {
+      if (!priceStr) return null
+      const match = priceStr.match(/[\d.,]+/)
+      if (!match) return null
+      const numStr = match[0].replace(/,/g, '')
+      return parseFloat(numStr)
+    }
+
     return {
       id: String(p.id),
+      slug: p.slug || String(p.id),
       name: p.title || '',
       location: p.location,
-      city: (cityData?.name as City) || 'Bali',
-      category: category as Listing['category'],
+      city: cityData?.name || 'Bali',
+      category: category,
       beds: p.bedrooms || 0,
       baths: p.bathrooms || 0,
       area: buildAreaText,
       listingType: listingTypeMap[p.listingType] || 'buy',
       salePrice: p.purchasePrice,
-      rentPrice: p.rentalPrice || p.rental,
-      badge: undefined as any,
+      rentPrice: p.rentalPrice,
+      badge: undefined as Badge | undefined,
       image: imageData?.url || '',
       imageAlt: firstImage?.caption || p.title || '',
-      salePriceValue: null as any,
-      rentPriceValue: null as any,
+      salePriceValue: extractPriceValue(p.purchasePrice),
+      rentPriceValue: extractPriceValue(p.rentalPrice),
     }
   })
 }
@@ -72,6 +82,23 @@ export default function ListingsGrid({ properties: cmsProperties }: Props) {
     }
     return LISTINGS
   }, [cmsProperties])
+
+  // Extract unique cities and categories from the listings data
+  const availableCities = useMemo(() => {
+    const cities = new Set<string>()
+    listings.forEach((listing) => {
+      if (listing.city) cities.add(listing.city)
+    })
+    return ['All Cities', ...Array.from(cities).sort()]
+  }, [listings])
+
+  const availableCategories = useMemo(() => {
+    const categories = new Set<string>()
+    listings.forEach((listing) => {
+      if (listing.category) categories.add(listing.category)
+    })
+    return ['all', ...Array.from(categories).sort()]
+  }, [listings])
 
   const [filters, setFilters] = useState<FilterState>({
     listingType: 'all',
@@ -97,7 +124,7 @@ export default function ListingsGrid({ properties: cmsProperties }: Props) {
 
     // City filter
     if (filters.city !== 'All Cities') {
-      result = result.filter((l) => l.city === (filters.city as City))
+      result = result.filter((l) => l.city === filters.city)
     }
 
     // Sort
@@ -123,7 +150,12 @@ export default function ListingsGrid({ properties: cmsProperties }: Props) {
   return (
     <>
       {/* Sticky filter bar */}
-      <ListingsFilterBar filters={filters} onChange={setFilters} />
+      <ListingsFilterBar
+        filters={filters}
+        onChange={setFilters}
+        availableCities={availableCities}
+        availableCategories={availableCategories}
+      />
 
       <div className="px-5 md:px-20 max-w-360 mx-auto">
         {/* Results bar */}

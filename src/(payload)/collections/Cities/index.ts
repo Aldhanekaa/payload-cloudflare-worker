@@ -42,6 +42,17 @@ export const Cities: CollectionConfig = {
       defaultValue: 'Indonesia',
     },
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Description',
+      required: false,
+      localized: true,
+      admin: {
+        description: 'Detailed description of the city.',
+      },
+    },
+
+    {
       name: 'media',
       type: 'upload',
       label: 'City Image',

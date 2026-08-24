@@ -63,6 +63,12 @@ const cloudflare =
 // console.log('isCLI || !isProduction', isCLI || !isProduction)
 
 export default buildConfig({
+  // ...
+  localization: {
+    locales: ['en', 'id'], // required
+    defaultLocale: 'id', // required
+    fallback: true,
+  },
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,

@@ -14,9 +14,16 @@ import { sendContactFormEmail } from '@/(payload)/email'
  *   message: string
  * }
  */
+interface ContactFormBody {
+  name: string
+  email: string
+  subject?: string
+  message: string
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const body = (await request.json()) as ContactFormBody
     const { name, email, subject, message } = body
 
     // Validation

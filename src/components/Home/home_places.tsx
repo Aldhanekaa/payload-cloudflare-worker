@@ -2,8 +2,10 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import PageContainer from '@/components/PageContainer'
+import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
+import type { City, Media } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -16,7 +18,11 @@ type Place = {
   imageAlt: string
 }
 
-// ── Data ───────────────────────────────────────────────────────────────────────
+type Props = {
+  cities: City[]
+}
+
+// ── Dummy Data ───────────────────────────────────────────────────────────────────────
 
 const PLACES: Place[] = [
   {
@@ -69,6 +75,26 @@ const PLACES: Place[] = [
     imageAlt: 'Lombok, Indonesia',
   },
 ]
+
+// ── Transform CMS data to component format ─────────────────────────────────
+
+function transformCityData(cities: City[]): Place[] {
+  return cities.map((city) => {
+    const mediaData = typeof city.media === 'object' ? (city.media as Media) : null
+
+    // Count properties from join field
+    const propertyCount = Array.isArray(city.properties) ? city.properties.length : 0
+
+    return {
+      name: city.name,
+      properties: propertyCount,
+      description: `Explore ${propertyCount} curated properties in ${city.name}.`,
+      href: `/locations/${city.name.toLowerCase()}`,
+      imageUrl: mediaData?.url || '',
+      imageAlt: `${city.name}, ${city.country || 'Indonesia'}`,
+    }
+  })
+}
 
 // ── Arrow SVG ──────────────────────────────────────────────────────────────────
 
@@ -152,7 +178,15 @@ function PlaceCard({ place }: { place: Place }) {
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
-export default function HomePlaces() {
+export default function HomePlaces({ cities: cmsCities }: Props) {
+  // Use CMS data or fallback to dummy data
+  const places = useMemo(() => {
+    if (cmsCities.length > 0 || !ENABLE_DUMMY_FALLBACK.properties) {
+      return transformCityData(cmsCities)
+    }
+    return PLACES
+  }, [cmsCities])
+
   return (
     <section className="bg-[#f7f5f0] py-[clamp(80px,10vw,140px)]">
       <PageContainer>
@@ -171,7 +205,7 @@ export default function HomePlaces() {
 
         {/* Cards — vertical stack on mobile, horizontal scroll on md+ */}
         <div className="flex flex-col md:flex-row md:overflow-x-auto gap-4 md:pb-2 snap-y md:snap-x snap-mandatory md:snap-none scrollbar-hide">
-          {PLACES.map((place) => (
+          {places.map((place) => (
             <div
               key={place.name}
               className="snap-start w-full md:w-auto md:shrink-0 md:flex-none"

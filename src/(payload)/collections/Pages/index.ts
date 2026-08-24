@@ -69,19 +69,19 @@ export const Pages: CollectionConfig<'pages'> = {
     {
       type: 'tabs',
       tabs: [
-        {
-          fields: [
-            colorPickerField({
-              name: 'backgroundColor', // 🏷️ The name of the field
-              label: 'Background Color', // 🎯 The label displayed in the UI
-              required: true,
-              defaultValue: '#063844',
-            }),
+        // {
+        //   fields: [
+        //     colorPickerField({
+        //       name: 'backgroundColor', // 🏷️ The name of the field
+        //       label: 'Background Color', // 🎯 The label displayed in the UI
+        //       required: true,
+        //       defaultValue: '#063844',
+        //     }),
 
-            hero,
-          ],
-          label: 'Hero',
-        },
+        //     hero,
+        //   ],
+        //   label: 'Hero',
+        // },
         {
           fields: [
             {

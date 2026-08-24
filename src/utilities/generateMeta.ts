@@ -13,7 +13,10 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   let url = serverUrl + '/website-template-OG.webp'
 
   if (image && typeof image === 'object' && 'url' in image) {
-    const ogUrl = image.sizes?.og?.url
+    const ogUrl =
+      image && typeof image === 'object' && 'sizes' in image && image.sizes && typeof image.sizes === 'object' && 'og' in image.sizes && image.sizes.og && typeof image.sizes.og === 'object' && 'url' in image.sizes.og
+        ? image.sizes.og.url
+        : undefined
 
     url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url
   }

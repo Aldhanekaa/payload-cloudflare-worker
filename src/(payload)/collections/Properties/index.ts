@@ -12,6 +12,7 @@ const LISTING_TYPES = [
 
 export const Properties: CollectionConfig = {
   slug: 'properties',
+
   access: {
     create: authenticated,
     delete: authenticated,
@@ -29,6 +30,7 @@ export const Properties: CollectionConfig = {
       type: 'text',
       label: 'Property Name',
       required: true,
+      localized: true,
       admin: {
         description: 'e.g. The Aruna Residence, Senopati Courtyard House',
       },
@@ -225,6 +227,7 @@ export const Properties: CollectionConfig = {
           type: 'text',
           label: 'Caption',
           required: false,
+          localized: true,
         },
       ],
     },
@@ -242,6 +245,7 @@ export const Properties: CollectionConfig = {
               type: 'textarea',
               label: 'Description',
               required: false,
+              localized: true,
               admin: {
                 description: 'Detailed description of the property.',
               },
@@ -273,6 +277,7 @@ export const Properties: CollectionConfig = {
                   type: 'text',
                   label: 'Data Name',
                   required: true,
+                  localized: true,
                   admin: {
                     description: 'e.g. Build Area, Garage, Pool Size',
                   },
@@ -303,6 +308,7 @@ export const Properties: CollectionConfig = {
                   type: 'text',
                   label: 'Feature',
                   required: true,
+                  localized: true,
                   admin: {
                     description: 'e.g. Ocean Views, Infinity Pool, Smart Home System',
                   },

@@ -12,7 +12,7 @@ export const relationshipFields: CollectionConfig['fields'] = [
           '@/(payload)/collections/Fields/relationship/components/server/Label#CustomRelationshipFieldLabelServer',
       },
     },
-    relationTo: 'custom-fields',
+    relationTo: 'custom-fields' as any, // Collection may not exist yet
   },
   {
     name: 'relationshipFieldClientComponent',
@@ -25,6 +25,6 @@ export const relationshipFields: CollectionConfig['fields'] = [
           '@/(payload)/collections/Fields/relationship/components/client/Label#CustomRelationshipFieldLabelClient',
       },
     },
-    relationTo: 'custom-fields',
+    relationTo: 'custom-fields' as any, // Collection may not exist yet
   },
 ]

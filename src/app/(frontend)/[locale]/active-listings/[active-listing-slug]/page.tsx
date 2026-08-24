@@ -69,6 +69,7 @@ export default async function ActiveListingPage({ params }: PageProps) {
 
     listing = {
       id: String(cmsProperty.id),
+      slug: cmsProperty.slug || String(cmsProperty.id),
       name: cmsProperty.title || '',
       location: cmsProperty.location || '',
       city: (cityData?.name as any) || 'Bali',
@@ -111,8 +112,8 @@ export default async function ActiveListingPage({ params }: PageProps) {
       features: features.length > 0 ? features : ['Modern Design', 'Prime Location'],
     }
   } else if (ENABLE_DUMMY_FALLBACK.properties) {
-    // Fallback to dummy data (using ID as slug for dummy data)
-    listing = LISTINGS.find((l) => l.id === slug) || null
+    // Fallback to dummy data (using slug for dummy data)
+    listing = LISTINGS.find((l) => l.slug === slug) || null
     if (listing) {
       details = LISTING_DETAILS[listing.id] || {
         images: [{ url: listing.image, alt: listing.imageAlt }],

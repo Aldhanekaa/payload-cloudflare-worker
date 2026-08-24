@@ -12,18 +12,48 @@ const redirects = redirectsImport as () => Promise<any>
 
 const nextConfig: NextConfig = {
   images: {
+    qualities: [100, 75],
+    dangerouslyAllowLocalIP: true,
+
     localPatterns: [
       {
         pathname: '/api/media/file/**',
       },
     ],
+
     remotePatterns: [
+      // Dynamic patterns from environment
+      ...[
+        process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+        'http://localhost:3000',
+        'http://192.168.18.26:3000',
+        'http://127.0.0.1',
+      ]
+        .filter(Boolean)
+        .map((item) => {
+          const url = new URL(item)
+
+          console.log('DATA', {
+            hostname: url.hostname,
+            protocol: url.protocol.replace(':', ''),
+          })
+
+          return {
+            hostname: url.hostname,
+            protocol: url.protocol.replace(':', '') as 'http' | 'https',
+          }
+        }),
+      // Static patterns
       {
-        protocol: 'https',
+        protocol: 'https' as const,
         hostname: 'images.unsplash.com',
       },
       {
-        protocol: 'https',
+        protocol: 'http' as const,
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https' as const,
         hostname: 'andersen.feroworks.com',
       },
     ],

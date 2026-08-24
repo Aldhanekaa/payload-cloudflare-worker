@@ -11,6 +11,8 @@ import { RenderHero } from '@/(payload)/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { getCachedCollection } from '@/utilities/getCollection'
+import type { LocaleCodes } from '@/i18n/localization'
 
 // export async function generateStaticParams() {
 //   const payload = await getPayload({ config: configPromise })
@@ -38,13 +40,14 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 type Args = {
   params: Promise<{
+    locale: LocaleCodes
     slug?: string[]
   }>
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = ['home'] } = await paramsPromise
+  const { slug = ['home'], locale } = await paramsPromise
   // Decode to support slugs with special characters
 
   // console.log('PAGE SLUG', slug)
@@ -56,6 +59,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const page: RequiredDataFromCollectionSlug<'pages'> | null = await queryPageBySlug({
     slug: decodedSlug,
+    locale,
   })
 
   // console.log('PAGE DATA', page)
@@ -72,13 +76,13 @@ export default async function Page({ params: paramsPromise }: Args) {
   // Fetch the header global for navigation
   // const payload = await getPayload({ config: configPromise })
 
-  const { hero, layout } = page
+  const { layout } = page
 
-  const bodyBackgroundColor = getSafeHexColor(page.backgroundColor)
+  // const bodyBackgroundColor = getSafeHexColor(page.backgroundColor)
 
   return (
     <>
-      {bodyBackgroundColor && <style>{`body { background-color: ${bodyBackgroundColor}; }`}</style>}
+      {/* {bodyBackgroundColor && <style>{`body { background-color: ${bodyBackgroundColor}; }`}</style>} */}
 
       <main className="pb-24 relative">
         <PageClient />
@@ -87,7 +91,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
         {draft && <LivePreviewListener />}
 
-        <RenderHero {...hero} />
+        {/* <RenderHero {...hero} /> */}
         <RenderBlocks blocks={layout} />
       </main>
     </>
@@ -95,34 +99,35 @@ export default async function Page({ params: paramsPromise }: Args) {
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = ['home'] } = await paramsPromise
+  const { slug = ['home'], locale } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = slug.join('/')
   const page = await queryPageBySlug({
     slug: decodedSlug,
+    locale,
   })
 
   return generateMeta({ doc: page })
 }
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPageBySlug = cache(async ({ slug, locale }: { slug: string; locale: LocaleCodes }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config: configPromise })
-
-  const result = await payload.find({
-    collection: 'pages',
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+  const result = await getCachedCollection(
+    {
+      collection: 'pages',
+      draft,
+      limit: 1,
+      overrideAccess: draft,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
+      depth: 2,
     },
-    depth: 2,
-  })
+    locale,
+  )()
 
   return result.docs?.[0] || null
 })

@@ -2,14 +2,17 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
+import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
+import type { Property as PayloadProperty, Media } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 type Property = {
   id: string
+  slug: string
   badge?: string
   name: string
   location: string
@@ -23,6 +26,58 @@ type Property = {
     src: Parameters<typeof Image>[0]['src']
     alt: string
   }
+}
+
+type Props = {
+  properties: PayloadProperty[]
+}
+
+// ── Transform CMS data to component format ─────────────────────────────────
+
+function transformPropertyData(properties: PayloadProperty[]): Property[] {
+  return properties.map((p: any) => {
+    const firstImage = p.images?.[0]
+    const imageData =
+      firstImage && typeof firstImage.image === 'object' ? (firstImage.image as Media) : null
+
+    // Get property type name
+    const propertyTypeData = typeof p.propertyType === 'object' ? p.propertyType : null
+    const typeName = propertyTypeData?.name || 'Property'
+
+    // Map property type to tag
+    const typeToTag: Record<string, Property['tag']> = {
+      Houses: 'houses',
+      Villas: 'villas',
+      Apartments: 'apartments',
+      Land: 'land',
+    }
+    const tag = typeToTag[typeName] || 'all'
+
+    // Format build area
+    const buildAreaText = p.buildArea ? `${p.buildArea} m²` : '0 m²'
+
+    // Get city name
+    const cityData = typeof p.city === 'object' ? p.city : null
+    const cityName = cityData?.name || ''
+
+    return {
+      id: String(p.id),
+      slug: p.slug || String(p.id),
+      badge: undefined, // No badge field in current schema
+      name: p.title || '',
+      location: p.location ? `${p.location}, ${cityName}` : cityName,
+      type: typeName,
+      beds: p.bedrooms || 0,
+      area: buildAreaText,
+      price: p.purchasePrice || p.rentalPrice || 'Price on request',
+      tag,
+      href: `/active-listings/${p.slug || p.id}`,
+      image: {
+        src: imageData?.url || DefaultImg,
+        alt: firstImage?.caption || p.title || '',
+      },
+    }
+  })
 }
 
 // ── Placeholder data ───────────────────────────────────────────────────────────
@@ -227,11 +282,19 @@ function PropertyCard({
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
-export default function HomeFeaturedProperties() {
+export default function HomeFeaturedProperties({ properties: cmsProperties }: Props) {
+  // Use CMS data or fallback to dummy data
+  const allProperties = useMemo(() => {
+    if (cmsProperties.length > 0 || !ENABLE_DUMMY_FALLBACK.properties) {
+      return transformPropertyData(cmsProperties)
+    }
+    return PROPERTIES
+  }, [cmsProperties])
+
   const [activeFilter, setActiveFilter] = useState<Property['tag']>('all')
 
   const filtered =
-    activeFilter === 'all' ? PROPERTIES : PROPERTIES.filter((p) => p.tag === activeFilter)
+    activeFilter === 'all' ? allProperties : allProperties.filter((p) => p.tag === activeFilter)
 
   const [p1, p2, p3, p4, p5] = filtered
 

@@ -1,16 +1,10 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import {
-  PORTFOLIOS,
-  CITIES,
-  type StatusFilter,
-  type CityFilter,
-  type Portfolio,
-} from './portfolios.data'
+import { PORTFOLIOS, type StatusFilter, type CityFilter, type Portfolio } from './portfolios.data'
 import PortfolioCard from './PortfolioCard'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
-import type { Portfolio as PayloadPortfolio, Media, City } from '@/payload-types'
+import type { Portfolio as PayloadPortfolio, Media } from '@/payload-types'
 
 type Props = {
   portfolios: PayloadPortfolio[]

@@ -5,10 +5,11 @@ export type Badge = 'Exclusive' | 'New' | 'Price Reduced'
 
 export type Listing = {
   id: string
+  slug: string
   name: string
   location: string
-  city: City
-  category: PropertyCategory
+  city: string
+  category: string
   beds: number
   baths: number
   area: string
@@ -27,6 +28,7 @@ export type Listing = {
 export const LISTINGS: Listing[] = [
   {
     id: '1',
+    slug: 'the-aruna-residence',
     name: 'The Aruna Residence',
     location: 'Uluwatu, Bali',
     city: 'Bali',
@@ -45,6 +47,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '2',
+    slug: 'senopati-courtyard-house',
     name: 'Senopati Courtyard House',
     location: 'South Jakarta',
     city: 'Jakarta',
@@ -64,6 +67,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '3',
+    slug: 'the-terraces-at-canggu',
     name: 'The Terraces at Canggu',
     location: 'Canggu, Bali',
     city: 'Bali',
@@ -83,6 +87,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '4',
+    slug: 'dago-hills-residence',
     name: 'Dago Hills Residence',
     location: 'Dago, Bandung',
     city: 'Bandung',
@@ -100,6 +105,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '5',
+    slug: 'surabaya-garden-estate',
     name: 'Surabaya Garden Estate',
     location: 'Pakuwon, Surabaya',
     city: 'Surabaya',
@@ -118,6 +124,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '6',
+    slug: 'oberoi-retreat',
     name: 'Oberoi Retreat',
     location: 'Seminyak, Bali',
     city: 'Bali',
@@ -136,6 +143,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '7',
+    slug: 'menteng-heritage-home',
     name: 'Menteng Heritage Home',
     location: 'Menteng, Jakarta',
     city: 'Jakarta',
@@ -155,6 +163,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '8',
+    slug: 'ubud-forest-villa',
     name: 'Ubud Forest Villa',
     location: 'Ubud, Bali',
     city: 'Bali',
@@ -173,6 +182,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '9',
+    slug: 'bsd-city-penthouse',
     name: 'BSD City Penthouse',
     location: 'BSD City, Tangerang',
     city: 'Jakarta',
@@ -191,6 +201,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '10',
+    slug: 'gili-air-beach-house',
     name: 'Gili Air Beach House',
     location: 'Gili Air, Lombok',
     city: 'Lombok',
@@ -209,6 +220,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '11',
+    slug: 'kemang-design-house',
     name: 'Kemang Design House',
     location: 'Kemang, Jakarta',
     city: 'Jakarta',
@@ -226,6 +238,7 @@ export const LISTINGS: Listing[] = [
   },
   {
     id: '12',
+    slug: 'lombok-hillside-estate',
     name: 'Lombok Hillside Estate',
     location: 'Senggigi, Lombok',
     city: 'Lombok',

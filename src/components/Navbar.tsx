@@ -187,7 +187,7 @@ export default function Navbar() {
       {mounted && (
         <div
           aria-hidden={!menuOpen}
-          className="fixed inset-0 z-99 flex flex-col px-8 pt-24 pb-12 transition-all duration-500 ease-in-out"
+          className="fixed inset-0 z-99 flex flex-col px-8 pt-24 pb-12 transition-all duration-500 ease-in-out overflow-y-auto"
           style={{
             fontFamily: 'var(--font-inter, sans-serif)',
             backgroundColor: 'rgb(10, 10, 10)',
@@ -198,7 +198,7 @@ export default function Navbar() {
         >
           {/* Vertical logo */}
           <div
-            className="mb-10 transition-all duration-500 ease-in-out"
+            className="mb-10 transition-all duration-500 ease-in-out flex-shrink-0"
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(-8px)',
@@ -214,7 +214,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile nav links — staggered entrance */}
-          <nav className="flex flex-col gap-0" aria-label="Mobile navigation">
+          <nav className="flex flex-col gap-0 flex-shrink-0" aria-label="Mobile navigation">
             {MOBILE_NAV_LINKS.map((link, i) => (
               <Link
                 key={link.href + link.label}
@@ -236,7 +236,7 @@ export default function Navbar() {
 
           {/* Mobile bottom actions */}
           <div
-            className="mt-8 flex items-center gap-6 transition-all duration-500 ease-in-out"
+            className="mt-8 flex items-center gap-6 transition-all duration-500 ease-in-out flex-shrink-0"
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(8px)',

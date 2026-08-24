@@ -4,7 +4,26 @@ import MobileNav from '@/components/Navbar/MobileNav'
 import NavbarItemText from '@/components/Navbar/Navbar'
 import PageContainer from '@/components/PageContainer'
 import { useState } from 'react'
-import type { Navigation } from '@/payload-types'
+// Navigation type - define locally since it may not be in payload-types
+interface Navigation {
+  id?: string
+  slug?: string
+  displayText?: string
+  subDisplayText?: string
+  backgroundColor?: string
+  textColor?: string
+  buttonBackground?: string
+  buttonColor?: string
+  categories?: unknown[]
+  link?: {
+    type: 'reference' | 'custom'
+    reference?: { relationTo: 'pages' | 'posts'; value: Record<string, unknown> }
+    url?: string
+    newTab?: boolean
+    label?: string
+    appearance?: string
+  }
+}
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { LocaleCodes } from '@/i18n/localization'

@@ -1,30 +1,22 @@
 'use client'
 
-import { CITIES, type CityFilter, type ListingType, type PropertyCategory } from './data'
-
 export type FilterState = {
-  listingType: ListingType | 'all'
-  category: PropertyCategory | 'all'
-  city: CityFilter
+  listingType: 'buy' | 'rent' | 'both' | 'all'
+  category: string
+  city: string
 }
 
 type Props = {
   filters: FilterState
   onChange: (next: FilterState) => void
+  availableCities: string[]
+  availableCategories: string[]
 }
 
 const LISTING_TYPE_FILTERS: { label: string; value: FilterState['listingType'] }[] = [
   { label: 'All', value: 'all' },
   { label: 'Buy', value: 'buy' },
   { label: 'Rent', value: 'rent' },
-]
-
-const CATEGORY_FILTERS: { label: string; value: FilterState['category'] }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Houses', value: 'Houses' },
-  { label: 'Villas', value: 'Villas' },
-  { label: 'Apartments', value: 'Apartments' },
-  { label: 'Land', value: 'Land' },
 ]
 
 function FilterButton({
@@ -55,7 +47,12 @@ function Divider() {
   return <div className="hidden md:block w-px h-6 bg-[#e5e0d7] mx-2" aria-hidden="true" />
 }
 
-export default function ListingsFilterBar({ filters, onChange }: Props) {
+export default function ListingsFilterBar({
+  filters,
+  onChange,
+  availableCities,
+  availableCategories,
+}: Props) {
   return (
     <div
       className="bg-white border-b border-[#e5e0d7] sticky  z-10"
@@ -82,13 +79,13 @@ export default function ListingsFilterBar({ filters, onChange }: Props) {
 
           {/* Property category */}
           <div className="flex gap-1 mr-5 flex-wrap">
-            {CATEGORY_FILTERS.map((f) => (
+            {availableCategories.map((category) => (
               <FilterButton
-                key={f.value}
-                active={filters.category === f.value}
-                onClick={() => onChange({ ...filters, category: f.value })}
+                key={category}
+                active={filters.category === category}
+                onClick={() => onChange({ ...filters, category })}
               >
-                {f.label}
+                {category === 'all' ? 'All' : category}
               </FilterButton>
             ))}
           </div>
@@ -99,10 +96,10 @@ export default function ListingsFilterBar({ filters, onChange }: Props) {
           <select
             aria-label="Filter by city"
             value={filters.city}
-            onChange={(e) => onChange({ ...filters, city: e.target.value as CityFilter })}
+            onChange={(e) => onChange({ ...filters, city: e.target.value })}
             className="ml-auto border border-[#e5e0d7] bg-transparent text-[11px] tracking-widest text-[#a5a19a] px-3 py-2 uppercase outline-none cursor-pointer"
           >
-            {CITIES.map((c) => (
+            {availableCities.map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>

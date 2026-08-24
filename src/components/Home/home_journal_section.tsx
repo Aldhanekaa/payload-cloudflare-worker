@@ -1,7 +1,12 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
+import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
+import type { Post, Media } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -15,6 +20,47 @@ type JournalPost = {
     src: Parameters<typeof Image>[0]['src']
     alt: string
   }
+}
+
+type Props = {
+  posts: Post[]
+}
+
+// ── Transform CMS data to component format ─────────────────────────────────
+
+function transformPostData(posts: Post[]): JournalPost[] {
+  return posts.map((post) => {
+    const heroImageData = typeof post.heroImage === 'object' ? (post.heroImage as Media) : null
+
+    // Format category
+    const categoryMap: Record<string, string> = {
+      architecture: 'Architecture',
+      'market-insight': 'Market Insight',
+      'buyers-guide': "Buyer's Guide",
+      design: 'Design',
+      lifestyle: 'Lifestyle',
+    }
+    const category = categoryMap[post.category] || post.category
+
+    // Format date
+    const formatDate = (dateString: string | undefined) => {
+      if (!dateString) return 'Recent'
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    }
+
+    return {
+      category,
+      date: formatDate(post.publishedAt),
+      title: post.title,
+      readTime: post.readTime || '5 min read',
+      href: `/insights/${post.slug}`,
+      image: {
+        src: heroImageData?.url || DefaultImg,
+        alt: post.imageAlt || post.title,
+      },
+    }
+  })
 }
 
 // ── Placeholder data (replace with Payload fetch) ─────────────────────────────
@@ -48,7 +94,15 @@ const POSTS: JournalPost[] = [
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function HomeJournalSection() {
+export default function HomeJournalSection({ posts: cmsPosts }: Props) {
+  // Use CMS data or fallback to dummy data
+  const journalPosts = useMemo(() => {
+    if (cmsPosts.length > 0 || !ENABLE_DUMMY_FALLBACK.posts) {
+      return transformPostData(cmsPosts)
+    }
+    return POSTS
+  }, [cmsPosts])
+
   return (
     <section className="bg-white py-20 md:py-28">
       <PageContainer>
@@ -64,7 +118,7 @@ export default function HomeJournalSection() {
           </div>
 
           <Link
-            href="/journal"
+            href="/insights"
             className="hidden md:inline-flex items-center gap-2 text-[#1a1a1a] text-[10px] tracking-[0.2em] uppercase font-medium no-underline hover:opacity-60 transition-opacity duration-200 shrink-0 mb-2"
           >
             View All Insights <span aria-hidden="true">→</span>
@@ -72,48 +126,54 @@ export default function HomeJournalSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12">
-          {POSTS.map((post) => (
-            <Link
-              key={post.href}
-              href={post.href}
-              className="group flex flex-col gap-0 no-underline"
-            >
-              {/* Image */}
-              <div className="relative w-full aspect-4/3 overflow-hidden mb-6">
-                <Image
-                  src={post.image.src}
-                  alt={post.image.alt}
-                  fill
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                />
-              </div>
+        {journalPosts.length === 0 ? (
+          <p className="text-[#a5a19a] text-sm py-24 text-center">
+            No insights published yet. Check back soon!
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12">
+            {journalPosts.map((post) => (
+              <Link
+                key={post.href}
+                href={post.href}
+                className="group flex flex-col gap-0 no-underline"
+              >
+                {/* Image */}
+                <div className="relative w-full aspect-4/3 overflow-hidden mb-6">
+                  <Image
+                    src={post.image.src}
+                    alt={post.image.alt}
+                    fill
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                  />
+                </div>
 
-              {/* Meta */}
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[#c8b97a] text-xs tracking-[0.2em] uppercase">
-                  {post.category}
-                </span>
-                <span className="text-[#d6d0c4] text-xs">/</span>
-                <span className="text-[#aaa] text-xs tracking-wide">{post.date}</span>
-              </div>
+                {/* Meta */}
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-[#c8b97a] text-xs tracking-[0.2em] uppercase">
+                    {post.category}
+                  </span>
+                  <span className="text-[#d6d0c4] text-xs">/</span>
+                  <span className="text-[#aaa] text-xs tracking-wide">{post.date}</span>
+                </div>
 
-              {/* Title */}
-              <h3 className="text-[#1a1a1a] text-xl md:text-2xl font-light leading-snug m-0 mb-4 group-hover:text-[#a8894a] transition-colors duration-200">
-                {post.title}
-              </h3>
+                {/* Title */}
+                <h3 className="text-[#1a1a1a] text-xl md:text-2xl font-light leading-snug m-0 mb-4 group-hover:text-[#a8894a] transition-colors duration-200">
+                  {post.title}
+                </h3>
 
-              {/* Read time */}
-              <p className="text-[#aaa] text-xs tracking-widest m-0">{post.readTime}</p>
-            </Link>
-          ))}
-        </div>
+                {/* Read time */}
+                <p className="text-[#aaa] text-xs tracking-widest m-0">{post.readTime}</p>
+              </Link>
+            ))}
+          </div>
+        )}
 
         {/* Mobile — view all link */}
         <div className="mt-10 md:hidden">
           <Link
-            href="/journal"
+            href="/insights"
             className="inline-flex items-center gap-2 text-[#1a1a1a] text-[10px] tracking-[0.2em] uppercase font-medium no-underline hover:opacity-60 transition-opacity duration-200"
           >
             View All Insights <span aria-hidden="true">→</span>
