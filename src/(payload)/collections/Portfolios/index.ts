@@ -136,6 +136,29 @@ export const Portfolios: CollectionConfig = {
       },
     },
 
+    // ── Action Links (Sidebar) ───────────────────────────────────────
+    {
+      name: 'enquiryLink',
+      type: 'text',
+      label: 'Enquiry Link',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'URL for project enquiry form or contact page',
+      },
+    },
+
+    {
+      name: 'visitScheduleLink',
+      type: 'text',
+      label: 'Schedule a Visit Link',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'URL for booking a project viewing or site visit',
+      },
+    },
+
     // ── Hero Image ───────────────────────────────────────
     {
       name: 'heroImage',

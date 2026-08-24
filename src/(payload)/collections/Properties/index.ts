@@ -118,6 +118,29 @@ export const Properties: CollectionConfig = {
       },
     },
 
+    // ── Action Links (Sidebar) ───────────────────────────────────────
+    {
+      name: 'enquiryLink',
+      type: 'text',
+      label: 'Enquiry Link',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'URL for property enquiry form or contact page',
+      },
+    },
+
+    {
+      name: 'visitScheduleLink',
+      type: 'text',
+      label: 'Schedule a Visit Link',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'URL for booking a property viewing or site visit',
+      },
+    },
+
     // ── Property Specs (Inline Row) ───────────────────────────────────────
     {
       type: 'row',

@@ -8,6 +8,10 @@ export interface ListingDetailData {
   description: string
   note?: string
   features: string[]
+  dataPoints?: {
+    name: string
+    value: string
+  }[]
 }
 
 export const LISTING_DETAILS: Record<string, ListingDetailData> = {

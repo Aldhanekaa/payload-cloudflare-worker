@@ -51,7 +51,7 @@ export default function ServicesCTA() {
             {t('cta-primary')}
           </Link>
           <Link
-            href="https://wa.me/62000000000"
+            href="https://wa.me/62812345678"
             target="_blank"
             rel="noopener noreferrer"
             className="border border-white/25 hover:border-white/50 text-white/80 hover:text-white text-[11px] tracking-[0.14em] uppercase font-medium px-9 py-4 no-underline transition-all duration-200 inline-flex items-center gap-2"

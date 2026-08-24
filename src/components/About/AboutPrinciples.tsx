@@ -1,35 +1,38 @@
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
-const principles = [
-  {
-    title: 'Rigorous Curation',
-    description:
-      'We decline the majority of properties presented to us. Only those that meet our criteria for architecture, location, and quality reach our clients.',
-  },
-  {
-    title: 'Genuine Relationships',
-    description:
-      'We operate through relationships, not transactions. The connections we build with clients, agents, and developers are the foundation of what we do.',
-  },
-  {
-    title: 'Local Depth',
-    description:
-      "Indonesia is our home market. We have invested years understanding its cities, regulations, and communities — so our clients don't have to start from zero.",
-  },
-  {
-    title: 'Quiet Confidence',
-    description:
-      'We do not shout. We present clearly, advise honestly, and trust that the quality of our work speaks for itself.',
-  },
-]
-
 export default function AboutPrinciples() {
+  const t = useTranslations('about-page.principles')
+
+  const principles = [
+    {
+      key: 'curation',
+      title: t('items.curation.title'),
+      description: t('items.curation.description'),
+    },
+    {
+      key: 'relationships',
+      title: t('items.relationships.title'),
+      description: t('items.relationships.description'),
+    },
+    {
+      key: 'local',
+      title: t('items.local.title'),
+      description: t('items.local.description'),
+    },
+    {
+      key: 'confidence',
+      title: t('items.confidence.title'),
+      description: t('items.confidence.description'),
+    },
+  ]
+
   return (
     <section className="py-[clamp(64px,8vw,100px)] bg-[#f7f5f0] border-t border-[#e5e0d7]">
       <PageContainer>
         {/* Header */}
         <p className="text-[10px] tracking-[0.22em] uppercase text-[#b89a5b] font-medium mb-3">
-          What We Stand For
+          {t('eyebrow')}
         </p>
         <h2
           className="font-normal text-[#0a0a0a] leading-[1.1] mb-14 max-w-100 mt-0"
@@ -38,7 +41,7 @@ export default function AboutPrinciples() {
             fontSize: 'clamp(28px, 3.5vw, 44px)',
           }}
         >
-          Four principles that shape everything.
+          {t('title')}
         </h2>
 
         {/* Principles grid */}
@@ -47,7 +50,7 @@ export default function AboutPrinciples() {
             const isLast = index === principles.length - 1
             return (
               <div
-                key={principle.title}
+                key={principle.key}
                 className={`p-8 border-t-2 border-t-[#b89a5b] ${!isLast ? 'border-r border-r-[#e5e0d7]' : ''}`}
               >
                 <h3

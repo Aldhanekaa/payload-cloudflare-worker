@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import NavbarLogo from '@/assets/Horizontal_Andersen_Properties_Logo.svg'
 import FooterLogo from '@/assets/Square_Andersen_Properties_Logo.svg'
 import LanguageToggle from '@/components/LanguageToggle'
@@ -24,11 +25,32 @@ const MOBILE_NAV_LINKS = [{ label: 'Home', href: '/' }, ...NAV_LINKS]
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+
+  const isHomePage = pathname === '/'
+  const SCROLL_THRESHOLD = 100 // pixels to scroll before background changes
 
   // Mount guard so the overlay is in the DOM before animating in
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Track scroll position for navbar background
+  useEffect(() => {
+    if (!isHomePage) return // Only apply on home page
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      setScrolled(scrollPosition > SCROLL_THRESHOLD)
+    }
+
+    // Set initial state
+    handleScroll()
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isHomePage])
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -42,7 +64,9 @@ export default function Navbar() {
     <>
       {/* ── Desktop / tablet header ── */}
       <header
-        className="fixed top-0 left-0 right-0 z-100 bg-black border-b border-white/6 transition-colors duration-400"
+        className={`fixed top-0 left-0 right-0 z-100 border-b transition-all duration-400 ${
+          isHomePage && !scrolled ? 'bg-transparent border-transparent' : 'bg-black border-white/6'
+        }`}
         style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
       >
         <div className="max-w-360 mx-auto px-5 md:px-20 flex items-center justify-between h-16">

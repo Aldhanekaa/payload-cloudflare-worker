@@ -19,12 +19,18 @@ function StatItem({ value, label, isFirst }: StatItemProps) {
   )
 }
 
+interface DataPoint {
+  name: string
+  value: string
+}
+
 interface PropertyStatsProps {
   bedrooms: number
   bathrooms: number
   buildArea: string
   landArea: string
   yearBuilt: number
+  dataPoints?: DataPoint[]
 }
 
 export function PropertyStats({
@@ -33,6 +39,7 @@ export function PropertyStats({
   buildArea,
   landArea,
   yearBuilt,
+  dataPoints = [],
 }: PropertyStatsProps) {
   return (
     <div className="flex gap-0 mb-12 flex-wrap">
@@ -41,6 +48,9 @@ export function PropertyStats({
       <StatItem value={buildArea} label="Build Area" />
       <StatItem value={landArea} label="Land Area" />
       <StatItem value={yearBuilt} label="Year Built" />
+      {dataPoints.map((dataPoint, index) => (
+        <StatItem key={index} value={dataPoint.value} label={dataPoint.name} />
+      ))}
     </div>
   )
 }

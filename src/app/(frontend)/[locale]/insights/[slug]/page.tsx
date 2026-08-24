@@ -4,8 +4,10 @@ import PageContainer from '@/components/PageContainer'
 import { getCachedCollection } from '@/utilities/getCollection'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { LocaleCodes } from '@/i18n/localization'
-import type { Media, Category } from '@/payload-types'
+import type { Media, Category, Post } from '@/payload-types'
 import { POSTS } from '@/components/Insights/insights.data'
+import RichText from '@/components/RichText'
+import { RelatedPosts } from '@/(payload)/blocks/RelatedPosts/Component'
 
 interface PageProps {
   params: Promise<{
@@ -64,6 +66,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
         alt: heroImageData?.alt || cmsPost.title || '',
       },
       content: cmsPost.content,
+      relatedPosts: cmsPost.relatedPosts || [],
     }
   } else if (ENABLE_DUMMY_FALLBACK.posts) {
     // Fallback to dummy data
@@ -98,6 +101,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
             ],
           },
         },
+        relatedPosts: [],
       }
     }
   }
@@ -176,30 +180,26 @@ export default async function InsightDetailPage({ params }: PageProps) {
       <PageContainer className="py-[clamp(60px,8vw,100px)]">
         <div className="max-w-3xl mx-auto">
           {/* Content */}
-          <div className="prose prose-lg prose-stone max-w-none">
-            {/* This is a placeholder - you'll need to render the Lexical content properly */}
-            {post.content?.root?.children?.map((child: any, index: number) => {
-              if (child.type === 'paragraph') {
-                return (
-                  <p key={index} className="text-[#242424] text-[16px] leading-[1.85] mb-6">
-                    {child.children?.map((c: any) => c.text).join('')}
-                  </p>
-                )
-              }
-              if (child.type === 'heading') {
-                const HeadingTag = `h${child.tag}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-                return (
-                  <HeadingTag
-                    key={index}
-                    className="font-cormorant text-[#0a0a0a] font-medium mt-10 mb-4"
-                  >
-                    {child.children?.map((c: any) => c.text).join('')}
-                  </HeadingTag>
-                )
-              }
-              return null
-            })}
-          </div>
+          {post.content && (
+            <RichText
+              className="prose prose-lg prose-stone max-w-none text-[#242424]"
+              data={post.content}
+              enableGutter={false}
+              enableProse={true}
+            />
+          )}
+
+          {/* Related Posts */}
+          {post.relatedPosts && post.relatedPosts.length > 0 && (
+            <div className="mt-16">
+              <RelatedPosts
+                className="max-w-none"
+                docs={post.relatedPosts.filter(
+                  (p: Post | string): p is Post => typeof p === 'object',
+                )}
+              />
+            </div>
+          )}
 
           {/* Back to Insights */}
           <div className="mt-16 pt-8 border-t border-[#e5e0d7]">

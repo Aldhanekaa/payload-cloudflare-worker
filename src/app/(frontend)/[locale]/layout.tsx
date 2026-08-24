@@ -14,6 +14,10 @@ import { draftMode } from 'next/headers'
 import { cormorant_garamond, inter } from '@/app/fonts'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
+import { getGlobalSettings } from '@/(payload)/globals/Global_Settings'
+import { getActiveAnnouncements } from '@/(payload)/globals/Global_Settings/types'
+import { AnnouncementBanner } from '@/components/AnnouncementBanner'
+import { WhatsAppButton } from '@/components/WhatsAppButton'
 
 export const metadata = {
   description: 'A blank template using Payload in a Next.js app.',
@@ -41,13 +45,36 @@ export default async function RootLayout({
 
   const { isEnabled } = await draftMode()
 
+  // Fetch global settings
+  const settings = await getGlobalSettings()
+
+  // Get only active announcements (filtered by date and isActive flag)
+  const activeAnnouncements = settings ? getActiveAnnouncements(settings.announcements) : []
+
   return (
     <html lang="en">
       <body className={`${cormorant_garamond.variable} ${inter.variable}`}>
         <NextIntlClientProvider messages={messages}>
+          {/* Display announcement banner if there are active announcements */}
+          {activeAnnouncements.length > 0 && (
+            <AnnouncementBanner
+              announcements={activeAnnouncements}
+              showAll={false} // Only show highest priority announcement
+            />
+          )}
+
           <Navbar />
           <main>{children}</main>
           <Footer />
+
+          {/* Floating WhatsApp button (bottom right corner) */}
+          {settings?.whatsapp && (
+            <WhatsAppButton
+              whatsapp={settings.whatsapp}
+              variant="floating"
+              message="Hello! I'm interested in learning more about your properties."
+            />
+          )}
         </NextIntlClientProvider>
       </body>
     </html>

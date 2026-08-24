@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
 import { Link } from '@payloadcms/ui'
+import { Globe, Home, FileText, FolderKanban } from 'lucide-react'
 
 export default function AfterNavLinks() {
   return (
@@ -30,21 +30,55 @@ export default function AfterNavLinks() {
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ fontSize: '0.875rem', textDecoration: 'none' }}
+          style={{
+            fontSize: '0.875rem',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
         >
-          🌐 View Website
+          <Globe size={16} />
+          View Website
         </Link>
         <Link
           href="/admin/collections/properties"
-          style={{ fontSize: '0.875rem', textDecoration: 'none' }}
+          style={{
+            fontSize: '0.875rem',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
         >
-          🏠 Manage Properties
+          <Home size={16} />
+          Manage Active Listings
+        </Link>
+        <Link
+          href="/admin/collections/portfolios"
+          style={{
+            fontSize: '0.875rem',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
+        >
+          <FolderKanban size={16} />
+          Manage Active Portfolio
         </Link>
         <Link
           href="/admin/collections/posts"
-          style={{ fontSize: '0.875rem', textDecoration: 'none' }}
+          style={{
+            fontSize: '0.875rem',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
         >
-          📝 Manage Posts
+          <FileText size={16} />
+          Manage Posts
         </Link>
       </div>
     </div>

@@ -26,6 +26,7 @@
     "test:email": "tsx scripts/test-email.ts"
   },
   "dependencies": {
+    "@base-ui/react": "^1.7.0",
     "@opennextjs/cloudflare": "^1.11.0",
     "@oversightstudio/blur-data-urls": "^1.0.4",
     "@payload-enchants/fields-select": "^1.2.2",
@@ -46,6 +47,7 @@
     "@websolutespa/payload-plugin-localization": "^3.0.1",
     "@websolutespa/payload-utils": "^3.0.2",
     "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
@@ -61,7 +63,9 @@
     "react-colorful": "^5.8.0",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.85.0",
-    "tailwind-merge": "^3.6.0"
+    "shadcn": "^4.19.0",
+    "tailwind-merge": "^3.6.0",
+    "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

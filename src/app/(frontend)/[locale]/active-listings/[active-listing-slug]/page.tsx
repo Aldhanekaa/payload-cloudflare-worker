@@ -103,6 +103,13 @@ export default async function ActiveListingPage({ params }: PageProps) {
     // Format land area
     const landAreaText = cmsProperty.landArea ? `${cmsProperty.landArea} m²` : '500 m²'
 
+    // Transform dataPoints
+    const dataPoints =
+      cmsProperty.dataPoints?.map((dp: any) => ({
+        name: dp.dataName,
+        value: dp.dataDetail,
+      })) || []
+
     details = {
       images: detailImages,
       landArea: landAreaText,
@@ -110,6 +117,7 @@ export default async function ActiveListingPage({ params }: PageProps) {
       description: cmsProperty.description || 'Beautiful property in a prime location.',
       note: '', // No note field in current schema
       features: features.length > 0 ? features : ['Modern Design', 'Prime Location'],
+      dataPoints: dataPoints,
     }
   } else if (ENABLE_DUMMY_FALLBACK.properties) {
     // Fallback to dummy data (using slug for dummy data)
@@ -122,6 +130,7 @@ export default async function ActiveListingPage({ params }: PageProps) {
         description: 'Beautiful property in a prime location.',
         note: 'Unfurnished',
         features: ['Modern Design', 'Prime Location', 'High Quality Finishes'],
+        dataPoints: [],
       }
     }
   }
@@ -168,6 +177,7 @@ export default async function ActiveListingPage({ params }: PageProps) {
                 buildArea={listing.area}
                 landArea={details.landArea}
                 yearBuilt={details.yearBuilt}
+                dataPoints={details.dataPoints}
               />
 
               <PropertyDescription description={details.description} note={details.note} />

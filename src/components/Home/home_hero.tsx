@@ -50,7 +50,7 @@ export default function HomePageHero() {
             {t('cta-primary')}
           </Link>
           <Link
-            href="/services"
+            href="https://wa.me/62812345678"
             className="inline-block border border-white/40 text-white text-[11px] tracking-[0.14em] font-medium py-3.5 px-8 no-underline uppercase hover:border-white/70 transition-colors duration-200"
           >
             {t('cta-secondary')}

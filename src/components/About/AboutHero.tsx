@@ -1,7 +1,10 @@
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import PageContainer from '@/components/PageContainer'
 
 export default function AboutHero() {
+  const t = useTranslations('about-page.hero')
+
   return (
     <div
       className="relative overflow-hidden bg-[#0a0a0a]"
@@ -23,7 +26,7 @@ export default function AboutHero() {
         style={{ paddingBottom: 'clamp(48px, 6vw, 80px)' }}
       >
         <p className="text-[10px] tracking-[0.22em] uppercase text-[#b89a5b] font-medium mb-4">
-          Our Story
+          {t('eyebrow')}
         </p>
         <h1
           className="text-white font-normal leading-[1.08] tracking-[-0.01em] max-w-150 m-0"
@@ -32,7 +35,7 @@ export default function AboutHero() {
             fontSize: 'clamp(36px, 5vw, 68px)',
           }}
         >
-          Built on considered advice and earned trust.
+          {t('title')}
         </h1>
       </PageContainer>
     </div>

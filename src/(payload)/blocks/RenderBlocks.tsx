@@ -10,6 +10,7 @@ import { Feature1 } from '@/(payload)/blocks/Features/Feature1/Component'
 import { Feature2 } from '@/(payload)/blocks/Features/Feature2/Component'
 import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/Component'
 import { Steps } from '@/(payload)/blocks/Steps/Component'
+import { FormBlock } from '@/(payload)/blocks/Form'
 
 const blockComponents: Record<string, React.FC<any>> = {
   archive: ArchiveBlock,
@@ -20,6 +21,7 @@ const blockComponents: Record<string, React.FC<any>> = {
   feature2: Feature2,
   heroHeadline: HeroHeadline,
   steps: Steps,
+  formBlock: FormBlock,
 }
 
 export const RenderBlocks: React.FC<{
