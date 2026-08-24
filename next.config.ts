@@ -60,14 +60,23 @@ const nextConfig: NextConfig = {
   },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
-  serverExternalPackages: ['jose', 'pg-cloudflare'],
+  serverExternalPackages: ['jose', 'pg-cloudflare', 'drizzle-kit', 'sharp'],
 
   // Your Next.js config here
-  webpack: (webpackConfig: any) => {
+  webpack: (webpackConfig: any, { isServer }: any) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
       '.mjs': ['.mts', '.mjs'],
+    }
+
+    // Ignore drizzle-kit in production builds (it's a dev-only tool)
+    if (isServer) {
+      webpackConfig.externals = webpackConfig.externals || []
+      webpackConfig.externals.push({
+        'drizzle-kit': 'commonjs drizzle-kit',
+        'drizzle-kit/api': 'commonjs drizzle-kit/api',
+      })
     }
 
     return webpackConfig

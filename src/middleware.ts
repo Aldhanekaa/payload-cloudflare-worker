@@ -9,3 +9,6 @@ export const config = {
   // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher: ['/((?!api|_next|_vercel|admin|.*\\..*).*)'],
 }
+
+// Specify experimental-edge runtime for Cloudflare Workers compatibility (Next.js 16+)
+export const runtime = 'experimental-edge'

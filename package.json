@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
-    "@opennextjs/cloudflare": "^1.11.0",
+    "@opennextjs/cloudflare": "^1.20.2",
     "@oversightstudio/blur-data-urls": "^1.0.4",
     "@payload-enchants/fields-select": "^1.2.2",
     "@payloadcms/db-d1-sqlite": "3.87.0",

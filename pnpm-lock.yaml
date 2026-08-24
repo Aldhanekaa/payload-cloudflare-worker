@@ -12,7 +12,7 @@ importers:
         specifier: ^1.7.0
         version: 1.7.0(@date-fns/tz@1.2.0)(@types/react@19.2.9)(date-fns@4.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@opennextjs/cloudflare':
-        specifier: ^1.11.0
+        specifier: ^1.20.2
         version: 1.20.2(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(wrangler@4.125.0)
       '@oversightstudio/blur-data-urls':
         specifier: ^1.0.4
