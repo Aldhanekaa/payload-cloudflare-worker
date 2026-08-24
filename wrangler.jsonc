@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "payloadcms-cf-worker-template",
+  "name": "andersen-properties",
   "compatibility_date": "2025-08-15",
   "account_id": "f50e92329e6f8728de1bf9cf42c4e268",
   "compatibility_flags": [
@@ -23,7 +23,7 @@
   "d1_databases": [
     {
       "binding": "D1",
-      "database_id": "9b028650-24b7-459a-a29f-0d911f33302f",
+      "database_id": "cc2f22b4-1d32-46eb-8c9b-6857f11fdfee",
       "remote": true,
     },
   ],
@@ -35,11 +35,11 @@
     // },
   ],
   "r2_buckets": [
-    // {
-    //   "binding": "R2",
-    //   "bucket_name": "andersen-properties",
-    //   "remote": true,
-    // },
+    {
+      "binding": "R2",
+      "bucket_name": "andersen-properties-files",
+      "remote": true,
+    },
   ],
   "observability": {
     "enabled": true,

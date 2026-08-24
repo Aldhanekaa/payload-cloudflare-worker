@@ -124,9 +124,11 @@ export interface Config {
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'id') | ('en' | 'id')[];
   globals: {
+    'global-settings': GlobalSetting;
     'better-editor-settings': BetterEditorSetting;
   };
   globalsSelect: {
+    'global-settings': GlobalSettingsSelect<false> | GlobalSettingsSelect<true>;
     'better-editor-settings': BetterEditorSettingsSelect<false> | BetterEditorSettingsSelect<true>;
   };
   locale: 'en' | 'id';
@@ -910,6 +912,14 @@ export interface Property {
    * Specific area within the city (e.g. Uluwatu, South Jakarta)
    */
   location: string;
+  /**
+   * URL for property enquiry form or contact page
+   */
+  enquiryLink?: string | null;
+  /**
+   * URL for booking a property viewing or site visit
+   */
+  visitScheduleLink?: string | null;
   bedrooms?: number | null;
   bathrooms?: number | null;
   /**
@@ -1085,6 +1095,14 @@ export interface Portfolio {
    * e.g. IDR 35 Billion, USD 2.2 Million
    */
   from: string;
+  /**
+   * URL for project enquiry form or contact page
+   */
+  enquiryLink?: string | null;
+  /**
+   * URL for booking a project viewing or site visit
+   */
+  visitScheduleLink?: string | null;
   /**
    * Main image for portfolio card and hero section.
    */
@@ -1766,6 +1784,8 @@ export interface PropertiesSelect<T extends boolean = true> {
   status?: T;
   city?: T;
   location?: T;
+  enquiryLink?: T;
+  visitScheduleLink?: T;
   bedrooms?: T;
   bathrooms?: T;
   buildArea?: T;
@@ -1847,6 +1867,8 @@ export interface PortfoliosSelect<T extends boolean = true> {
   units?: T;
   completion?: T;
   from?: T;
+  enquiryLink?: T;
+  visitScheduleLink?: T;
   heroImage?: T;
   imageAlt?: T;
   architect?: T;
@@ -2156,6 +2178,96 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "global-settings".
+ */
+export interface GlobalSetting {
+  id: number;
+  whatsapp: {
+    /**
+     * Include the + symbol (e.g., +1, +44, +971)
+     */
+    countryCode: string;
+    /**
+     * Enter number without spaces or special characters
+     */
+    number: string;
+    /**
+     * Text to display alongside WhatsApp number
+     */
+    displayText?: string | null;
+  };
+  /**
+   * External link for scheduling consultations (e.g., Calendly, Cal.com)
+   */
+  scheduleConsultationLink?: string | null;
+  /**
+   * Manage important announcements displayed across the site
+   */
+  announcements?:
+    | {
+        isActive?: boolean | null;
+        priority?: ('high' | 'normal' | 'low') | null;
+        announcement: string;
+        /**
+         * Optional link for users to learn more or take action
+         */
+        announcementLink?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label?: string | null;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        /**
+         * When to start displaying this announcement
+         */
+        startDate?: string | null;
+        /**
+         * When to stop displaying this announcement
+         */
+        endDate?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Link label for seasonal promotions (e.g., Learn More & Get Involved)
+   */
+  currentSeasonPromotionLink?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'posts';
+          value: number | Post;
+        } | null);
+    url?: string | null;
+    label?: string | null;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Editor-wide preferences for the Better Editor overlay.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2186,6 +2298,53 @@ export interface BetterEditorSetting {
   hoverToolbarPosition?: ('top-right' | 'top-left' | 'bottom-right' | 'bottom-left') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "global-settings_select".
+ */
+export interface GlobalSettingsSelect<T extends boolean = true> {
+  whatsapp?:
+    | T
+    | {
+        countryCode?: T;
+        number?: T;
+        displayText?: T;
+      };
+  scheduleConsultationLink?: T;
+  announcements?:
+    | T
+    | {
+        isActive?: T;
+        priority?: T;
+        announcement?: T;
+        announcementLink?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        startDate?: T;
+        endDate?: T;
+        id?: T;
+      };
+  currentSeasonPromotionLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

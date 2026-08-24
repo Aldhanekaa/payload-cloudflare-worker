@@ -11,6 +11,7 @@
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import type { GlobalSetting } from '@/payload-types'
 
 export async function seedGlobalSettings() {
   const payload = await getPayload({ config })

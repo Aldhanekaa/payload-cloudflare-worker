@@ -6,7 +6,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 // import { GetPlatformProxyOptions } from 'wrangler'
-// import { r2Storage } from '@payloadcms/storage-r2'
+import { r2Storage } from '@payloadcms/storage-r2'
 
 import { Categories } from './(payload)/collections/Categories'
 
@@ -25,6 +25,7 @@ import { s3Storage } from '@payloadcms/storage-s3'
 
 import { plugins } from '@/(payload)/plugins'
 import { nodemailerAdapter } from '@/(payload)/email/adapter'
+import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
 // import migrations from './db/migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -118,6 +119,7 @@ export default buildConfig({
     Portfolios,
     Testimonials,
   ],
+  globals: [GlobalSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -130,27 +132,27 @@ export default buildConfig({
   email: nodemailerAdapter,
   plugins: [
     ...plugins,
-    s3Storage({
-      collections: {
-        media: true,
-      },
-      bucket: 'payloadcms-cf-worker-template',
-      config: {
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID,
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-        },
-        endpoint: process.env.S3_ENDPOINT,
-        region: process.env.S3_REGION, // asia pacific
-        // region: process.env.S3_REGION,
+    // s3Storage({
+    //   collections: {
+    //     media: true,
+    //   },
+    //   bucket: 'payloadcms-cf-worker-template',
+    //   config: {
+    //     credentials: {
+    //       accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    //       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+    //     },
+    //     endpoint: process.env.S3_ENDPOINT,
+    //     region: process.env.S3_REGION, // asia pacific
+    //     // region: process.env.S3_REGION,
 
-        // ... Other S3 configuration
-      },
-    }),
-    // r2Storage({
-    //   bucket: cloudflare.env.R2,
-    //   collections: { media: true },
+    //     // ... Other S3 configuration
+    //   },
     // }),
+    r2Storage({
+      bucket: cloudflare.env.R2,
+      collections: { media: true },
+    }),
   ],
 })
 

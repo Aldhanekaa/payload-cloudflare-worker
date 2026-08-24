@@ -18,7 +18,7 @@ export function useGlobalSettings() {
         if (!response.ok) {
           throw new Error('Failed to fetch global settings')
         }
-        const data = await response.json()
+        const data = (await response.json()) as GlobalSettings
         setSettings(data)
       } catch (err) {
         setError(err instanceof Error ? err : new Error('Unknown error'))
