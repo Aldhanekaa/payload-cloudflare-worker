@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import NavbarLogo from '@/assets/Horizontal_Andersen_Properties_Logo.svg'
 import FooterLogo from '@/assets/Square_Andersen_Properties_Logo.svg'
+import LanguageToggle from '@/components/LanguageToggle'
 
 // ── Nav links ──────────────────────────────────────────────────────────────────
 
@@ -71,15 +72,7 @@ export default function Navbar() {
           {/* Actions — visible on tablet (md+); on desktop the nav sits between logo and these */}
           <div className="hidden md:flex items-center gap-5">
             {/* Language toggle */}
-            <button
-              aria-label="Toggle language"
-              className="text-white/60 text-[11px] tracking-[0.12em] bg-transparent border-none cursor-pointer p-0"
-              style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
-            >
-              <span className="text-primary">EN</span>
-              {' / '}
-              <span className="text-white/60">ID</span>
-            </button>
+            <LanguageToggle />
 
             {/* Search */}
             <button
@@ -198,7 +191,7 @@ export default function Navbar() {
         >
           {/* Vertical logo */}
           <div
-            className="mb-10 transition-all duration-500 ease-in-out flex-shrink-0"
+            className="mb-10 transition-all duration-500 ease-in-out shrink-0"
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(-8px)',
@@ -214,7 +207,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile nav links — staggered entrance */}
-          <nav className="flex flex-col gap-0 flex-shrink-0" aria-label="Mobile navigation">
+          <nav className="flex flex-col gap-0 shrink-0" aria-label="Mobile navigation">
             {MOBILE_NAV_LINKS.map((link, i) => (
               <Link
                 key={link.href + link.label}
@@ -236,22 +229,17 @@ export default function Navbar() {
 
           {/* Mobile bottom actions */}
           <div
-            className="mt-8 flex items-center gap-6 transition-all duration-500 ease-in-out flex-shrink-0"
+            className="mt-8 flex items-center gap-6 transition-all duration-500 ease-in-out shrink-0"
             style={{
               opacity: menuOpen ? 1 : 0,
               transform: menuOpen ? 'translateY(0)' : 'translateY(8px)',
               transitionDelay: menuOpen ? `${120 + MOBILE_NAV_LINKS.length * 50}ms` : '0ms',
             }}
           >
-            <button
-              aria-label="Toggle language"
+            <LanguageToggle
               className="text-white/50 text-[11px] tracking-[0.12em] bg-transparent border-none cursor-pointer"
-              style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
-            >
-              <span className="text-primary">EN</span>
-              {' / '}
-              <span className="text-white/50">ID</span>
-            </button>
+              inactiveClassName="text-white/50 hover:text-white/70 transition-colors duration-200"
+            />
             <Link
               href="/active-listings"
               onClick={() => setMenuOpen(false)}

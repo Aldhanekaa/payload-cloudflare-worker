@@ -206,12 +206,308 @@
     "twitter-creator": "@indonesiafirstrobotik"
   },
   "home-page": {
-    "hero-title": "Indonesia FIRST Robotik",
-    "hero-subtitle": "A Home to the Indonesian youth FIRST® robotics.",
-    "impacts-heading": "Inspiring Generations of Global Citizens",
-    "impacts-subheading": "and helping them realize their power to build a better future",
-    "impacts-description": "As we work as a community to prepare young people for a STEM future, FIRST aims to ensure its programs are having a lasting, positive impact on participants across all demographic groups. Our rigorous multi-year longitudinal study, conducted by Brandeis University Center for Youth and Communities, provides strong evidence that participation in FIRST does just that. Even with just one year of FIRST participation, study participants are 2-3xs more likely to have gains in STEM outcomes than a comparison group of peers not participating in FIRST.",
-    "impacts-cta": "find more facts",
-    "featured-blogs-read-more": "Read More"
+    "hero": {
+      "eyebrow": "Andersen Properties · Indonesia",
+      "title": "Exceptional properties, considered for life.",
+      "subtitle": "Discover distinctive residences and thoughtfully designed developments selected for their architecture, location, and lasting value.",
+      "cta-primary": "Explore Properties",
+      "cta-secondary": "Speak With an Advisor",
+      "scroll-indicator": "Scroll to discover"
+    },
+    "about": {
+      "headline": "Property is more than an address.",
+      "description": "Andersen Properties connects discerning clients with residences defined by thoughtful architecture, enduring quality, and a genuine sense of place.",
+      "cta": "Discover Our Approach",
+      "stats": {
+        "years": "Years of Local Insight",
+        "properties": "Selected Properties",
+        "markets": "Key Indonesian Markets"
+      }
+    },
+    "featured-properties": {
+      "eyebrow": "Curated Residences",
+      "title": "Featured Properties",
+      "filters": {
+        "all": "All",
+        "houses": "Houses",
+        "villas": "Villas",
+        "apartments": "Apartments",
+        "land": "Land"
+      },
+      "view-property": "View Property",
+      "bed": "bed",
+      "no-properties": "No properties in this category yet.",
+      "view-all": "View All Active Listings"
+    },
+    "signature-development": {
+      "eyebrow": "Signature Development",
+      "title": "Andersen Residences\nNo. 01",
+      "description": "A limited collection of contemporary tropical homes shaped by natural materials, considered proportions, and seamless indoor–outdoor living.",
+      "stats": {
+        "location": "Location",
+        "property-type": "Property Type",
+        "residences": "Residences",
+        "completion": "Completion",
+        "starting-price": "Starting Price"
+      },
+      "values": {
+        "location": "Seminyak, Bali",
+        "property-type": "Tropical Villa Collection",
+        "residences": "12 Exclusive Homes",
+        "completion": "Q3 2026",
+        "starting-price": "IDR 35 Billion"
+      },
+      "cta": "Explore the Development"
+    },
+    "expertise": {
+      "eyebrow": "How We Can Help",
+      "title": "Property expertise, personally delivered.",
+      "services": {
+        "acquisition": {
+          "title": "Property Acquisition",
+          "description": "End-to-end guidance for clients purchasing property in Indonesia, from brief through to keys in hand."
+        },
+        "sales": {
+          "title": "Property Sales",
+          "description": "A deliberate, targeted approach to representing exceptional properties for sale."
+        },
+        "development": {
+          "title": "Development Advisory",
+          "description": "Market intelligence and design thinking for developers at every stage of a project."
+        },
+        "private-search": {
+          "title": "Private Property Search",
+          "description": "A confidential service for clients seeking specific properties, including off-market opportunities."
+        }
+      },
+      "learn-more": "Learn more"
+    },
+    "consideration-steps": {
+      "title": "Considered at every step.",
+      "steps": {
+        "curated": {
+          "title": "Carefully Curated",
+          "description": "We select properties for architecture, quality, location, livability, and long-term relevance."
+        },
+        "intelligence": {
+          "title": "Local Intelligence",
+          "description": "Market understanding supported by meaningful relationships across Indonesia."
+        },
+        "service": {
+          "title": "Discreet Service",
+          "description": "A private, personal experience designed around each client's priorities."
+        },
+        "value": {
+          "title": "Enduring Value",
+          "description": "Guidance that considers both the emotional and financial value of a property."
+        }
+      }
+    },
+    "places": {
+      "title": "Find your place in Indonesia.",
+      "properties": "properties",
+      "explore-location": "Explore location",
+      "dummy": {
+        "bali": "Tropical modernism, cultural depth, and a thriving luxury property market.",
+        "jakarta": "Indonesia's capital: prestige addresses, architectural innovation, and strong investment returns.",
+        "bandung": "Cool highland living with an established design community and exceptional residential character.",
+        "surabaya": "East Java's business hub — a growing market for refined urban and suburban residences.",
+        "lombok": "Unhurried coastal living, exceptional natural settings, and emerging world-class development."
+      }
+    },
+    "testimonial": {
+      "quote": "Andersen understood that we were not simply looking for a house. We were looking for a place that felt right for the way our family lives.",
+      "attribution": "Private Client, Jakarta",
+      "cta": "Read Client Stories"
+    },
+    "path": {
+      "title": "A clear path to the right property.",
+      "steps": {
+        "understand": {
+          "title": "Understand",
+          "description": "We begin with your goals, lifestyle, location, and investment priorities."
+        },
+        "curate": {
+          "title": "Curate",
+          "description": "We prepare a focused selection of suitable opportunities."
+        },
+        "experience": {
+          "title": "Experience",
+          "description": "We arrange private viewings and provide clear property insight."
+        },
+        "complete": {
+          "title": "Complete",
+          "description": "We support negotiation, due diligence, and a smooth transaction."
+        }
+      }
+    },
+    "journal": {
+      "eyebrow": "Journal",
+      "title": "Perspectives on\nproperty and place.",
+      "view-all": "View All Insights",
+      "no-posts": "No insights published yet. Check back soon!",
+      "read-time": "min read",
+      "categories": {
+        "architecture": "Architecture",
+        "market-insight": "Market Insight",
+        "buyers-guide": "Buyer's Guide",
+        "design": "Design",
+        "lifestyle": "Lifestyle"
+      }
+    },
+    "faqs": {
+      "title": "Frequently asked.",
+      "subtitle": "Not finding an answer? Reach us directly for a private conversation.",
+      "questions": {
+        "select-listings": {
+          "q": "How does Andersen Properties select its listings?",
+          "a": "Every property we represent is personally evaluated against a set of criteria covering architecture, build quality, location fundamentals, and long-term value. We only take on listings we would confidently recommend to our own network."
+        },
+        "off-market": {
+          "q": "Can you help with an off-market property search?",
+          "a": "Yes. A significant portion of the properties we facilitate never appear on public listings. If you have specific requirements, our advisors can conduct a discreet search through our private network."
+        },
+        "locations": {
+          "q": "Which locations do you currently serve?",
+          "a": "We operate across eight key Indonesian markets, including Bali, Jakarta, Lombok, and Labuan Bajo, with a focus on areas experiencing sustained demand from both local and international buyers."
+        },
+        "international": {
+          "q": "Do you assist international buyers?",
+          "a": "Absolutely. We regularly work with buyers based outside Indonesia and can guide you through foreign ownership structures, nominee arrangements, and the legal framework applicable to your situation."
+        },
+        "support": {
+          "q": "What support is provided during the transaction?",
+          "a": "From the initial search through to handover, your dedicated advisor coordinates due diligence, legal review, notarial services, and any post-purchase requirements — so you have a single point of contact throughout."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Begin the conversation",
+      "title": "Let's find a property that feels distinctly yours.",
+      "subtitle": "Share what you are looking for and begin a private conversation with an Andersen property advisor.",
+      "cta-primary": "Schedule a Consultation",
+      "cta-secondary": "Contact via WhatsApp"
+    }
+  },
+  "about-page": {
+    "hero": {
+      "eyebrow": "Our Story",
+      "title": "Built on considered advice and earned trust."
+    },
+    "intro": {
+      "headline": "A different kind of property firm.",
+      "paragraph1": "Andersen Properties was founded in 2013 with a straightforward belief: that the property market in Indonesia deserved a firm that prioritised quality over quantity, and the client's interests above its own transaction count.",
+      "paragraph2": "We are a small, deliberately sized team working across eight key markets in Indonesia. We do not handle every type of property. We focus on the exceptional — homes defined by thoughtful architecture, careful construction, and a genuine sense of place."
+    },
+    "principles": {
+      "eyebrow": "What We Stand For",
+      "title": "Four principles that shape everything.",
+      "items": {
+        "curation": {
+          "title": "Rigorous Curation",
+          "description": "We decline the majority of properties presented to us. Only those that meet our criteria for architecture, location, and quality reach our clients."
+        },
+        "relationships": {
+          "title": "Genuine Relationships",
+          "description": "We operate through relationships, not transactions. The connections we build with clients, agents, and developers are the foundation of what we do."
+        },
+        "local": {
+          "title": "Local Depth",
+          "description": "Indonesia is our home market. We have invested years understanding its cities, regulations, and communities — so our clients don't have to start from zero."
+        },
+        "confidence": {
+          "title": "Quiet Confidence",
+          "description": "We do not shout. We present clearly, advise honestly, and trust that the quality of our work speaks for itself."
+        }
+      }
+    },
+    "team": {
+      "eyebrow": "The People",
+      "title": "A small team doing considered work.",
+      "members": {
+        "henrik": {
+          "name": "Henrik Andersen",
+          "role": "Founder & Principal Advisor",
+          "bio": "Henrik has spent over twelve years working across residential property in Indonesia. He established Andersen Properties with a clear purpose: to create a property firm that operates with the same values as the clients it serves."
+        },
+        "sari": {
+          "name": "Sari Wijayanti",
+          "role": "Head of Sales, Indonesia",
+          "bio": "Sari leads our sales team across all Indonesian markets. Her deep local network and acute market knowledge have been central to our presence in both Bali and Jakarta."
+        },
+        "budi": {
+          "name": "Budi Santoso",
+          "role": "Development Advisory",
+          "bio": "With a background in architecture and ten years advising developers, Budi brings a rigorous design perspective to every development project we take on."
+        },
+        "clara": {
+          "name": "Clara Reinholt",
+          "role": "Client Relations",
+          "bio": "Clara manages the experience of every client from first contact through to transaction completion, ensuring our standard of service is consistent at every point."
+        }
+      }
+    }
+  },
+  "services-page": {
+    "hero": {
+      "eyebrow": "How We Work",
+      "title": "Property expertise, personally delivered.",
+      "description": "Four distinct services covering every aspect of property — from finding the right home to selling, developing, and searching privately."
+    },
+    "details": {
+      "what-we-cover": "What we cover",
+      "acquisition": {
+        "number": "01",
+        "title": "Property Acquisition",
+        "description": "Whether you are purchasing your first home in Indonesia or adding to an existing portfolio, our acquisition service provides end-to-end guidance. We begin with a thorough understanding of your requirements and conclude with the keys in hand.",
+        "items": [
+          "Initial brief and requirements",
+          "Market assessment and shortlisting",
+          "Private viewings and site visits",
+          "Offer strategy and negotiation",
+          "Due diligence coordination",
+          "Legal completion and handover"
+        ]
+      },
+      "sales": {
+        "number": "02",
+        "title": "Property Sales",
+        "description": "We represent a limited number of exceptional properties for sale at any one time, ensuring each receives the attention and presentation it deserves. Our approach is deliberate, targeted, and discreet.",
+        "items": [
+          "Property assessment and positioning",
+          "Architectural photography and editorial presentation",
+          "Targeted buyer outreach",
+          "Private viewings and open days",
+          "Offer management and negotiation",
+          "Transaction support through to settlement"
+        ]
+      },
+      "development": {
+        "number": "03",
+        "title": "Development Advisory",
+        "description": "We work with landowners, architects, and developers to refine the commercial and design proposition of a project from its earliest stages. Our market intelligence ensures each development is positioned for enduring success.",
+        "items": [
+          "Site assessment and feasibility",
+          "Market research and competitor analysis",
+          "Product design and unit mix advisory",
+          "Pricing strategy and revenue modelling",
+          "Sales strategy and launch planning",
+          "Ongoing sales management"
+        ]
+      },
+      "private-search": {
+        "number": "04",
+        "title": "Private Property Search",
+        "description": "A completely confidential service for clients seeking a specific type of property. We conduct a structured search across both listed and unlisted opportunities, presenting only those that genuinely meet your criteria.",
+        "items": [
+          "Private briefing and criteria definition",
+          "Structured market search",
+          "Off-market relationship outreach",
+          "Curated shortlist presentation",
+          "Coordinated viewings",
+          "Acquisition support if required"
+        ]
+      }
+    }
   }
 }

@@ -1,6 +1,9 @@
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
 export default function AboutIntro() {
+  const t = useTranslations('about-page.intro')
+
   return (
     <section className="py-[clamp(64px,8vw,100px)] bg-white">
       <PageContainer>
@@ -13,20 +16,16 @@ export default function AboutIntro() {
               fontSize: 'clamp(28px, 3.5vw, 44px)',
             }}
           >
-            A different kind of property firm.
+            {t('headline')}
           </h2>
 
           {/* Right — body copy */}
           <div>
             <p className="text-[#242424] text-[17px] leading-[1.75] font-light mb-5">
-              Andersen Properties was founded in 2013 with a straightforward belief: that the
-              property market in Indonesia deserved a firm that prioritised quality over quantity,
-              and the client&apos;s interests above its own transaction count.
+              {t('paragraph1')}
             </p>
             <p className="text-[#a5a19a] text-[15px] leading-[1.75] font-light m-0">
-              We are a small, deliberately sized team working across eight key markets in Indonesia.
-              We do not handle every type of property. We focus on the exceptional — homes defined
-              by thoughtful architecture, careful construction, and a genuine sense of place.
+              {t('paragraph2')}
             </p>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
@@ -63,7 +64,6 @@ function transformPropertyData(properties: PayloadProperty[]): Property[] {
     return {
       id: String(p.id),
       slug: p.slug || String(p.id),
-      badge: undefined, // No badge field in current schema
       name: p.title || '',
       location: p.location ? `${p.location}, ${cityName}` : cityName,
       type: typeName,
@@ -85,6 +85,7 @@ function transformPropertyData(properties: PayloadProperty[]): Property[] {
 const PROPERTIES: Property[] = [
   {
     id: '1',
+    slug: 'aruna-residence',
     badge: 'Exclusive',
     name: 'The Aruna Residence',
     location: 'Uluwatu, Bali',
@@ -93,11 +94,12 @@ const PROPERTIES: Property[] = [
     area: '620 m²',
     price: 'IDR 28.5 Billion',
     tag: 'villas',
-    href: '/active-listings/1',
+    href: '/active-listings/aruna-residence',
     image: { src: DefaultImg, alt: 'The Aruna Residence, Uluwatu, Bali' },
   },
   {
     id: '2',
+    slug: 'senopati-courtyard',
     badge: 'New',
     name: 'Senopati Courtyard House',
     location: 'South Jakarta',
@@ -106,11 +108,12 @@ const PROPERTIES: Property[] = [
     area: '380 m²',
     price: 'IDR 18.2 Billion',
     tag: 'houses',
-    href: '/active-listings/2',
+    href: '/active-listings/senopati-courtyard',
     image: { src: DefaultImg, alt: 'Senopati Courtyard House, South Jakarta' },
   },
   {
     id: '3',
+    slug: 'terraces-canggu',
     badge: 'Exclusive',
     name: 'The Terraces at Canggu',
     location: 'Canggu, Bali',
@@ -119,11 +122,12 @@ const PROPERTIES: Property[] = [
     area: '280 m²',
     price: 'Price on request',
     tag: 'villas',
-    href: '/active-listings/3',
+    href: '/active-listings/terraces-canggu',
     image: { src: DefaultImg, alt: 'The Terraces at Canggu, Canggu, Bali' },
   },
   {
     id: '4',
+    slug: 'dago-hills',
     name: 'Dago Hills Residence',
     location: 'Bandung',
     type: 'Houses',
@@ -131,11 +135,12 @@ const PROPERTIES: Property[] = [
     area: '450 m²',
     price: 'IDR 14.8 Billion',
     tag: 'houses',
-    href: '/active-listings/4',
+    href: '/active-listings/dago-hills',
     image: { src: DefaultImg, alt: 'Dago Hills Residence, Bandung' },
   },
   {
     id: '5',
+    slug: 'surabaya-garden',
     name: 'Surabaya Garden Estate',
     location: 'Surabaya',
     type: 'Houses',
@@ -143,17 +148,9 @@ const PROPERTIES: Property[] = [
     area: '780 m²',
     price: 'IDR 22.0 Billion',
     tag: 'houses',
-    href: '/active-listings/5',
+    href: '/active-listings/surabaya-garden',
     image: { src: DefaultImg, alt: 'Surabaya Garden Estate, Surabaya' },
   },
-]
-
-const FILTERS: { label: string; value: Property['tag'] }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Houses', value: 'houses' },
-  { label: 'Villas', value: 'villas' },
-  { label: 'Apartments', value: 'apartments' },
-  { label: 'Land', value: 'land' },
 ]
 
 // ── Arrow SVG (matches Figma exactly) ─────────────────────────────────────────
@@ -186,6 +183,7 @@ function PropertyCard({
   titleSize?: string
 }) {
   const [hovered, setHovered] = useState(false)
+  const t = useTranslations('home-page.featured-properties')
 
   return (
     <Link
@@ -217,7 +215,7 @@ function PropertyCard({
             className="text-white text-xs tracking-[0.16em] uppercase font-medium border-b border-white/40 pb-1 transition-transform duration-400"
             style={{ transform: hovered ? 'translateY(0)' : 'translateY(12px)' }}
           >
-            View Property
+            {t('view-property')}
           </span>
         </div>
 
@@ -266,7 +264,9 @@ function PropertyCard({
         <div className="flex gap-4 flex-wrap">
           <span className="text-[#a5a19a] text-xs">{property.type}</span>
           <span className="text-[#e5e0d7]">·</span>
-          <span className="text-[#a5a19a] text-xs">{property.beds} bed</span>
+          <span className="text-[#a5a19a] text-xs">
+            {property.beds} {t('bed')}
+          </span>
           <span className="text-[#e5e0d7]">·</span>
           <span className="text-[#a5a19a] text-xs">{property.area}</span>
         </div>
@@ -283,6 +283,8 @@ function PropertyCard({
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function HomeFeaturedProperties({ properties: cmsProperties }: Props) {
+  const t = useTranslations('home-page.featured-properties')
+
   // Use CMS data or fallback to dummy data
   const allProperties = useMemo(() => {
     if (cmsProperties.length > 0 || !ENABLE_DUMMY_FALLBACK.properties) {
@@ -292,6 +294,14 @@ export default function HomeFeaturedProperties({ properties: cmsProperties }: Pr
   }, [cmsProperties])
 
   const [activeFilter, setActiveFilter] = useState<Property['tag']>('all')
+
+  const FILTERS: { label: string; value: Property['tag'] }[] = [
+    { label: t('filters.all'), value: 'all' },
+    { label: t('filters.houses'), value: 'houses' },
+    { label: t('filters.villas'), value: 'villas' },
+    { label: t('filters.apartments'), value: 'apartments' },
+    { label: t('filters.land'), value: 'land' },
+  ]
 
   const filtered =
     activeFilter === 'all' ? allProperties : allProperties.filter((p) => p.tag === activeFilter)
@@ -305,7 +315,7 @@ export default function HomeFeaturedProperties({ properties: cmsProperties }: Pr
         <div className="flex items-end justify-between mb-12 flex-wrap gap-6">
           <div>
             <p className="text-xs tracking-[0.2em] uppercase text-primary font-medium mb-3">
-              Curated Residences
+              {t('eyebrow')}
             </p>
             <h2
               className="font-normal text-[#0a0a0a] leading-[1.1] m-0"
@@ -314,7 +324,7 @@ export default function HomeFeaturedProperties({ properties: cmsProperties }: Pr
                 fontSize: 'clamp(32px, 4vw, 52px)',
               }}
             >
-              Featured Properties
+              {t('title')}
             </h2>
           </div>
 
@@ -339,9 +349,7 @@ export default function HomeFeaturedProperties({ properties: cmsProperties }: Pr
 
         {/* ── Content ── */}
         {filtered.length === 0 ? (
-          <p className="text-[#a5a19a] text-sm py-24 text-center">
-            No properties in this category yet.
-          </p>
+          <p className="text-[#a5a19a] text-sm py-24 text-center">{t('no-properties')}</p>
         ) : (
           <>
             {/* ── Row 1: p1 (large, 4/3) + right column [p2, p3] (3/2 each) ── */}
@@ -370,7 +378,7 @@ export default function HomeFeaturedProperties({ properties: cmsProperties }: Pr
                 href="/active-listings"
                 className="text-black text-xs tracking-[0.12em] uppercase no-underline font-medium inline-flex items-center gap-2.5 border-b border-[#0a0a0a] pb-0.75 hover:opacity-60 transition-opacity duration-200"
               >
-                View All Active Listings
+                {t('view-all')}
                 <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
                   <path
                     d="M9 1L13 5M13 5L9 9M13 5H1"

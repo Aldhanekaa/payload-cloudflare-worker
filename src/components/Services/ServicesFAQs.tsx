@@ -1,38 +1,35 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
-const faqs = [
-  {
-    question: 'How does Andersen Properties select its listings?',
-    answer:
-      'Every property we represent is personally evaluated against a set of criteria covering architecture, build quality, location fundamentals, and long-term value. We only take on listings we would confidently recommend to our own network.',
-  },
-  {
-    question: 'Can you help with an off-market property search?',
-    answer:
-      'Yes. A significant portion of the properties we facilitate never appear on public listings. If you have specific requirements, our advisors can conduct a discreet search through our private network.',
-  },
-  {
-    question: 'Which locations do you currently serve?',
-    answer:
-      'We operate across eight key Indonesian markets, including Bali, Jakarta, Lombok, and Labuan Bajo, with a focus on areas experiencing sustained demand from both local and international buyers.',
-  },
-  {
-    question: 'Do you assist international buyers?',
-    answer:
-      'Absolutely. We regularly work with buyers based outside Indonesia and can guide you through foreign ownership structures, nominee arrangements, and the legal framework applicable to your situation.',
-  },
-  {
-    question: 'What support is provided during the transaction?',
-    answer:
-      'From the initial search through to handover, your dedicated advisor coordinates due diligence, legal review, notarial services, and any post-purchase requirements — so you have a single point of contact throughout.',
-  },
-]
-
 export default function ServicesFAQs() {
+  const t = useTranslations('home-page.faqs')
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const faqs = [
+    {
+      question: t('questions.select-listings.q'),
+      answer: t('questions.select-listings.a'),
+    },
+    {
+      question: t('questions.off-market.q'),
+      answer: t('questions.off-market.a'),
+    },
+    {
+      question: t('questions.locations.q'),
+      answer: t('questions.locations.a'),
+    },
+    {
+      question: t('questions.international.q'),
+      answer: t('questions.international.a'),
+    },
+    {
+      question: t('questions.support.q'),
+      answer: t('questions.support.a'),
+    },
+  ]
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index)
@@ -48,11 +45,9 @@ export default function ServicesFAQs() {
               className="font-light leading-[1.1] tracking-tight text-[#1a1a1a] m-0"
               style={{ fontSize: 'clamp(32px, 4vw, 48px)' }}
             >
-              Frequently asked.
+              {t('title')}
             </h2>
-            <p className="text-[#888] text-sm font-light leading-relaxed m-0">
-              Not finding an answer? Reach us directly for a private conversation.
-            </p>
+            <p className="text-[#888] text-sm font-light leading-relaxed m-0">{t('subtitle')}</p>
           </div>
 
           {/* Right — accordion */}

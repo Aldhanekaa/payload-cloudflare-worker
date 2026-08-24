@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import PageContainer from '../PageContainer'
 import HeroImg from '@/assets/ANDERSEN_PROPERTIES_HERO.avif'
 
@@ -23,45 +24,34 @@ type FeaturedProperty = {
   }
 }
 
-// ── Placeholder data (replace with Payload fetch) ─────────────────────────────
-
-const FEATURED: FeaturedProperty = {
-  eyebrow: 'Signature Development',
-  title: 'Andersen Residences\nNo. 01',
-  description:
-    'A limited collection of contemporary tropical homes shaped by natural materials, considered proportions, and seamless indoor–outdoor living.',
-  stats: [
-    { label: 'Location', value: 'Seminyak, Bali' },
-    { label: 'Property Type', value: 'Tropical Villa Collection' },
-    { label: 'Residences', value: '12 Exclusive Homes' },
-    { label: 'Completion', value: 'Q3 2026' },
-    { label: 'Starting Price', value: 'IDR 35 Billion' },
-  ],
-  ctaLabel: 'Explore the Development',
-  ctaHref: '/properties/andersen-residences-01',
-  image: {
-    src: HeroImg,
-    alt: 'Andersen Residences No. 01 — Seminyak, Bali',
-  },
-}
-
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function HomeSignatureDevelopment() {
+  const t = useTranslations('home-page.signature-development')
+
+  const FEATURED: FeaturedProperty = {
+    eyebrow: t('eyebrow'),
+    title: t('title'),
+    description: t('description'),
+    stats: [
+      { label: t('stats.location'), value: t('values.location') },
+      { label: t('stats.property-type'), value: t('values.property-type') },
+      { label: t('stats.residences'), value: t('values.residences') },
+      { label: t('stats.completion'), value: t('values.completion') },
+      { label: t('stats.starting-price'), value: t('values.starting-price') },
+    ],
+    ctaLabel: t('cta'),
+    ctaHref: '/properties/andersen-residences-01',
+    image: {
+      src: HeroImg,
+      alt: 'Andersen Residences No. 01 — Seminyak, Bali',
+    },
+  }
+
   const p = FEATURED
 
   return (
     <section className="bg-[#0e0e0e] overflow-hidden">
-      {/*
-        Layout strategy:
-        - PageContainer centres and pads the content as usual.
-        - Inside it we use a two-column grid: [image] [content].
-        - The image column escapes the container to the left using a
-          negative left margin equal to PageContainer's own padding,
-          so it bleeds to the viewport edge while the right (content)
-          column stays perfectly aligned with the container.
-        - On mobile: single column, image drops below (order-last).
-      */}
       <PageContainer className="py-0! px-0! sm:px-0! md:px-0!">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* ── Image — breaks out to the left ──────────────────────────── */}
@@ -74,20 +64,7 @@ export default function HomeSignatureDevelopment() {
               lg:w-[calc(50vw)]
               lg:justify-self-end
             "
-            style={
-              {
-                // On xl the container is capped at 1280px and centred.
-                // The image left edge must reach the viewport left edge,
-                // so we pull it left by (viewport - 1280px) / 2 + container-left-padding.
-                // We express this purely with Tailwind on the wrapper below.
-              }
-            }
           >
-            {/*
-              This inner wrapper is what actually bleeds.
-              On lg+ it stretches from the viewport left edge to the centre
-              of the container by using a negative left offset.
-            */}
             <div className="relative h-full w-full lg:absolute lg:inset-y-0 lg:right-0 ">
               <Image
                 src={p.image.src}

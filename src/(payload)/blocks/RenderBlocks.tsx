@@ -11,11 +11,10 @@ import { Feature2 } from '@/(payload)/blocks/Features/Feature2/Component'
 import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/Component'
 import { Steps } from '@/(payload)/blocks/Steps/Component'
 
-const blockComponents = {
+const blockComponents: Record<string, React.FC<any>> = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
-  // formBlock: FormBlock,
   mediaBlock: MediaBlock,
   feature1: Feature1,
   feature2: Feature2,
@@ -42,7 +41,6 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="" key={index} data-better-editor-id={block.id}>
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
               )

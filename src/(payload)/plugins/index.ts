@@ -13,6 +13,7 @@ import { payloadEnhancedSidebar } from '@veiag/payload-enhanced-sidebar'
 import { localization } from '@websolutespa/payload-plugin-localization'
 import { blurDataUrlsPlugin } from '@oversightstudio/blur-data-urls'
 import { fieldsSelect } from '@payload-enchants/fields-select'
+import { betterEditor } from 'payload-better-editor'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -32,6 +33,10 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 export const plugins: Plugin[] = [
   localization(),
   fieldsSelect(),
+
+  betterEditor({
+    collections: ['pages', 'posts'], // collection slugs where the toggle appears
+  }),
 
   // importExportPlugin({
   //   collections: [{ slug: 'properties' }],

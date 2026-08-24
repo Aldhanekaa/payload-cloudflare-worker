@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
 // ── Arrow SVG ──────────────────────────────────────────────────────────────────
@@ -20,78 +21,17 @@ function LearnMoreArrow() {
   )
 }
 
-// ── Service data ───────────────────────────────────────────────────────────────
-
-const services = [
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path
-          d="M4 22V12L14 4L24 12V22"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <rect x="10" y="16" width="8" height="6" stroke="currentColor" strokeWidth="1.2" />
-      </svg>
-    ),
-    title: 'Property Acquisition',
-    description:
-      'End-to-end guidance for clients purchasing property in Indonesia, from brief through to keys in hand.',
-    href: '#acquisition',
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="14" cy="14" r="10" stroke="currentColor" strokeWidth="1.2" />
-        <path d="M14 8V14L18 16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      </svg>
-    ),
-    title: 'Property Sales',
-    description: 'A deliberate, targeted approach to representing exceptional properties for sale.',
-    href: '#sales',
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <path
-          d="M4 24L4 16M10 24V12M16 24V8M22 24V4"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-        />
-      </svg>
-    ),
-    title: 'Development Advisory',
-    description:
-      'Market intelligence and design thinking for developers at every stage of a project.',
-    href: '#development',
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.2" />
-        <path d="M18 18L24 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      </svg>
-    ),
-    title: 'Private Property Search',
-    description:
-      'A confidential service for clients seeking specific properties, including off-market opportunities.',
-    href: '#private-search',
-  },
-]
-
 // ── Service card ───────────────────────────────────────────────────────────────
 
 function ServiceCard({
   service,
   hasBorderLeft,
 }: {
-  service: (typeof services)[0]
+  service: { icon: React.ReactNode; title: string; description: string; href: string }
   hasBorderLeft: boolean
 }) {
   const [hovered, setHovered] = useState(false)
+  const t = useTranslations('home-page.expertise')
 
   return (
     <div
@@ -122,7 +62,7 @@ function ServiceCard({
         href={service.href}
         className="text-[#b89a5b] text-[11px] tracking-widest uppercase no-underline font-medium inline-flex items-center gap-1.5 hover:gap-3 transition-all duration-200"
       >
-        Learn more
+        {t('learn-more')}
         <LearnMoreArrow />
       </Link>
     </div>
@@ -132,13 +72,72 @@ function ServiceCard({
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function ServicesExpertise() {
+  const t = useTranslations('home-page.expertise')
+
+  const services = [
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path
+            d="M4 22V12L14 4L24 12V22"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <rect x="10" y="16" width="8" height="6" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+      ),
+      title: t('services.acquisition.title'),
+      description: t('services.acquisition.description'),
+      href: '#acquisition',
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle cx="14" cy="14" r="10" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M14 8V14L18 16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      ),
+      title: t('services.sales.title'),
+      description: t('services.sales.description'),
+      href: '#sales',
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path
+            d="M4 24L4 16M10 24V12M16 24V8M22 24V4"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+        </svg>
+      ),
+      title: t('services.development.title'),
+      description: t('services.development.description'),
+      href: '#development',
+    },
+    {
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M18 18L24 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+      ),
+      title: t('services.private-search.title'),
+      description: t('services.private-search.description'),
+      href: '#private-search',
+    },
+  ]
+
   return (
     <section id="services" className="bg-[#f7f5f0] py-[clamp(80px,10vw,140px)]">
       <PageContainer>
         {/* Header */}
         <div className="mb-16">
           <p className="text-[10px] tracking-[0.22em] uppercase text-[#b89a5b] font-medium mb-3">
-            How We Can Help
+            {t('eyebrow')}
           </p>
           <h2
             className="font-normal text-[#0a0a0a] leading-[1.1] max-w-130 m-0"
@@ -147,7 +146,7 @@ export default function ServicesExpertise() {
               fontSize: 'clamp(32px, 4vw, 52px)',
             }}
           >
-            Property expertise, personally delivered.
+            {t('title')}
           </h2>
         </div>
 

@@ -34,24 +34,11 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { LiveEditorToggle as LiveEditorToggle_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
 import { default as default_622ee6d751a3251c92e383ed88de1c86 } from '@shefing/right-panel/components/RightPanelEditView'
 import { ColorPickerFieldComponent as ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912 } from '@/(payload)/plugins/colorPicker/component'
-import { ExportListMenuItem as ExportListMenuItem_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { ImportListMenuItem as ImportListMenuItem_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { FormatField as FormatField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { LimitField as LimitField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { Page as Page_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { SortBy as SortBy_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { SortOrder as SortOrder_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { LocaleField as LocaleField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { SelectionToUseField as SelectionToUseField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { FieldsToExport as FieldsToExport_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { CollectionField as CollectionField_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { ExportPreview as ExportPreview_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { ExportSaveButton as ExportSaveButton_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { ImportPreview as ImportPreview_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
-import { ImportSaveButton as ImportSaveButton_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
+import { SettingsBanner as SettingsBanner_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
 import { EnhancedSidebar as EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371 } from '@veiag/payload-enhanced-sidebar/rsc'
 import { default as default_5c0c2f026d3023312882037f7709f993 } from '@/components/(payload)/Header'
 import { default as default_008e8b984045f6649ae74d03500fd9b7 } from '@/components/(payload)/LogoutButton'
@@ -67,7 +54,6 @@ import { default as default_c64e2174c8c61abf1fbe1bf33f178119 } from '@/component
 import { default as default_e650e8609dbac1c8b72807e18d8357a8 } from '@/components/(payload)/BeforeLogin'
 import { default as default_33ad075e6e3ab2baffd40c94b68d8565 } from '@/components/(payload)/BeforeNavLinks'
 import { InternalBadgeProvider as InternalBadgeProvider_bb20d92177fcc2ccf9f674de15933324 } from '@veiag/payload-enhanced-sidebar/client'
-import { ImportExportProvider as ImportExportProvider_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
 import { CustomContextProvider as CustomContextProvider_eb973206959ea065377b1af967827871 } from '@shefing/right-panel/providers/CustomContext'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -110,24 +96,11 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  "payload-better-editor/client#LiveEditorToggle": LiveEditorToggle_d26de2934fab2f5e50b16fb3e402473a,
   "@shefing/right-panel/components/RightPanelEditView#default": default_622ee6d751a3251c92e383ed88de1c86,
   "@/(payload)/plugins/colorPicker/component#ColorPickerFieldComponent": ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912,
-  "@payloadcms/plugin-import-export/rsc#ExportListMenuItem": ExportListMenuItem_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#ImportListMenuItem": ImportListMenuItem_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#FormatField": FormatField_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#LimitField": LimitField_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#Page": Page_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#SortBy": SortBy_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#SortOrder": SortOrder_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#LocaleField": LocaleField_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#SelectionToUseField": SelectionToUseField_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#FieldsToExport": FieldsToExport_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#CollectionField": CollectionField_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#ExportPreview": ExportPreview_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#ExportSaveButton": ExportSaveButton_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#ImportPreview": ImportPreview_cdf7e044479f899a31f804427d568b36,
-  "@payloadcms/plugin-import-export/rsc#ImportSaveButton": ImportSaveButton_cdf7e044479f899a31f804427d568b36,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
+  "payload-better-editor/client#SettingsBanner": SettingsBanner_d26de2934fab2f5e50b16fb3e402473a,
   "@veiag/payload-enhanced-sidebar/rsc#EnhancedSidebar": EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371,
   "@/components/(payload)/Header#default": default_5c0c2f026d3023312882037f7709f993,
   "@/components/(payload)/LogoutButton#default": default_008e8b984045f6649ae74d03500fd9b7,
@@ -143,7 +116,6 @@ export const importMap = {
   "@/components/(payload)/BeforeLogin#default": default_e650e8609dbac1c8b72807e18d8357a8,
   "@/components/(payload)/BeforeNavLinks#default": default_33ad075e6e3ab2baffd40c94b68d8565,
   "@veiag/payload-enhanced-sidebar/client#InternalBadgeProvider": InternalBadgeProvider_bb20d92177fcc2ccf9f674de15933324,
-  "@payloadcms/plugin-import-export/rsc#ImportExportProvider": ImportExportProvider_cdf7e044479f899a31f804427d568b36,
   "@shefing/right-panel/providers/CustomContext#CustomContextProvider": CustomContextProvider_eb973206959ea065377b1af967827871,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1

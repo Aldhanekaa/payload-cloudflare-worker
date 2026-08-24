@@ -1,13 +1,16 @@
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
-const stats = [
-  { value: '12+', label: 'Years of Local Insight' },
-  { value: '150+', label: 'Selected Properties' },
-  { value: '8', label: 'Key Indonesian Markets' },
-]
-
 export default function HomeAboutAndersenProperties() {
+  const t = useTranslations('home-page.about')
+
+  const stats = [
+    { value: '12+', label: t('stats.years') },
+    { value: '150+', label: t('stats.properties') },
+    { value: '8', label: t('stats.markets') },
+  ]
+
   return (
     <section className="bg-[#f5f2eb] py-20 md:py-28">
       <PageContainer>
@@ -16,21 +19,20 @@ export default function HomeAboutAndersenProperties() {
           {/* Left — headline */}
           <div>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-[#1a1a1a] m-0">
-              Property is more than an address.
+              {t('headline')}
             </h2>
           </div>
 
           {/* Right — description + CTA */}
           <div className="flex flex-col justify-center gap-6">
             <p className="text-[#555] text-sm sm:text-base font-light leading-relaxed m-0">
-              Andersen Properties connects discerning clients with residences defined by thoughtful
-              architecture, enduring quality, and a genuine sense of place.
+              {t('description')}
             </p>
             <Link
               href="/about"
               className="inline-flex items-center gap-2 text-[#a8894a] text-[11px] tracking-[0.2em] uppercase font-medium no-underline hover:opacity-70 transition-opacity duration-200 w-fit"
             >
-              Discover Our Approach <span aria-hidden="true">→</span>
+              {t('cta')} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

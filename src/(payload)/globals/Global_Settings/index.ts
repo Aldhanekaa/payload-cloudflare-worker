@@ -1,0 +1,5 @@
+export { GlobalSettings } from './config'
+export type { GlobalSettings as GlobalSettingsType, WhatsAppContact, Announcement } from './types'
+export { getWhatsAppUrl, getActiveAnnouncements, sortAnnouncementsByPriority } from './types'
+export { useGlobalSettings } from './useGlobalSettings'
+export { getGlobalSettings, getWhatsAppContact, getScheduleConsultationLink } from './server'

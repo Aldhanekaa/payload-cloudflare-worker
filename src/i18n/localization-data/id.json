@@ -206,12 +206,308 @@
     "twitter-creator": "@indonesiafirstrobotik"
   },
   "home-page": {
-    "hero-title": "Indonesia FIRST Robotik",
-    "hero-subtitle": "Rumah bagi robotika FIRST® remaja Indonesia.",
-    "impacts-heading": "Menginspirasi Generasi Warga Global",
-    "impacts-subheading": "dan membantu mereka menyadari kekuatan mereka untuk membangun masa depan yang lebih baik",
-    "impacts-description": "Saat kami bekerja sebagai komunitas untuk mempersiapkan kaum muda untuk masa depan STEM, FIRST bertujuan memastikan program-programnya memberikan dampak positif yang berkelanjutan bagi peserta dari semua kelompok demografis. Studi longitudinal multi-tahun kami yang ketat, yang dilakukan oleh Brandeis University Center for Youth and Communities, memberikan bukti kuat bahwa partisipasi dalam FIRST melakukan hal itu. Bahkan hanya dengan satu tahun partisipasi FIRST, peserta studi 2-3 kali lebih mungkin mendapatkan kemajuan dalam hasil STEM dibandingkan kelompok teman sebaya yang tidak berpartisipasi dalam FIRST.",
-    "impacts-cta": "temukan fakta lainnya",
-    "featured-blogs-read-more": "Baca Selengkapnya"
+    "hero": {
+      "eyebrow": "Andersen Properties · Indonesia",
+      "title": "Properti luar biasa, dipertimbangkan seumur hidup.",
+      "subtitle": "Temukan hunian khas dan pengembangan yang dirancang dengan cermat yang dipilih karena arsitektur, lokasi, dan nilai tahan lamanya.",
+      "cta-primary": "Jelajahi Properti",
+      "cta-secondary": "Berbicara dengan Penasihat",
+      "scroll-indicator": "Gulir untuk menemukan"
+    },
+    "about": {
+      "headline": "Properti lebih dari sekadar alamat.",
+      "description": "Andersen Properties menghubungkan klien yang cerdas dengan hunian yang ditentukan oleh arsitektur yang bijaksana, kualitas tahan lama, dan rasa tempat yang autentik.",
+      "cta": "Temukan Pendekatan Kami",
+      "stats": {
+        "years": "Tahun Wawasan Lokal",
+        "properties": "Properti Terpilih",
+        "markets": "Pasar Utama Indonesia"
+      }
+    },
+    "featured-properties": {
+      "eyebrow": "Hunian Kurasi",
+      "title": "Properti Unggulan",
+      "filters": {
+        "all": "Semua",
+        "houses": "Rumah",
+        "villas": "Villa",
+        "apartments": "Apartemen",
+        "land": "Tanah"
+      },
+      "view-property": "Lihat Properti",
+      "bed": "kamar",
+      "no-properties": "Belum ada properti dalam kategori ini.",
+      "view-all": "Lihat Semua Listing Aktif"
+    },
+    "signature-development": {
+      "eyebrow": "Pengembangan Unggulan",
+      "title": "Andersen Residences\nNo. 01",
+      "description": "Koleksi terbatas rumah tropis kontemporer yang dibentuk oleh bahan alami, proporsi yang dipertimbangkan, dan kehidupan indoor-outdoor yang mulus.",
+      "stats": {
+        "location": "Lokasi",
+        "property-type": "Jenis Properti",
+        "residences": "Hunian",
+        "completion": "Penyelesaian",
+        "starting-price": "Harga Mulai"
+      },
+      "values": {
+        "location": "Seminyak, Bali",
+        "property-type": "Koleksi Villa Tropis",
+        "residences": "12 Rumah Eksklusif",
+        "completion": "Q3 2026",
+        "starting-price": "IDR 35 Miliar"
+      },
+      "cta": "Jelajahi Pengembangan"
+    },
+    "expertise": {
+      "eyebrow": "Bagaimana Kami Dapat Membantu",
+      "title": "Keahlian properti, diberikan secara pribadi.",
+      "services": {
+        "acquisition": {
+          "title": "Akuisisi Properti",
+          "description": "Panduan end-to-end untuk klien yang membeli properti di Indonesia, dari brief hingga kunci di tangan."
+        },
+        "sales": {
+          "title": "Penjualan Properti",
+          "description": "Pendekatan yang disengaja dan terarah untuk mewakili properti luar biasa untuk dijual."
+        },
+        "development": {
+          "title": "Penasihat Pengembangan",
+          "description": "Intelijen pasar dan pemikiran desain untuk pengembang di setiap tahap proyek."
+        },
+        "private-search": {
+          "title": "Pencarian Properti Pribadi",
+          "description": "Layanan rahasia untuk klien yang mencari properti spesifik, termasuk peluang off-market."
+        }
+      },
+      "learn-more": "Pelajari lebih lanjut"
+    },
+    "consideration-steps": {
+      "title": "Dipertimbangkan di setiap langkah.",
+      "steps": {
+        "curated": {
+          "title": "Kurasi dengan Hati-hati",
+          "description": "Kami memilih properti berdasarkan arsitektur, kualitas, lokasi, kelayakan huni, dan relevansi jangka panjang."
+        },
+        "intelligence": {
+          "title": "Intelijen Lokal",
+          "description": "Pemahaman pasar yang didukung oleh hubungan bermakna di seluruh Indonesia."
+        },
+        "service": {
+          "title": "Layanan Diskrit",
+          "description": "Pengalaman pribadi dan personal yang dirancang sesuai prioritas setiap klien."
+        },
+        "value": {
+          "title": "Nilai Tahan Lama",
+          "description": "Panduan yang mempertimbangkan nilai emosional dan finansial dari sebuah properti."
+        }
+      }
+    },
+    "places": {
+      "title": "Temukan tempat Anda di Indonesia.",
+      "properties": "properti",
+      "explore-location": "Jelajahi lokasi",
+      "dummy": {
+        "bali": "Modernisme tropis, kedalaman budaya, dan pasar properti mewah yang berkembang.",
+        "jakarta": "Ibu kota Indonesia: alamat bergengsi, inovasi arsitektur, dan pengembalian investasi yang kuat.",
+        "bandung": "Kehidupan dataran tinggi yang sejuk dengan komunitas desain yang mapan dan karakter hunian luar biasa.",
+        "surabaya": "Pusat bisnis Jawa Timur — pasar yang berkembang untuk hunian urban dan suburban yang halus.",
+        "lombok": "Kehidupan pesisir yang tenang, pengaturan alami yang luar biasa, dan pengembangan kelas dunia yang berkembang."
+      }
+    },
+    "testimonial": {
+      "quote": "Andersen memahami bahwa kami tidak hanya mencari rumah. Kami mencari tempat yang terasa tepat untuk cara hidup keluarga kami.",
+      "attribution": "Klien Pribadi, Jakarta",
+      "cta": "Baca Cerita Klien"
+    },
+    "path": {
+      "title": "Jalur yang jelas menuju properti yang tepat.",
+      "steps": {
+        "understand": {
+          "title": "Memahami",
+          "description": "Kami mulai dengan tujuan, gaya hidup, lokasi, dan prioritas investasi Anda."
+        },
+        "curate": {
+          "title": "Kurasi",
+          "description": "Kami menyiapkan pilihan peluang yang sesuai dan fokus."
+        },
+        "experience": {
+          "title": "Pengalaman",
+          "description": "Kami mengatur kunjungan pribadi dan memberikan wawasan properti yang jelas."
+        },
+        "complete": {
+          "title": "Menyelesaikan",
+          "description": "Kami mendukung negosiasi, uji tuntas, dan transaksi yang lancar."
+        }
+      }
+    },
+    "journal": {
+      "eyebrow": "Jurnal",
+      "title": "Perspektif tentang\nproperti dan tempat.",
+      "view-all": "Lihat Semua Wawasan",
+      "no-posts": "Belum ada wawasan yang dipublikasikan. Periksa kembali segera!",
+      "read-time": "menit baca",
+      "categories": {
+        "architecture": "Arsitektur",
+        "market-insight": "Wawasan Pasar",
+        "buyers-guide": "Panduan Pembeli",
+        "design": "Desain",
+        "lifestyle": "Gaya Hidup"
+      }
+    },
+    "faqs": {
+      "title": "Pertanyaan yang sering diajukan.",
+      "subtitle": "Tidak menemukan jawaban? Hubungi kami secara langsung untuk percakapan pribadi.",
+      "questions": {
+        "select-listings": {
+          "q": "Bagaimana Andersen Properties memilih listingnya?",
+          "a": "Setiap properti yang kami wakili dievaluasi secara pribadi berdasarkan serangkaian kriteria yang mencakup arsitektur, kualitas bangunan, dasar lokasi, dan nilai jangka panjang. Kami hanya mengambil listing yang kami rekomendasikan dengan percaya diri kepada jaringan kami sendiri."
+        },
+        "off-market": {
+          "q": "Bisakah Anda membantu dengan pencarian properti off-market?",
+          "a": "Ya. Sebagian besar properti yang kami fasilitasi tidak pernah muncul di listing publik. Jika Anda memiliki persyaratan khusus, penasihat kami dapat melakukan pencarian rahasia melalui jaringan pribadi kami."
+        },
+        "locations": {
+          "q": "Lokasi mana yang saat ini Anda layani?",
+          "a": "Kami beroperasi di delapan pasar utama Indonesia, termasuk Bali, Jakarta, Lombok, dan Labuan Bajo, dengan fokus pada area yang mengalami permintaan berkelanjutan dari pembeli lokal dan internasional."
+        },
+        "international": {
+          "q": "Apakah Anda membantu pembeli internasional?",
+          "a": "Tentu saja. Kami secara teratur bekerja dengan pembeli yang berbasis di luar Indonesia dan dapat memandu Anda melalui struktur kepemilikan asing, pengaturan nominee, dan kerangka hukum yang berlaku untuk situasi Anda."
+        },
+        "support": {
+          "q": "Dukungan apa yang diberikan selama transaksi?",
+          "a": "Dari pencarian awal hingga serah terima, penasihat khusus Anda mengkoordinasikan uji tuntas, tinjauan hukum, layanan notaris, dan persyaratan pasca-pembelian apa pun — jadi Anda memiliki satu titik kontak sepanjang proses."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Mulai percakapan",
+      "title": "Mari temukan properti yang terasa khas milik Anda.",
+      "subtitle": "Bagikan apa yang Anda cari dan mulai percakapan pribadi dengan penasihat properti Andersen.",
+      "cta-primary": "Jadwalkan Konsultasi",
+      "cta-secondary": "Hubungi via WhatsApp"
+    }
+  },
+  "about-page": {
+    "hero": {
+      "eyebrow": "Cerita Kami",
+      "title": "Dibangun atas saran yang dipertimbangkan dan kepercayaan yang diraih."
+    },
+    "intro": {
+      "headline": "Perusahaan properti yang berbeda.",
+      "paragraph1": "Andersen Properties didirikan pada tahun 2013 dengan keyakinan sederhana: bahwa pasar properti di Indonesia layak mendapatkan perusahaan yang memprioritaskan kualitas daripada kuantitas, dan kepentingan klien di atas jumlah transaksinya sendiri.",
+      "paragraph2": "Kami adalah tim kecil yang bekerja dengan sengaja di delapan pasar utama di Indonesia. Kami tidak menangani semua jenis properti. Kami fokus pada yang luar biasa — rumah yang ditentukan oleh arsitektur yang bijaksana, konstruksi yang hati-hati, dan rasa tempat yang autentik."
+    },
+    "principles": {
+      "eyebrow": "Apa yang Kami Perjuangkan",
+      "title": "Empat prinsip yang membentuk segalanya.",
+      "items": {
+        "curation": {
+          "title": "Kurasi yang Ketat",
+          "description": "Kami menolak sebagian besar properti yang ditawarkan kepada kami. Hanya yang memenuhi kriteria kami untuk arsitektur, lokasi, dan kualitas yang sampai ke klien kami."
+        },
+        "relationships": {
+          "title": "Hubungan yang Tulus",
+          "description": "Kami beroperasi melalui hubungan, bukan transaksi. Koneksi yang kami bangun dengan klien, agen, dan pengembang adalah fondasi dari apa yang kami lakukan."
+        },
+        "local": {
+          "title": "Kedalaman Lokal",
+          "description": "Indonesia adalah pasar rumah kami. Kami telah menginvestasikan tahun-tahun untuk memahami kota, regulasi, dan komunitasnya — sehingga klien kami tidak perlu memulai dari nol."
+        },
+        "confidence": {
+          "title": "Kepercayaan yang Tenang",
+          "description": "Kami tidak berteriak. Kami menyajikan dengan jelas, memberi nasihat dengan jujur, dan percaya bahwa kualitas pekerjaan kami berbicara sendiri."
+        }
+      }
+    },
+    "team": {
+      "eyebrow": "Orang-Orang",
+      "title": "Tim kecil yang melakukan pekerjaan yang dipertimbangkan.",
+      "members": {
+        "henrik": {
+          "name": "Henrik Andersen",
+          "role": "Pendiri & Penasihat Utama",
+          "bio": "Henrik telah menghabiskan lebih dari dua belas tahun bekerja di properti residensial di Indonesia. Dia mendirikan Andersen Properties dengan tujuan yang jelas: untuk menciptakan perusahaan properti yang beroperasi dengan nilai yang sama dengan klien yang dilayaninya."
+        },
+        "sari": {
+          "name": "Sari Wijayanti",
+          "role": "Kepala Penjualan, Indonesia",
+          "bio": "Sari memimpin tim penjualan kami di semua pasar Indonesia. Jaringan lokalnya yang dalam dan pengetahuan pasar yang tajam telah menjadi pusat kehadiran kami di Bali dan Jakarta."
+        },
+        "budi": {
+          "name": "Budi Santoso",
+          "role": "Penasihat Pengembangan",
+          "bio": "Dengan latar belakang arsitektur dan sepuluh tahun memberi nasihat kepada pengembang, Budi membawa perspektif desain yang ketat ke setiap proyek pengembangan yang kami ambil."
+        },
+        "clara": {
+          "name": "Clara Reinholt",
+          "role": "Hubungan Klien",
+          "bio": "Clara mengelola pengalaman setiap klien dari kontak pertama hingga penyelesaian transaksi, memastikan standar layanan kami konsisten di setiap titik."
+        }
+      }
+    }
+  },
+  "services-page": {
+    "hero": {
+      "eyebrow": "Cara Kami Bekerja",
+      "title": "Keahlian properti, diberikan secara pribadi.",
+      "description": "Empat layanan berbeda yang mencakup setiap aspek properti — dari menemukan rumah yang tepat hingga menjual, mengembangkan, dan mencari secara pribadi."
+    },
+    "details": {
+      "what-we-cover": "Apa yang kami cover",
+      "acquisition": {
+        "number": "01",
+        "title": "Akuisisi Properti",
+        "description": "Baik Anda membeli rumah pertama Anda di Indonesia atau menambah portofolio yang sudah ada, layanan akuisisi kami menyediakan panduan end-to-end. Kami mulai dengan pemahaman menyeluruh tentang persyaratan Anda dan menyimpulkan dengan kunci di tangan.",
+        "items": [
+          "Brief awal dan persyaratan",
+          "Penilaian pasar dan daftar pendek",
+          "Kunjungan pribadi dan kunjungan lokasi",
+          "Strategi penawaran dan negosiasi",
+          "Koordinasi uji tuntas",
+          "Penyelesaian hukum dan serah terima"
+        ]
+      },
+      "sales": {
+        "number": "02",
+        "title": "Penjualan Properti",
+        "description": "Kami mewakili sejumlah properti luar biasa terbatas untuk dijual pada satu waktu, memastikan masing-masing menerima perhatian dan presentasi yang layak. Pendekatan kami disengaja, ditargetkan, dan diskrit.",
+        "items": [
+          "Penilaian dan positioning properti",
+          "Fotografi arsitektur dan presentasi editorial",
+          "Penjangkauan pembeli yang ditargetkan",
+          "Kunjungan pribadi dan hari terbuka",
+          "Manajemen penawaran dan negosiasi",
+          "Dukungan transaksi hingga penyelesaian"
+        ]
+      },
+      "development": {
+        "number": "03",
+        "title": "Penasihat Pengembangan",
+        "description": "Kami bekerja dengan pemilik tanah, arsitek, dan pengembang untuk menyempurnakan proposisi komersial dan desain proyek dari tahap paling awal. Intelijen pasar kami memastikan setiap pengembangan diposisikan untuk kesuksesan yang berkelanjutan.",
+        "items": [
+          "Penilaian lokasi dan kelayakan",
+          "Riset pasar dan analisis kompetitor",
+          "Desain produk dan penasihat unit mix",
+          "Strategi harga dan pemodelan pendapatan",
+          "Strategi penjualan dan perencanaan peluncuran",
+          "Manajemen penjualan berkelanjutan"
+        ]
+      },
+      "private-search": {
+        "number": "04",
+        "title": "Pencarian Properti Pribadi",
+        "description": "Layanan yang sepenuhnya rahasia untuk klien yang mencari jenis properti tertentu. Kami melakukan pencarian terstruktur di seluruh peluang yang terdaftar dan tidak terdaftar, hanya menyajikan yang benar-benar memenuhi kriteria Anda.",
+        "items": [
+          "Briefing pribadi dan definisi kriteria",
+          "Pencarian pasar terstruktur",
+          "Penjangkauan hubungan off-market",
+          "Presentasi daftar pendek yang dikurasi",
+          "Kunjungan terkoordinasi",
+          "Dukungan akuisisi jika diperlukan"
+        ]
+      }
+    }
   }
 }

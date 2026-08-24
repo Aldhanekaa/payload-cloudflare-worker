@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
@@ -28,19 +29,13 @@ type Props = {
 
 // ── Transform CMS data to component format ─────────────────────────────────
 
-function transformPostData(posts: Post[]): JournalPost[] {
+function transformPostData(posts: Post[], t: any): JournalPost[] {
   return posts.map((post) => {
     const heroImageData = typeof post.heroImage === 'object' ? (post.heroImage as Media) : null
 
-    // Format category
-    const categoryMap: Record<string, string> = {
-      architecture: 'Architecture',
-      'market-insight': 'Market Insight',
-      'buyers-guide': "Buyer's Guide",
-      design: 'Design',
-      lifestyle: 'Lifestyle',
-    }
-    const category = categoryMap[post.category] || post.category
+    // Format category with translation
+    const categoryKey = `categories.${post.category}` as const
+    const category = t(categoryKey, { default: post.category })
 
     // Format date
     const formatDate = (dateString: string | undefined) => {
@@ -49,11 +44,14 @@ function transformPostData(posts: Post[]): JournalPost[] {
       return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
     }
 
+    // Format read time
+    const readTime = post.readTime ? `${post.readTime} ${t('read-time')}` : `5 ${t('read-time')}`
+
     return {
       category,
       date: formatDate(post.publishedAt),
       title: post.title,
-      readTime: post.readTime || '5 min read',
+      readTime,
       href: `/insights/${post.slug}`,
       image: {
         src: heroImageData?.url || DefaultImg,
@@ -95,13 +93,15 @@ const POSTS: JournalPost[] = [
 // ── Component ──────────────────────────────────────────────────────────────────
 
 export default function HomeJournalSection({ posts: cmsPosts }: Props) {
+  const t = useTranslations('home-page.journal')
+
   // Use CMS data or fallback to dummy data
   const journalPosts = useMemo(() => {
     if (cmsPosts.length > 0 || !ENABLE_DUMMY_FALLBACK.posts) {
-      return transformPostData(cmsPosts)
+      return transformPostData(cmsPosts, t)
     }
     return POSTS
-  }, [cmsPosts])
+  }, [cmsPosts, t])
 
   return (
     <section className="bg-white py-20 md:py-28">
@@ -109,11 +109,11 @@ export default function HomeJournalSection({ posts: cmsPosts }: Props) {
         {/* Header row */}
         <div className="flex items-end justify-between mb-10 md:mb-14">
           <div>
-            <p className="text-[#c8b97a] text-[10px] tracking-[0.25em] uppercase mb-3">Journal</p>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-[#1a1a1a] m-0">
-              Perspectives on
-              <br />
-              property and place.
+            <p className="text-[#c8b97a] text-[10px] tracking-[0.25em] uppercase mb-3">
+              {t('eyebrow')}
+            </p>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-[#1a1a1a] m-0 whitespace-pre-line">
+              {t('title')}
             </h2>
           </div>
 
@@ -121,15 +121,13 @@ export default function HomeJournalSection({ posts: cmsPosts }: Props) {
             href="/insights"
             className="hidden md:inline-flex items-center gap-2 text-[#1a1a1a] text-[10px] tracking-[0.2em] uppercase font-medium no-underline hover:opacity-60 transition-opacity duration-200 shrink-0 mb-2"
           >
-            View All Insights <span aria-hidden="true">→</span>
+            {t('view-all')} <span aria-hidden="true">→</span>
           </Link>
         </div>
 
         {/* Cards grid */}
         {journalPosts.length === 0 ? (
-          <p className="text-[#a5a19a] text-sm py-24 text-center">
-            No insights published yet. Check back soon!
-          </p>
+          <p className="text-[#a5a19a] text-sm py-24 text-center">{t('no-posts')}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-12">
             {journalPosts.map((post) => (
@@ -176,7 +174,7 @@ export default function HomeJournalSection({ posts: cmsPosts }: Props) {
             href="/insights"
             className="inline-flex items-center gap-2 text-[#1a1a1a] text-[10px] tracking-[0.2em] uppercase font-medium no-underline hover:opacity-60 transition-opacity duration-200"
           >
-            View All Insights <span aria-hidden="true">→</span>
+            {t('view-all')} <span aria-hidden="true">→</span>
           </Link>
         </div>
       </PageContainer>

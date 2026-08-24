@@ -24,6 +24,7 @@ import { Feature2 } from '@/(payload)/blocks/Features/Feature2/config'
 import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/config'
 import { Steps } from '@/(payload)/blocks/Steps/config'
 import { colorPickerField } from '@/(payload)/plugins/colorPicker'
+import { FormBlock } from '@/(payload)/fields/Form'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -88,6 +89,7 @@ export const Pages: CollectionConfig<'pages'> = {
               name: 'layout',
               type: 'blocks',
               blocks: [
+                FormBlock,
                 CallToAction,
                 Content,
                 MediaBlock,

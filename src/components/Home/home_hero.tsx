@@ -1,8 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import HeroImg from '@/assets/ANDERSEN_PROPERTIES_HERO.avif'
 
 export default function HomePageHero() {
+  const t = useTranslations('home-page.hero')
+
   return (
     <section className="relative h-screen min-h-150 overflow-hidden bg-black">
       {/* Background image */}
@@ -22,7 +25,7 @@ export default function HomePageHero() {
       <div className="relative z-10 max-w-360 mx-auto px-5 md:px-20 pt-20 h-full flex flex-col justify-center">
         {/* Eyebrow */}
         <p className="text-primary text-[11px] tracking-[0.22em] uppercase font-medium mb-6">
-          Andersen Properties · Indonesia
+          {t('eyebrow')}
         </p>
 
         {/* Headline */}
@@ -30,13 +33,12 @@ export default function HomePageHero() {
           className="text-white font-normal leading-[1.08] tracking-[-0.01em] max-w-170 mb-7 mt-0"
           style={{ fontSize: 'clamp(44px, 6vw, 80px)' }}
         >
-          Exceptional properties, considered for life.
+          {t('title')}
         </h1>
 
         {/* Subheading */}
         <p className="text-white/72 text-base leading-[1.7] max-w-110 mb-11 font-light">
-          Discover distinctive residences and thoughtfully designed developments selected for their
-          architecture, location, and lasting value.
+          {t('subtitle')}
         </p>
 
         {/* CTAs */}
@@ -45,13 +47,13 @@ export default function HomePageHero() {
             href="/active-listings"
             className="inline-block bg-primary text-[#0a0a0a] text-[11px] tracking-[0.14em] font-semibold py-3.5 px-8 no-underline uppercase hover:bg-primary-400 transition-colors duration-200"
           >
-            Explore Properties
+            {t('cta-primary')}
           </Link>
           <Link
             href="/services"
             className="inline-block border border-white/40 text-white text-[11px] tracking-[0.14em] font-medium py-3.5 px-8 no-underline uppercase hover:border-white/70 transition-colors duration-200"
           >
-            Speak With an Advisor
+            {t('cta-secondary')}
           </Link>
         </div>
       </div>
@@ -63,7 +65,7 @@ export default function HomePageHero() {
           <div className="absolute left-0 w-full bg-primary animate-scroll-down" />
         </div>
         <span className="text-white/40 text-[10px] tracking-[0.18em] uppercase">
-          Scroll to discover
+          {t('scroll-indicator')}
         </span>
       </div>
     </section>

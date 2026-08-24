@@ -1,29 +1,32 @@
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
-const steps = [
-  {
-    number: '01',
-    title: 'Understand',
-    description: 'We begin with your goals, lifestyle, location, and investment priorities.',
-  },
-  {
-    number: '02',
-    title: 'Curate',
-    description: 'We prepare a focused selection of suitable opportunities.',
-  },
-  {
-    number: '03',
-    title: 'Experience',
-    description: 'We arrange private viewings and provide clear property insight.',
-  },
-  {
-    number: '04',
-    title: 'Complete',
-    description: 'We support negotiation, due diligence, and a smooth transaction.',
-  },
-]
-
 export default function ServicesPath() {
+  const t = useTranslations('home-page.path')
+
+  const steps = [
+    {
+      number: '01',
+      title: t('steps.understand.title'),
+      description: t('steps.understand.description'),
+    },
+    {
+      number: '02',
+      title: t('steps.curate.title'),
+      description: t('steps.curate.description'),
+    },
+    {
+      number: '03',
+      title: t('steps.experience.title'),
+      description: t('steps.experience.description'),
+    },
+    {
+      number: '04',
+      title: t('steps.complete.title'),
+      description: t('steps.complete.description'),
+    },
+  ]
+
   return (
     <section className="bg-[#f7f5f0] py-[clamp(80px,10vw,140px)]">
       <PageContainer>
@@ -36,7 +39,7 @@ export default function ServicesPath() {
               fontSize: 'clamp(32px, 4vw, 52px)',
             }}
           >
-            A clear path to the right property.
+            {t('title')}
           </h2>
         </div>
 

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { City, Media } from '@/payload-types'
@@ -78,18 +79,25 @@ const PLACES: Place[] = [
 
 // ── Transform CMS data to component format ─────────────────────────────────
 
-function transformCityData(cities: City[]): Place[] {
+function transformCityData(cities: City[], t: any): Place[] {
   return cities.map((city) => {
     const mediaData = typeof city.media === 'object' ? (city.media as Media) : null
 
     // Count properties from join field
     const propertyCount = Array.isArray(city.properties) ? city.properties.length : 0
 
+    // Get dummy description based on city name if available
+    const cityNameLower = city.name.toLowerCase()
+    const dummyDescKey = `dummy.${cityNameLower}` as const
+    const description = t(dummyDescKey, {
+      default: `Explore ${propertyCount} curated ${t('properties')} in ${city.name}.`,
+    })
+
     return {
       name: city.name,
       properties: propertyCount,
-      description: `Explore ${propertyCount} curated properties in ${city.name}.`,
-      href: `/locations/${city.name.toLowerCase()}`,
+      description,
+      href: `/locations/${cityNameLower}`,
       imageUrl: mediaData?.url || '',
       imageAlt: `${city.name}, ${city.country || 'Indonesia'}`,
     }
@@ -116,6 +124,7 @@ function ArrowIcon() {
 
 function PlaceCard({ place }: { place: Place }) {
   const [hovered, setHovered] = useState(false)
+  const t = useTranslations('home-page.places')
 
   return (
     <div
@@ -163,12 +172,14 @@ function PlaceCard({ place }: { place: Place }) {
         >
           {place.name}
         </h3>
-        <p className="text-white/55 text-xs mb-2.5">{place.properties} properties</p>
+        <p className="text-white/55 text-xs mb-2.5">
+          {place.properties} {t('properties')}
+        </p>
         <Link
           href={place.href}
           className="text-[#b89a5b] text-[10px] tracking-[0.14em] uppercase no-underline font-medium inline-flex items-center gap-1.5"
         >
-          Explore location
+          {t('explore-location')}
           <ArrowIcon />
         </Link>
       </div>
@@ -179,13 +190,15 @@ function PlaceCard({ place }: { place: Place }) {
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function HomePlaces({ cities: cmsCities }: Props) {
+  const t = useTranslations('home-page.places')
+
   // Use CMS data or fallback to dummy data
   const places = useMemo(() => {
     if (cmsCities.length > 0 || !ENABLE_DUMMY_FALLBACK.properties) {
-      return transformCityData(cmsCities)
+      return transformCityData(cmsCities, t)
     }
     return PLACES
-  }, [cmsCities])
+  }, [cmsCities, t])
 
   return (
     <section className="bg-[#f7f5f0] py-[clamp(80px,10vw,140px)]">
@@ -199,7 +212,7 @@ export default function HomePlaces({ cities: cmsCities }: Props) {
               fontSize: 'clamp(32px, 4vw, 52px)',
             }}
           >
-            Find your place in Indonesia.
+            {t('title')}
           </h2>
         </div>
 

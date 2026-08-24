@@ -1,36 +1,38 @@
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
-const steps = [
-  {
-    number: '01',
-    title: 'Carefully Curated',
-    description:
-      'We select properties for architecture, quality, location, livability, and long-term relevance.',
-  },
-  {
-    number: '02',
-    title: 'Local Intelligence',
-    description: 'Market understanding supported by meaningful relationships across Indonesia.',
-  },
-  {
-    number: '03',
-    title: 'Discreet Service',
-    description: "A private, personal experience designed around each client's priorities.",
-  },
-  {
-    number: '04',
-    title: 'Enduring Value',
-    description: 'Guidance that considers both the emotional and financial value of a property.',
-  },
-]
-
 export default function HomeConsiderationSteps() {
+  const t = useTranslations('home-page.consideration-steps')
+
+  const steps = [
+    {
+      number: '01',
+      title: t('steps.curated.title'),
+      description: t('steps.curated.description'),
+    },
+    {
+      number: '02',
+      title: t('steps.intelligence.title'),
+      description: t('steps.intelligence.description'),
+    },
+    {
+      number: '03',
+      title: t('steps.service.title'),
+      description: t('steps.service.description'),
+    },
+    {
+      number: '04',
+      title: t('steps.value.title'),
+      description: t('steps.value.description'),
+    },
+  ]
+
   return (
     <section className="bg-[#111110] py-20 md:py-28">
       <PageContainer>
         {/* Heading */}
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.1] tracking-tight text-white mb-12 md:mb-20 max-w-xs sm:max-w-sm m-0">
-          Considered at every step.
+          {t('title')}
         </h2>
 
         {/* Steps table */}

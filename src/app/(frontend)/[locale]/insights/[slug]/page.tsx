@@ -161,12 +161,12 @@ export default async function InsightDetailPage({ params }: PageProps) {
 
       {/* Hero Image */}
       {post.heroImage?.url && (
-        <div className="relative w-full" style={{ height: 'clamp(400px, 50vw, 600px)' }}>
+        <div className="relative w-full min-h-[700px] ">
           <Image
             src={post.heroImage.url}
             alt={post.heroImage.alt}
             fill
-            className="object-cover"
+            className=" object-cover"
             priority
           />
         </div>

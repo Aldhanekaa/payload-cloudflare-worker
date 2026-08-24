@@ -1,6 +1,9 @@
+import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 
 export default function ServicesHero() {
+  const t = useTranslations('services-page.hero')
+
   return (
     <div
       className="bg-[#0a0a0a]"
@@ -11,7 +14,7 @@ export default function ServicesHero() {
     >
       <PageContainer>
         <p className="text-[10px] tracking-[0.22em] uppercase text-[#b89a5b] font-medium mb-4">
-          How We Work
+          {t('eyebrow')}
         </p>
         <h1
           className="text-white font-normal leading-[1.08] tracking-[-0.01em] max-w-150 mb-4 mt-0"
@@ -20,11 +23,10 @@ export default function ServicesHero() {
             fontSize: 'clamp(36px, 5vw, 64px)',
           }}
         >
-          Property expertise, personally delivered.
+          {t('title')}
         </h1>
         <p className="text-white/50 text-[15px] leading-[1.7] font-light max-w-110 m-0">
-          Four distinct services covering every aspect of property — from finding the right home to
-          selling, developing, and searching privately.
+          {t('description')}
         </p>
       </PageContainer>
     </div>
