@@ -5,12 +5,26 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
-import { GetPlatformProxyOptions } from 'wrangler'
-import { r2Storage } from '@payloadcms/storage-r2'
+// import { GetPlatformProxyOptions } from 'wrangler'
+// import { r2Storage } from '@payloadcms/storage-r2'
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
+import { Categories } from './(payload)/collections/Categories'
+
+import { Pages } from './(payload)/collections/Pages'
+import { Posts } from './(payload)/collections/Posts'
+
+import { Users } from './(payload)/collections/Users'
+import { Media } from './(payload)/collections/Media'
+import { Properties } from './(payload)/collections/Properties'
+import { PropertyTypes } from './(payload)/collections/PropertyTypes'
+import { PropertyCategories } from './(payload)/collections/PropertyCategories'
+import { Cities } from './(payload)/collections/Cities'
+import { Portfolios } from './(payload)/collections/Portfolios'
+import { Testimonials } from './(payload)/collections/Testimonials'
 import { s3Storage } from '@payloadcms/storage-s3'
+
+import { plugins } from '@/(payload)/plugins'
+import { nodemailerAdapter } from '@/(payload)/email/adapter'
 // import migrations from './db/migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -49,13 +63,55 @@ const cloudflare =
 // console.log('isCLI || !isProduction', isCLI || !isProduction)
 
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      // Graphics
+      graphics: {
+        Logo: '@/components/(payload)/Logo',
+        Icon: '@/components/(payload)/Icon',
+      },
+      // Navigation
+      beforeNavLinks: ['@/components/(payload)/BeforeNavLinks'],
+      afterNavLinks: ['@/components/(payload)/AfterNavLinks'],
+      // Dashboard
+      beforeDashboard: ['@/components/(payload)/BeforeDashboard'],
+      afterDashboard: ['@/components/(payload)/AfterDashboard'],
+      // Login
+      beforeLogin: ['@/components/(payload)/BeforeLogin'],
+      afterLogin: ['@/components/(payload)/AfterLogin'],
+      // Header
+      header: ['@/components/(payload)/Header'],
+      // Actions
+      actions: ['@/components/(payload)/Actions'],
+      // Settings Menu
+      settingsMenu: [
+        '@/components/(payload)/SettingsMenu#SettingsMenu',
+        '@/components/(payload)/SettingsMenu#SystemActions',
+      ],
+      // Logout
+      logout: {
+        Button: '@/components/(payload)/LogoutButton',
+      },
+    },
   },
-  collections: [Users, Media],
+  collections: [
+    Users,
+    Media,
+    Categories,
+    Posts,
+    Pages,
+    Properties,
+    PropertyTypes,
+    PropertyCategories,
+    Cities,
+    Portfolios,
+    Testimonials,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -65,19 +121,23 @@ export default buildConfig({
     binding: cloudflare.env.D1,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
+  email: nodemailerAdapter,
   plugins: [
+    ...plugins,
     s3Storage({
       collections: {
         media: true,
       },
-      bucket: 'payload-cloudflare-worker',
+      bucket: 'payloadcms-cf-worker-template',
       config: {
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID,
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
         },
         endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION, // asia pacific
         // region: process.env.S3_REGION,
+
         // ... Other S3 configuration
       },
     }),
@@ -94,7 +154,8 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
+        remoteBindings: false,
         // remoteBindings: process.env.REMOTE_BINDINGS !== 'false',
-      } satisfies GetPlatformProxyOptions),
+      }),
   )
 }

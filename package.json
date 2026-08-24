@@ -1,5 +1,5 @@
 {
-  "name": "payload-cloudflare-worker",
+  "name": "andersen-properties",
   "version": "1.0.0",
   "description": "A blank template to get started with Payload 3.0",
   "license": "MIT",
@@ -22,41 +22,59 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "test:email": "tsx scripts/test-email.ts"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.11.0",
     "@payloadcms/db-d1-sqlite": "3.87.0",
+    "@payloadcms/live-preview-react": "^3.87.0",
     "@payloadcms/next": "3.87.0",
+    "@payloadcms/plugin-form-builder": "^3.87.0",
+    "@payloadcms/plugin-redirects": "^3.87.0",
+    "@payloadcms/plugin-seo": "^3.87.0",
     "@payloadcms/richtext-lexical": "3.87.0",
     "@payloadcms/storage-r2": "3.87.0",
     "@payloadcms/storage-s3": "^3.87.0",
     "@payloadcms/ui": "3.87.0",
+    "@shefing/right-panel": "^1.0.5",
+    "@veiag/payload-enhanced-sidebar": "^0.5.1",
+    "class-variance-authority": "^0.7.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
-    "next": "15.4.11",
-    "payload": "3.87.0",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "lucide-react": "^1.33.0",
+    "next": "^16.3.1",
+    "next-intl": "^4.13.7",
+    "nodemailer": "^9.0.5",
+    "payload": "^3.88.0",
+    "radix-ui": "^1.6.7",
+    "react": "^19.2.8",
+    "react-colorful": "^5.8.0",
+    "react-dom": "^19.2.8",
+    "react-hook-form": "^7.85.0",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@playwright/test": "1.58.2",
+    "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/react": "16.3.0",
     "@types/node": "22.19.9",
+    "@types/nodemailer": "^8.0.1",
     "@types/react": "19.2.9",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "4.5.2",
     "eslint": "^9.16.0",
-    "eslint-config-next": "15.4.11",
+    "eslint-config-next": "^16.3.2",
     "jsdom": "28.0.0",
     "prettier": "^3.4.2",
+    "tailwindcss": "^4.3.3",
     "tsx": "4.22.4",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "6.0.5",
-    "vitest": "4.0.18",
-    "wrangler": "~4.61.1"
+    "vitest": "^4.1.11",
+    "wrangler": "^4.125.0"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
@@ -75,5 +93,18 @@
         "description": "Generate a random string using `openssl rand -hex 32`"
       }
     }
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.4": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.27.0": true,
+    "@parcel/watcher@2.6.0": true,
+    "@swc/core@1.15.47": true,
+    "fsevents@2.3.2": true,
+    "fsevents@2.3.3": true,
+    "sharp@0.34.5": true,
+    "unrs-resolver@1.12.2": true,
+    "workerd@1.20260128.0": true
   }
 }

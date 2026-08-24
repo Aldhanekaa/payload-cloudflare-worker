@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "payload-cloudflare-worker",
+  "name": "payloadcms-cf-worker-template",
   "compatibility_date": "2025-08-15",
   "account_id": "f50e92329e6f8728de1bf9cf42c4e268",
   "compatibility_flags": [
@@ -24,7 +24,6 @@
     {
       "binding": "D1",
       "database_id": "9b028650-24b7-459a-a29f-0d911f33302f",
-      "database_name": "prod_db",
       "remote": true,
     },
   ],
@@ -38,10 +37,21 @@
   "r2_buckets": [
     // {
     //   "binding": "R2",
-    //   "bucket_name": "payload-cloudflare-worker",
+    //   "bucket_name": "andersen-properties",
     //   "remote": true,
     // },
   ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+    },
+  },
+
+  "limits": {
+    "cpu_ms": 300000,
+  },
 
   // Here's how to configure an additional environment
   // It can be deployed with `CLOUDFLARE_ENV=staging pnpm run deploy`
@@ -66,7 +76,7 @@
   //     "r2_buckets": [
   //       {
   //         "binding": "R2",
-  //         "bucket_name": "payload-cloudflare-worker",
+  //         "bucket_name": "andersen-properties",
   //       },
   //     ],
   //   },

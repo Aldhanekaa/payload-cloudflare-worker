@@ -1,11 +1,30 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const withNextIntl = createNextIntlPlugin({
+  requestConfig: './src/i18n/request.ts',
+})
+
+import redirectsImport from './redirects.js'
+
+const redirects = redirectsImport as () => Promise<any>
+
+const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
         pathname: '/api/media/file/**',
+      },
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'andersen.feroworks.com',
       },
     ],
   },
@@ -23,6 +42,7 @@ const nextConfig = {
 
     return webpackConfig
   },
+  redirects,
 }
 
-export default withPayload(nextConfig, { devBundleServerPackages: false })
+export default withNextIntl(withPayload(nextConfig, { devBundleServerPackages: false }))
