@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@better-auth/passkey": "^1.7.1",
     "@opennextjs/cloudflare": "^1.20.2",
     "@oversightstudio/blur-data-urls": "^1.0.4",
     "@payload-enchants/fields-select": "^1.2.2",
@@ -46,6 +47,7 @@
     "@websolutespa/bom-core": "^3.0.2",
     "@websolutespa/payload-plugin-localization": "^3.0.1",
     "@websolutespa/payload-utils": "^3.0.2",
+    "better-auth": "^1.7.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
@@ -56,6 +58,7 @@
     "next-intl": "^4.13.7",
     "nodemailer": "^9.0.5",
     "payload": "^3.88.0",
+    "payload-auth": "^3.0.0",
     "payload-better-editor": "^1.4.1",
     "payload-plugin-masquerade": "^2.1.0",
     "radix-ui": "^1.6.7",
