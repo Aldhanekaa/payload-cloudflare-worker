@@ -7,7 +7,7 @@ export default {
   ...baseConfig,
   build: {
     externals: [
-      'drizzle-kit-*',
+      'drizzle-kit*',
       'jose',
       'pg-cloudflare',
       'jsdom',
@@ -18,7 +18,7 @@ export default {
   },
   edgeExternals: [
     ...(baseConfig.edgeExternals || []),
-    'drizzle-kit-*',
+    'drizzle-kit*',
     'jose',
     'pg-cloudflare',
     'jsdom',

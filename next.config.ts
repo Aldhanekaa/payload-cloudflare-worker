@@ -11,13 +11,23 @@ import redirectsImport from './redirects.js'
 
 const redirects = redirectsImport as () => Promise<any>
 
+const stubPath = path.resolve('./stubs/drizzle-kit.js')
+
 const nextConfig: NextConfig = {
-  // turbopack: {
-  //   resolveAlias: {
-  //     'drizzle-kit': './stubs/drizzle-kit.js',
-  //     'drizzle-kit/api': './stubs/drizzle-kit.js',
-  //   },
-  // },
+  turbopack: {
+    resolveAlias: {
+      'drizzle-kit': './stubs/drizzle-kit.js',
+      'drizzle-kit/api': './stubs/drizzle-kit.js',
+    },
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'drizzle-kit': stubPath,
+      'drizzle-kit/api': stubPath,
+    }
+    return config
+  },
   images: {
     qualities: [100, 75],
     dangerouslyAllowLocalIP: true,
@@ -65,6 +75,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    workerThreads: false,
+    staticGenerationMaxConcurrency: 1,
+    staticGenerationMinPagesPerWorker: 1,
+  },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
   serverExternalPackages: [
@@ -91,4 +106,4 @@ if (payloadConfig.serverExternalPackages) {
   )
 }
 
-export default withNextIntl(withPayload(nextConfig, { devBundleServerPackages: false }))
+export default withNextIntl(payloadConfig)
