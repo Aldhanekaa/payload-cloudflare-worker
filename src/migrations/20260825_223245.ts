@@ -42,50 +42,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`filesize\` numeric,
   	\`width\` numeric,
   	\`height\` numeric,
-  	\`focal_x\` numeric,
-  	\`focal_y\` numeric,
-  	\`sizes_thumbnail_url\` text,
-  	\`sizes_thumbnail_width\` numeric,
-  	\`sizes_thumbnail_height\` numeric,
-  	\`sizes_thumbnail_mime_type\` text,
-  	\`sizes_thumbnail_filesize\` numeric,
-  	\`sizes_thumbnail_filename\` text,
-  	\`sizes_square_url\` text,
-  	\`sizes_square_width\` numeric,
-  	\`sizes_square_height\` numeric,
-  	\`sizes_square_mime_type\` text,
-  	\`sizes_square_filesize\` numeric,
-  	\`sizes_square_filename\` text,
-  	\`sizes_small_url\` text,
-  	\`sizes_small_width\` numeric,
-  	\`sizes_small_height\` numeric,
-  	\`sizes_small_mime_type\` text,
-  	\`sizes_small_filesize\` numeric,
-  	\`sizes_small_filename\` text,
-  	\`sizes_medium_url\` text,
-  	\`sizes_medium_width\` numeric,
-  	\`sizes_medium_height\` numeric,
-  	\`sizes_medium_mime_type\` text,
-  	\`sizes_medium_filesize\` numeric,
-  	\`sizes_medium_filename\` text,
-  	\`sizes_large_url\` text,
-  	\`sizes_large_width\` numeric,
-  	\`sizes_large_height\` numeric,
-  	\`sizes_large_mime_type\` text,
-  	\`sizes_large_filesize\` numeric,
-  	\`sizes_large_filename\` text,
-  	\`sizes_xlarge_url\` text,
-  	\`sizes_xlarge_width\` numeric,
-  	\`sizes_xlarge_height\` numeric,
-  	\`sizes_xlarge_mime_type\` text,
-  	\`sizes_xlarge_filesize\` numeric,
-  	\`sizes_xlarge_filename\` text,
-  	\`sizes_og_url\` text,
-  	\`sizes_og_width\` numeric,
-  	\`sizes_og_height\` numeric,
-  	\`sizes_og_mime_type\` text,
-  	\`sizes_og_filesize\` numeric,
-  	\`sizes_og_filename\` text,
   	FOREIGN KEY (\`folder_id\`) REFERENCES \`payload_folders\`(\`id\`) ON UPDATE no action ON DELETE set null
   );
   `)
@@ -93,13 +49,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`media_updated_at_idx\` ON \`media\` (\`updated_at\`);`)
   await db.run(sql`CREATE INDEX \`media_created_at_idx\` ON \`media\` (\`created_at\`);`)
   await db.run(sql`CREATE UNIQUE INDEX \`media_filename_idx\` ON \`media\` (\`filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_thumbnail_sizes_thumbnail_filename_idx\` ON \`media\` (\`sizes_thumbnail_filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_square_sizes_square_filename_idx\` ON \`media\` (\`sizes_square_filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_small_sizes_small_filename_idx\` ON \`media\` (\`sizes_small_filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_medium_sizes_medium_filename_idx\` ON \`media\` (\`sizes_medium_filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_large_sizes_large_filename_idx\` ON \`media\` (\`sizes_large_filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_xlarge_sizes_xlarge_filename_idx\` ON \`media\` (\`sizes_xlarge_filename\`);`)
-  await db.run(sql`CREATE INDEX \`media_sizes_og_sizes_og_filename_idx\` ON \`media\` (\`sizes_og_filename\`);`)
   await db.run(sql`CREATE TABLE \`categories\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`generate_slug\` integer DEFAULT true,
@@ -1683,6 +1632,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`global_settings_rels_path_idx\` ON \`global_settings_rels\` (\`path\`);`)
   await db.run(sql`CREATE INDEX \`global_settings_rels_pages_id_idx\` ON \`global_settings_rels\` (\`pages_id\`);`)
   await db.run(sql`CREATE INDEX \`global_settings_rels_posts_id_idx\` ON \`global_settings_rels\` (\`posts_id\`);`)
+  await db.run(sql`CREATE TABLE \`better_editor_settings\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`sidebar_position\` text DEFAULT 'right',
+  	\`force_full_width_fields\` integer DEFAULT true,
+  	\`tablet_width\` numeric DEFAULT 800,
+  	\`mobile_width\` numeric DEFAULT 400,
+  	\`hover_color_top_level\` text DEFAULT '#3b82f6',
+  	\`hover_color_nested\` text DEFAULT '#f59e0b',
+  	\`hover_outline_width\` numeric DEFAULT 2,
+  	\`show_hover_toolbar\` integer DEFAULT true,
+  	\`hover_toolbar_position\` text DEFAULT 'top-right',
+  	\`updated_at\` text,
+  	\`created_at\` text
+  );
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -1797,4 +1761,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`global_settings\`;`)
   await db.run(sql`DROP TABLE \`global_settings_locales\`;`)
   await db.run(sql`DROP TABLE \`global_settings_rels\`;`)
+  await db.run(sql`DROP TABLE \`better_editor_settings\`;`)
 }
