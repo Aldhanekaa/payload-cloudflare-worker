@@ -25,6 +25,7 @@ import sharp from 'sharp'
 import { plugins } from '@/(payload)/plugins'
 // import { nodemailerAdapter } from '@/(payload)/email/adapter'
 import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
+// import { migrations } from './migrations'
 // import migrations from './db/migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -137,6 +138,7 @@ export default buildConfig({
   },
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
+    // prodMigrations: migrations as any,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
   // email: nodemailerAdapter,
@@ -181,9 +183,11 @@ function getCloudflareContextFromWrangler(retries = 5, delay = 300): Promise<Clo
         const { getPlatformProxy } = await import(
           /* webpackIgnore: true */ `${'__wrangler'.replaceAll('_', '')}`
         )
+        const isRemote =
+          process.env.CLOUDFLARE_REMOTE === 'true' || process.env.REMOTE_BINDINGS === 'true'
         return await getPlatformProxy({
           environment: process.env.CLOUDFLARE_ENV,
-          remoteBindings: false,
+          remoteBindings: isRemote,
           ...(isBuild ? { persist: false } : {}),
         })
       } catch (err: any) {

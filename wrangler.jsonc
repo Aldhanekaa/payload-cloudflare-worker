@@ -27,6 +27,7 @@
       "binding": "D1",
       "database_id": "cc2f22b4-1d32-46eb-8c9b-6857f11fdfee",
       "remote": true,
+      "migrations_dir": "./src/migrations",
     },
   ],
   "services": [
