@@ -21,10 +21,9 @@ import { PropertyCategories } from './(payload)/collections/PropertyCategories'
 import { Cities } from './(payload)/collections/Cities'
 import { Portfolios } from './(payload)/collections/Portfolios'
 import { Testimonials } from './(payload)/collections/Testimonials'
-import { s3Storage } from '@payloadcms/storage-s3'
 
 import { plugins } from '@/(payload)/plugins'
-import { nodemailerAdapter } from '@/(payload)/email/adapter'
+// import { nodemailerAdapter } from '@/(payload)/email/adapter'
 import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
 // import migrations from './db/migrations'
 
@@ -64,6 +63,9 @@ const cloudflare =
 // console.log('isCLI || !isProduction', isCLI || !isProduction)
 
 export default buildConfig({
+  // graphQL: {
+  //   disable: true,
+  // },
   // ...
   localization: {
     locales: ['en', 'id'], // required
@@ -76,35 +78,35 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    components: {
-      // Graphics
-      graphics: {
-        Logo: '@/components/(payload)/Logo',
-        Icon: '@/components/(payload)/Icon',
-      },
-      // Navigation
-      beforeNavLinks: ['@/components/(payload)/BeforeNavLinks'],
-      afterNavLinks: ['@/components/(payload)/AfterNavLinks'],
-      // Dashboard
-      beforeDashboard: ['@/components/(payload)/BeforeDashboard'],
-      afterDashboard: ['@/components/(payload)/AfterDashboard'],
-      // Login
-      beforeLogin: ['@/components/(payload)/BeforeLogin'],
-      afterLogin: ['@/components/(payload)/AfterLogin'],
-      // Header
-      header: ['@/components/(payload)/Header'],
-      // Actions
-      actions: ['@/components/(payload)/Actions'],
-      // Settings Menu
-      settingsMenu: [
-        '@/components/(payload)/SettingsMenu#SettingsMenu',
-        '@/components/(payload)/SettingsMenu#SystemActions',
-      ],
-      // Logout
-      logout: {
-        Button: '@/components/(payload)/LogoutButton',
-      },
-    },
+    // components: {
+    //   // Graphics
+    //   graphics: {
+    //     Logo: '@/components/(payload)/Logo',
+    //     Icon: '@/components/(payload)/Icon',
+    //   },
+    //   // Navigation
+    //   beforeNavLinks: ['@/components/(payload)/BeforeNavLinks'],
+    //   afterNavLinks: ['@/components/(payload)/AfterNavLinks'],
+    //   // Dashboard
+    //   beforeDashboard: ['@/components/(payload)/BeforeDashboard'],
+    //   afterDashboard: ['@/components/(payload)/AfterDashboard'],
+    //   // Login
+    //   beforeLogin: ['@/components/(payload)/BeforeLogin'],
+    //   afterLogin: ['@/components/(payload)/AfterLogin'],
+    //   // Header
+    //   header: ['@/components/(payload)/Header'],
+    //   // Actions
+    //   actions: ['@/components/(payload)/Actions'],
+    //   // Settings Menu
+    //   settingsMenu: [
+    //     '@/components/(payload)/SettingsMenu#SettingsMenu',
+    //     '@/components/(payload)/SettingsMenu#SystemActions',
+    //   ],
+    //   // Logout
+    //   logout: {
+    //     Button: '@/components/(payload)/LogoutButton',
+    //   },
+    // },
   },
   collections: [
     Users,
@@ -129,7 +131,7 @@ export default buildConfig({
     binding: cloudflare.env.D1,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
-  email: nodemailerAdapter,
+  // email: nodemailerAdapter,
   plugins: [
     ...plugins,
     // s3Storage({

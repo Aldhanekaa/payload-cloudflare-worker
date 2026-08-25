@@ -4,6 +4,8 @@
   "name": "andersen-properties",
   "compatibility_date": "2025-08-15",
   "account_id": "f50e92329e6f8728de1bf9cf42c4e268",
+
+  "minify": true,
   "compatibility_flags": [
     // Enable Node.js API
     // see https://developers.cloudflare.com/workers/configuration/compatibility-flags/#nodejs-compatibility-flag

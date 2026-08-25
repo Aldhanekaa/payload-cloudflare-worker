@@ -12,6 +12,12 @@ import redirectsImport from './redirects.js'
 const redirects = redirectsImport as () => Promise<any>
 
 const nextConfig: NextConfig = {
+  // turbopack: {
+  //   resolveAlias: {
+  //     'drizzle-kit': './stubs/drizzle-kit.js',
+  //     'drizzle-kit/api': './stubs/drizzle-kit.js',
+  //   },
+  // },
   images: {
     qualities: [100, 75],
     dangerouslyAllowLocalIP: true,
@@ -64,39 +70,25 @@ const nextConfig: NextConfig = {
   serverExternalPackages: [
     'jose',
     'pg-cloudflare',
-    'drizzle-kit',
-    'drizzle-kit-e722632bd56cd1a1/api',
-    'drizzle-kit-*/api',
+    'jsdom',
+    'undici',
+    'cssstyle',
+    'csstools',
+    'css-tree',
+    'sharp',
+    'pino',
+    'pino-pretty',
+    'nodemailer', // Can't send emails from Workers anyway
+    'graphql', // If disabling GraphQL
   ],
-
-  // Your Next.js config here
-  webpack: (webpackConfig: any, { isServer }: any) => {
-    webpackConfig.resolve.extensionAlias = {
-      '.cjs': ['.cts', '.cjs'],
-      '.js': ['.ts', '.tsx', '.js', '.jsx'],
-      '.mjs': ['.mts', '.mjs'],
-    }
-
-    // Ignore drizzle-kit in production builds (it's a dev-only tool)
-    if (isServer) {
-      // Alias drizzle-kit and all its subpaths to an empty stub
-      webpackConfig.resolve.alias = webpackConfig.resolve.alias || {}
-      webpackConfig.resolve.alias['drizzle-kit'] = path.resolve('./stubs/drizzle-kit.js')
-      webpackConfig.resolve.alias['drizzle-kit/api'] = path.resolve('./stubs/drizzle-kit.js')
-
-      webpackConfig.externals = webpackConfig.externals || []
-      // Mark drizzle-kit as external - it should never be bundled
-      webpackConfig.externals.push(
-        'drizzle-kit',
-        'drizzle-kit/api',
-        /^drizzle-kit\/.*/,
-        /^drizzle-kit-.*\/api$/,
-      )
-    }
-
-    return webpackConfig
-  },
   redirects,
+}
+
+const payloadConfig = withPayload(nextConfig, { devBundleServerPackages: false })
+if (payloadConfig.serverExternalPackages) {
+  payloadConfig.serverExternalPackages = payloadConfig.serverExternalPackages.filter(
+    (pkg: string) => !pkg.includes('drizzle-kit'),
+  )
 }
 
 export default withNextIntl(withPayload(nextConfig, { devBundleServerPackages: false }))

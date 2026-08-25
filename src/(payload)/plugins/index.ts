@@ -31,39 +31,39 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
-  localization(),
-  fieldsSelect(),
+  // localization(),
+  // fieldsSelect(),
 
-  betterEditor({
-    collections: ['pages', 'posts'], // collection slugs where the toggle appears
-  }),
-
-  // importExportPlugin({
-  //   collections: [{ slug: 'properties' }],
-  //   // see below for a list of available options
+  // betterEditor({
+  //   collections: ['pages', 'posts'], // collection slugs where the toggle appears
   // }),
 
-  blurDataUrlsPlugin({
-    enabled: true,
-    collections: [Media],
-    // Blur data URLs Settings (Optional)
-    blurOptions: {
-      blur: 18,
-      width: 32,
-      height: 'auto',
-    },
-  }),
+  // // importExportPlugin({
+  // //   collections: [{ slug: 'properties' }],
+  // //   // see below for a list of available options
+  // // }),
 
-  // Enhanced Sidebar - Organized navigation with tabs
-  payloadEnhancedSidebar(sidebarConfig),
+  // blurDataUrlsPlugin({
+  //   enabled: true,
+  //   collections: [Media],
+  //   // Blur data URLs Settings (Optional)
+  //   blurOptions: {
+  //     blur: 18,
+  //     width: 32,
+  //     height: 'auto',
+  //   },
+  // }),
 
-  seoPlugin({
-    generateTitle,
-    generateURL,
-  }),
-  RightPanelPlugin({
-    excludedCollections: [], // Add collections to exclude if needed
-  }),
+  // // Enhanced Sidebar - Organized navigation with tabs
+  // payloadEnhancedSidebar(sidebarConfig),
+
+  // seoPlugin({
+  //   generateTitle,
+  //   generateURL,
+  // }),
+  // RightPanelPlugin({
+  //   excludedCollections: [], // Add collections to exclude if needed
+  // }),
 
   redirectsPlugin({
     collections: ['pages', 'posts'],

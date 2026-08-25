@@ -125,11 +125,9 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'id') | ('en' | 'id')[];
   globals: {
     'global-settings': GlobalSetting;
-    'better-editor-settings': BetterEditorSetting;
   };
   globalsSelect: {
     'global-settings': GlobalSettingsSelect<false> | GlobalSettingsSelect<true>;
-    'better-editor-settings': BetterEditorSettingsSelect<false> | BetterEditorSettingsSelect<true>;
   };
   locale: 'en' | 'id';
   widgets: {
@@ -212,7 +210,6 @@ export interface Media {
     };
     [k: string]: unknown;
   } | null;
-  blurDataUrl?: string | null;
   folder?: (number | null) | FolderInterface;
   updatedAt: string;
   createdAt: string;
@@ -1448,7 +1445,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
-  blurDataUrl?: T;
   folder?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2268,38 +2264,6 @@ export interface GlobalSetting {
   createdAt?: string | null;
 }
 /**
- * Editor-wide preferences for the Better Editor overlay.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "better-editor-settings".
- */
-export interface BetterEditorSetting {
-  id: number;
-  sidebarPosition?: ('right' | 'left') | null;
-  /**
-   * Override admin.width on sidebar fields so they always span the full row.
-   */
-  forceFullWidthFields?: boolean | null;
-  tabletWidth?: number | null;
-  mobileWidth?: number | null;
-  /**
-   * Hex color (e.g. `#3b82f6`).
-   */
-  hoverColorTopLevel?: string | null;
-  /**
-   * Hex color for blocks nested inside another block.
-   */
-  hoverColorNested?: string | null;
-  /**
-   * Outline thickness in pixels (1–5).
-   */
-  hoverOutlineWidth?: number | null;
-  showHoverToolbar?: boolean | null;
-  hoverToolbarPosition?: ('top-right' | 'top-left' | 'bottom-right' | 'bottom-left') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "global-settings_select".
  */
@@ -2342,24 +2306,6 @@ export interface GlobalSettingsSelect<T extends boolean = true> {
         label?: T;
         appearance?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "better-editor-settings_select".
- */
-export interface BetterEditorSettingsSelect<T extends boolean = true> {
-  sidebarPosition?: T;
-  forceFullWidthFields?: T;
-  tabletWidth?: T;
-  mobileWidth?: T;
-  hoverColorTopLevel?: T;
-  hoverColorNested?: T;
-  hoverOutlineWidth?: T;
-  showHoverToolbar?: T;
-  hoverToolbarPosition?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
