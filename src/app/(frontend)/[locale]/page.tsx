@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
 import config from '@/payload.config'
 import './styles.css'
@@ -21,9 +23,22 @@ import HomeCTA from '@/components/Home/home_cta'
 import { getCachedCollection } from '@/utilities/getCollection'
 import type { LocaleCodes } from '@/i18n/localization'
 import type { Property, City as PayloadCity, Post } from '@/payload-types'
+import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
 
 type PageProps = {
   params: Promise<{ locale: LocaleCodes }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo.home' })
+
+  return generateLocalizedMeta({
+    title: t('title'),
+    description: t('description'),
+    path: '',
+    locale,
+  })
 }
 
 export default async function HomePage({ params }: PageProps) {

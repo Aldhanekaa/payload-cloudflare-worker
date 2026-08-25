@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { Breadcrumb } from '@/components/Active_Listings/Breadcrumb'
 import { PortfolioImageSlider } from '@/components/Portfolios/PortfolioImageSlider'
 import { PortfolioHeader } from '@/components/Portfolios/PortfolioHeader'
@@ -12,12 +13,56 @@ import { getCachedCollection } from '@/utilities/getCollection'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { LocaleCodes } from '@/i18n/localization'
 import type { Portfolio, Media, City } from '@/payload-types'
+import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
+import { JsonLd } from '@/components/JsonLd'
+import { getServerSideURL } from '@/utilities/getURL'
 
 interface PageProps {
   params: Promise<{
     locale: LocaleCodes
     'portfolio-slug': string
   }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { 'portfolio-slug': slug, locale } = await params
+
+  const result = await getCachedCollection(
+    {
+      collection: 'portfolios',
+      depth: 1,
+      limit: 1,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    },
+    locale,
+  )()
+
+  const cmsPortfolio = result.docs[0] as any
+
+  let title = cmsPortfolio?.meta?.title || cmsPortfolio?.name
+  let description = cmsPortfolio?.meta?.description || cmsPortfolio?.description || cmsPortfolio?.tagline
+  let image: number | string | Media | null = cmsPortfolio?.meta?.image || cmsPortfolio?.heroImage || null
+
+  if (!title && ENABLE_DUMMY_FALLBACK.portfolios) {
+    const dummyPortfolio = PORTFOLIOS.find((p) => p.slug === slug)
+    if (dummyPortfolio) {
+      title = dummyPortfolio.name
+      description = dummyPortfolio.tagline
+      image = dummyPortfolio.image.src
+    }
+  }
+
+  return generateLocalizedMeta({
+    title: title ? `${title} — Portfolios` : 'Portfolio',
+    description: description || 'Curated development portfolio by Andersen Properties.',
+    path: `/portfolios/${slug}`,
+    locale,
+    image,
+  })
 }
 
 // Helper to format status for display
@@ -120,8 +165,37 @@ export default async function PortfolioPage({ params }: PageProps) {
 
   const statusDisplay = formatStatus(portfolio.status)
 
+  const serverUrl = getServerSideURL()
+  const pageUrl = `${serverUrl}/${locale}/portfolios/${slug}`
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${serverUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Portfolios',
+        item: `${serverUrl}/${locale}/portfolios`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: portfolio.name,
+        item: pageUrl,
+      },
+    ],
+  }
+
   return (
     <main className=" ">
+      <JsonLd data={breadcrumbJsonLd} />
       <div className="bg-[#f7f5f0] min-h-screen">
         {/* Breadcrumb */}
         <div className="px-5 md:px-20 max-w-360 mx-auto pt-8 pb-6">

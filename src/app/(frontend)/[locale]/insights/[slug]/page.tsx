@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
+import type { Metadata } from 'next'
 import PageContainer from '@/components/PageContainer'
 import { getCachedCollection } from '@/utilities/getCollection'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
@@ -8,12 +9,59 @@ import type { Media, Category, Post } from '@/payload-types'
 import { POSTS } from '@/components/Insights/insights.data'
 import RichText from '@/components/RichText'
 import { RelatedPosts } from '@/(payload)/blocks/RelatedPosts/Component'
+import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
+import { JsonLd } from '@/components/JsonLd'
+import { getServerSideURL } from '@/utilities/getURL'
 
 interface PageProps {
   params: Promise<{
     locale: LocaleCodes
     slug: string
   }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug, locale } = await params
+
+  const result = await getCachedCollection(
+    {
+      collection: 'posts',
+      depth: 2,
+      limit: 1,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    },
+    locale,
+  )()
+
+  const cmsPost = result.docs[0] as any
+
+  let title = cmsPost?.meta?.title || cmsPost?.title
+  let description = cmsPost?.meta?.description || cmsPost?.short_overview || cmsPost?.subTitle
+  let image: string | Media | null = cmsPost?.meta?.image || cmsPost?.heroImage || null
+  let publishedTime = cmsPost?.publishedAt || undefined
+
+  if (!title && ENABLE_DUMMY_FALLBACK.posts) {
+    const dummyPost = POSTS.find((p) => p.slug === slug)
+    if (dummyPost) {
+      title = dummyPost.title
+      description = dummyPost.excerpt
+      image = dummyPost.imageUrl
+    }
+  }
+
+  return generateLocalizedMeta({
+    title: title ? `${title} — Insights` : 'Insight',
+    description: description || 'Perspectives on property and place from Andersen Properties.',
+    path: `/insights/${slug}`,
+    locale,
+    image,
+    type: 'article',
+    publishedTime,
+  })
 }
 
 export default async function InsightDetailPage({ params }: PageProps) {
@@ -110,8 +158,57 @@ export default async function InsightDetailPage({ params }: PageProps) {
     notFound()
   }
 
+  const serverUrl = getServerSideURL()
+  const pageUrl = `${serverUrl}/${locale}/insights/${slug}`
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.short_overview || post.subTitle,
+    url: pageUrl,
+    image: post.heroImage?.url ? [post.heroImage.url] : undefined,
+    datePublished: cmsPost?.publishedAt || undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'Andersen Properties',
+      url: serverUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Andersen Properties',
+      url: serverUrl,
+    },
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${serverUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Insights',
+        item: `${serverUrl}/${locale}/insights`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: pageUrl,
+      },
+    ],
+  }
+
   return (
     <main className="bg-[#f7f5f0] min-h-screen">
+      <JsonLd data={[articleJsonLd, breadcrumbJsonLd]} />
       {/* Hero Section */}
       <div className="bg-[#0a0a0a] pt-[clamp(80px,10vw,120px)] pb-[clamp(60px,8vw,100px)]">
         <PageContainer>

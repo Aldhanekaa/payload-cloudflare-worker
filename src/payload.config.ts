@@ -9,10 +9,8 @@ import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { r2Storage } from '@payloadcms/storage-r2'
 
 import { Categories } from './(payload)/collections/Categories'
-
 import { Pages } from './(payload)/collections/Pages'
 import { Posts } from './(payload)/collections/Posts'
-
 import { Users } from './(payload)/collections/Users'
 import { Media } from './(payload)/collections/Media'
 import { Properties } from './(payload)/collections/Properties'
@@ -21,6 +19,8 @@ import { PropertyCategories } from './(payload)/collections/PropertyCategories'
 import { Cities } from './(payload)/collections/Cities'
 import { Portfolios } from './(payload)/collections/Portfolios'
 import { Testimonials } from './(payload)/collections/Testimonials'
+
+import sharp from 'sharp'
 
 import { plugins } from '@/(payload)/plugins'
 // import { nodemailerAdapter } from '@/(payload)/email/adapter'
@@ -70,6 +70,7 @@ const cloudflare =
 // console.log('isCLI || !isProduction', isCLI || !isProduction)
 
 export default buildConfig({
+  sharp,
   graphQL: {
     disable: false,
   },
@@ -85,35 +86,35 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    // components: {
-    //   // Graphics
-    //   graphics: {
-    //     Logo: '@/components/(payload)/Logo',
-    //     Icon: '@/components/(payload)/Icon',
-    //   },
-    //   // Navigation
-    //   beforeNavLinks: ['@/components/(payload)/BeforeNavLinks'],
-    //   afterNavLinks: ['@/components/(payload)/AfterNavLinks'],
-    //   // Dashboard
-    //   beforeDashboard: ['@/components/(payload)/BeforeDashboard'],
-    //   afterDashboard: ['@/components/(payload)/AfterDashboard'],
-    //   // Login
-    //   beforeLogin: ['@/components/(payload)/BeforeLogin'],
-    //   afterLogin: ['@/components/(payload)/AfterLogin'],
-    //   // Header
-    //   header: ['@/components/(payload)/Header'],
-    //   // Actions
-    //   actions: ['@/components/(payload)/Actions'],
-    //   // Settings Menu
-    //   settingsMenu: [
-    //     '@/components/(payload)/SettingsMenu#SettingsMenu',
-    //     '@/components/(payload)/SettingsMenu#SystemActions',
-    //   ],
-    //   // Logout
-    //   logout: {
-    //     Button: '@/components/(payload)/LogoutButton',
-    //   },
-    // },
+    components: {
+      // Graphics
+      graphics: {
+        Logo: '@/components/(payload)/Logo',
+        Icon: '@/components/(payload)/Icon',
+      },
+      // Navigation
+      beforeNavLinks: ['@/components/(payload)/BeforeNavLinks'],
+      afterNavLinks: ['@/components/(payload)/AfterNavLinks'],
+      // Dashboard
+      beforeDashboard: ['@/components/(payload)/BeforeDashboard'],
+      afterDashboard: ['@/components/(payload)/AfterDashboard'],
+      // Login
+      beforeLogin: ['@/components/(payload)/BeforeLogin'],
+      afterLogin: ['@/components/(payload)/AfterLogin'],
+      // Header
+      header: ['@/components/(payload)/Header'],
+      // Actions
+      actions: ['@/components/(payload)/Actions'],
+      // Settings Menu
+      settingsMenu: [
+        '@/components/(payload)/SettingsMenu#SettingsMenu',
+        '@/components/(payload)/SettingsMenu#SystemActions',
+      ],
+      // Logout
+      logout: {
+        Button: '@/components/(payload)/LogoutButton',
+      },
+    },
   },
   collections: [
     Users,
