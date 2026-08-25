@@ -26,7 +26,7 @@ export const betterAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  plugins: [admin() as any, nextCookies() as any],
+  plugins: [nextCookies() as any],
 } satisfies BetterAuthOptions
 
 export const payloadAuthOptions = {
