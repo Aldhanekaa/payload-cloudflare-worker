@@ -23,7 +23,7 @@ import { Testimonials } from './(payload)/collections/Testimonials'
 import sharp from 'sharp'
 
 import { plugins } from '@/(payload)/plugins'
-// import { nodemailerAdapter } from '@/(payload)/email/adapter'
+import { nodemailerAdapter } from '@/(payload)/email/adapter'
 import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
 // import { migrations } from './migrations'
 // import migrations from './db/migrations'
@@ -141,7 +141,7 @@ export default buildConfig({
     // prodMigrations: migrations as any,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
-  // email: nodemailerAdapter,
+  email: nodemailerAdapter,
   plugins: [
     ...plugins,
     // s3Storage({
