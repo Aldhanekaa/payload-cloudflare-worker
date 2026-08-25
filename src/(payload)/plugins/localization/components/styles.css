@@ -1,0 +1,443 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Localization Plugin Styles
+   Uses Payload CMS CSS variables for full theme compatibility
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Locale Selector Bar ──────────────────────────────────────────────────── */
+.loc-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--theme-elevation-50);
+  border-bottom: 1px solid var(--theme-elevation-150);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.loc-bar__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--theme-text-body);
+  opacity: 0.5;
+  margin-right: 0.25rem;
+}
+
+.loc-bar__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1.5px solid var(--theme-elevation-300);
+  background: transparent;
+  color: var(--theme-text-body);
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.loc-bar__pill:hover {
+  border-color: var(--theme-text-body);
+  background: var(--theme-elevation-100);
+}
+
+.loc-bar__pill--active {
+  background: var(--theme-text-body);
+  color: var(--theme-elevation-0);
+  border-color: var(--theme-text-body);
+}
+
+/* ── Localize Field Button ────────────────────────────────────────────────── */
+.loc-field-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--theme-text-body);
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+.loc-field-btn:hover {
+  opacity: 1;
+}
+
+.loc-field-btn--disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.loc-field-btn__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.loc-field-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.loc-field-tooltip__text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--theme-elevation-900);
+  color: var(--theme-elevation-0);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 100;
+}
+
+.loc-field-tooltip:hover .loc-field-tooltip__text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ── Modal Overlay ────────────────────────────────────────────────────────── */
+.loc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: locFadeIn 0.15s ease;
+}
+
+@keyframes locFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.loc-modal {
+  background: var(--theme-elevation-0);
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: locSlideUp 0.2s ease;
+}
+
+@keyframes locSlideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Modal Header ─────────────────────────────────────────────────────────── */
+.loc-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.75rem;
+  border-bottom: 1px solid var(--theme-elevation-150);
+  flex-shrink: 0;
+}
+
+.loc-modal__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--theme-text-body);
+}
+
+.loc-modal__title-icon {
+  opacity: 0.6;
+}
+
+.loc-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--theme-text-body);
+  opacity: 0.5;
+  border-radius: 5px;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.loc-modal__close:hover {
+  opacity: 1;
+  background: var(--theme-elevation-100);
+}
+
+/* ── Locale Tabs ──────────────────────────────────────────────────────────── */
+.loc-modal__tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.6rem 1.25rem;
+  border-bottom: 1px solid var(--theme-elevation-150);
+  flex-shrink: 0;
+  overflow-x: auto;
+}
+
+.loc-modal__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--theme-text-body);
+  opacity: 0.45;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.loc-modal__tab:hover {
+  opacity: 0.8;
+  background: var(--theme-elevation-100);
+}
+
+.loc-modal__tab--active {
+  background: var(--theme-elevation-150);
+  opacity: 1;
+}
+
+.loc-modal__tab-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--theme-success-500, #22c55e);
+  display: none;
+}
+
+.loc-modal__tab--has-value .loc-modal__tab-dot {
+  display: block;
+}
+
+/* ── Modal Body ───────────────────────────────────────────────────────────── */
+.loc-modal__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.loc-modal__pane {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.loc-modal__pane--reference {
+  border-right: 1px solid var(--theme-elevation-150);
+  background: var(--theme-elevation-50);
+}
+
+.loc-modal__pane-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin-bottom: 0.75rem;
+  color: var(--theme-text-body);
+}
+
+.loc-modal__reference-value {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--theme-text-body);
+  background: var(--theme-elevation-100);
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 6px;
+  padding: 0.75rem;
+  min-height: 80px;
+  word-break: break-word;
+}
+
+.loc-modal__reference-value--empty {
+  opacity: 0.4;
+  font-style: italic;
+}
+
+.loc-modal__textarea {
+  width: 100%;
+  flex: 1;
+  min-height: 120px;
+  background: var(--theme-elevation-0);
+  border: 1px solid var(--theme-elevation-300);
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--theme-text-body);
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.loc-modal__textarea:focus {
+  outline: none;
+  border-color: var(--theme-text-body);
+}
+
+.loc-modal__textarea::placeholder {
+  opacity: 0.35;
+}
+
+/* ── Modal Footer ─────────────────────────────────────────────────────────── */
+.loc-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--theme-elevation-150);
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+
+.loc-modal__footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loc-modal__footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.loc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.loc-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.loc-btn--primary {
+  background: var(--theme-text-body);
+  color: var(--theme-elevation-0);
+  border-color: var(--theme-text-body);
+}
+
+.loc-btn--primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.loc-btn--outline {
+  background: transparent;
+  color: var(--theme-text-body);
+  border-color: var(--theme-elevation-300);
+}
+
+.loc-btn--outline:hover:not(:disabled) {
+  background: var(--theme-elevation-100);
+  border-color: var(--theme-text-body);
+}
+
+.loc-btn--ghost {
+  background: transparent;
+  color: var(--theme-text-body);
+  border-color: transparent;
+  opacity: 0.65;
+}
+
+.loc-btn--ghost:hover:not(:disabled) {
+  background: var(--theme-elevation-100);
+  opacity: 1;
+}
+
+.loc-btn--auto {
+  background: var(--theme-elevation-100);
+  color: var(--theme-text-body);
+  border-color: var(--theme-elevation-200);
+  font-size: 0.78rem;
+}
+
+.loc-btn--auto:hover:not(:disabled) {
+  border-color: var(--theme-text-body);
+}
+
+/* ── Loading Spinner ──────────────────────────────────────────────────────── */
+.loc-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: locSpin 0.6s linear infinite;
+  display: inline-block;
+}
+
+@keyframes locSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Status Messages ──────────────────────────────────────────────────────── */
+.loc-status {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+}
+
+.loc-status--success {
+  color: var(--theme-success-500, #22c55e);
+}
+
+.loc-status--error {
+  color: var(--theme-error-500);
+}
