@@ -200,10 +200,41 @@
     "title": "404 – Page Not Found | IFR Foundation",
     "description": "The page you were looking for does not exist."
   },
+  "seo": {
+    "siteName": "Andersen Properties",
+    "titleTemplate": "%s | Andersen Properties",
+    "defaultTitle": "Andersen Properties | Exceptional Indonesian Real Estate",
+    "defaultDescription": "Discover distinctive residences and thoughtfully designed developments across Indonesia selected for architecture, location, and lasting value.",
+    "defaultKeywords": "Andersen Properties, Indonesia real estate, Bali luxury villas, Jakarta luxury property, property acquisition Indonesia, architectural residences",
+    "home": {
+      "title": "Andersen Properties | Exceptional Indonesian Real Estate",
+      "description": "Discover distinctive residences and thoughtfully designed developments across Indonesia selected for architecture, location, and lasting value."
+    },
+    "about": {
+      "title": "About Us",
+      "description": "Built on considered advice and earned trust. Learn about the team, principles, and story behind Andersen Properties."
+    },
+    "services": {
+      "title": "Our Services",
+      "description": "Four distinct services covering every aspect of property in Indonesia — acquisition, sales, development advisory, and private property search."
+    },
+    "activeListings": {
+      "title": "Active Listings",
+      "description": "Browse personally selected properties chosen for architectural quality, prime location, and long-term value across Indonesia."
+    },
+    "portfolios": {
+      "title": "Portfolios",
+      "description": "A record of every development we have curated, delivered, and sold — from active projects open for purchase to completed collections."
+    },
+    "insights": {
+      "title": "Insights",
+      "description": "Architecture, market intelligence, and considered perspectives on Indonesian property and place from Andersen Properties."
+    }
+  },
   "default-metadata": {
-    "title": "Indonesia FIRST Robotik | IFR Foundation",
-    "description": "Indonesia FIRST Robotik (IFR) is the official FIRST Robotics program partner in Indonesia, empowering the next generation of science and technology leaders through robotics competitions.",
-    "twitter-creator": "@indonesiafirstrobotik"
+    "title": "Andersen Properties | Exceptional Indonesian Real Estate",
+    "description": "Discover distinctive residences and thoughtfully designed developments across Indonesia selected for architecture, location, and lasting value.",
+    "twitter-creator": "@andersenprop"
   },
   "home-page": {
     "hero": {

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { Breadcrumb } from '@/components/Active_Listings/Breadcrumb'
 import { ImageSlider } from '@/components/Active_Listings/ImageSlider'
 import { PropertyHeader } from '@/components/Active_Listings/PropertyHeader'
@@ -13,12 +14,62 @@ import { getCachedCollection } from '@/utilities/getCollection'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { LocaleCodes } from '@/i18n/localization'
 import type { Media } from '@/payload-types'
+import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
+import { JsonLd } from '@/components/JsonLd'
+import { getServerSideURL } from '@/utilities/getURL'
 
 interface PageProps {
   params: Promise<{
     locale: LocaleCodes
     'active-listing-slug': string
   }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { 'active-listing-slug': slug, locale } = await params
+
+  const result = await getCachedCollection(
+    {
+      collection: 'properties',
+      depth: 2,
+      limit: 1,
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+    },
+    locale,
+  )()
+
+  const cmsProperty = result.docs[0] as any
+
+  let title = cmsProperty?.meta?.title || cmsProperty?.title
+  let description = cmsProperty?.meta?.description || cmsProperty?.description
+  let image: string | Media | null = cmsProperty?.meta?.image || null
+
+  if (!image && cmsProperty?.images?.[0]?.image) {
+    const firstImg = cmsProperty.images[0].image
+    image = typeof firstImg === 'object' ? (firstImg as Media) : null
+  }
+
+  if (!title && ENABLE_DUMMY_FALLBACK.properties) {
+    const dummyListing = LISTINGS.find((l) => l.slug === slug)
+    if (dummyListing) {
+      title = dummyListing.name
+      image = dummyListing.image
+      const details = LISTING_DETAILS[dummyListing.id]
+      description = details?.description || `Exclusive property in ${dummyListing.location}`
+    }
+  }
+
+  return generateLocalizedMeta({
+    title: title ? `${title} — Active Listings` : 'Active Listing',
+    description: description || 'Exclusive property in Indonesia by Andersen Properties.',
+    path: `/active-listings/${slug}`,
+    locale,
+    image,
+  })
 }
 
 export default async function ActiveListingPage({ params }: PageProps) {
@@ -142,8 +193,51 @@ export default async function ActiveListingPage({ params }: PageProps) {
   const listingTypeText =
     listing.listingType === 'both' ? 'Buy or Rent' : listing.listingType === 'buy' ? 'Buy' : 'Rent'
 
+  const serverUrl = getServerSideURL()
+  const pageUrl = `${serverUrl}/${locale}/active-listings/${slug}`
+
+  const propertyJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateListing',
+    name: listing.name,
+    description: details.description,
+    url: pageUrl,
+    image: details.images.map((img) => img.url).filter(Boolean),
+    offers: {
+      '@type': 'Offer',
+      price: listing.salePrice || listing.rentPrice || 'Contact for Price',
+      priceCurrency: 'IDR',
+    },
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${serverUrl}/${locale}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Active Listings',
+        item: `${serverUrl}/${locale}/active-listings`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: listing.name,
+        item: pageUrl,
+      },
+    ],
+  }
+
   return (
     <main className=" ">
+      <JsonLd data={[propertyJsonLd, breadcrumbJsonLd]} />
       <div className="bg-[#f7f5f0] min-h-screen">
         {/* Breadcrumb */}
         <div className="px-5 md:px-20 max-w-360 mx-auto pt-8 pb-6">

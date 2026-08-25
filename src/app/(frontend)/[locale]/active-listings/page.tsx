@@ -1,18 +1,26 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import ListingsHero from '@/components/Active_Listings/listings_hero'
 import ListingsGrid from '@/components/Active_Listings/listings_grid'
 import { getCachedCollection } from '@/utilities/getCollection'
 import type { LocaleCodes } from '@/i18n/localization'
 import type { Property } from '@/payload-types'
-
-export const metadata: Metadata = {
-  title: 'Active Listings | Andersen Properties',
-  description:
-    "Every property personally selected for architectural quality, location, and long-term value across Indonesia's key markets.",
-}
+import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
 
 type PageProps = {
   params: Promise<{ locale: LocaleCodes }>
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'seo.activeListings' })
+
+  return generateLocalizedMeta({
+    title: t('title'),
+    description: t('description'),
+    path: '/active-listings',
+    locale,
+  })
 }
 
 export default async function ActiveListingsPage({ params }: PageProps) {
