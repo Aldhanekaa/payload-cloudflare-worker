@@ -137,13 +137,13 @@ export default async function RootLayout({
           <Footer />
 
           {/* Floating WhatsApp button (bottom right corner) */}
-          {settings?.whatsapp && (
+          {/* {settings?.whatsapp && (
             <WhatsAppButton
               whatsapp={settings.whatsapp}
               variant="floating"
               message="Hello! I'm interested in learning more about your properties."
             />
-          )}
+          )} */}
         </NextIntlClientProvider>
       </body>
     </html>

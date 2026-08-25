@@ -1,9 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { Link, usePathname } from '@/i18n/routing'
 import NavbarLogo from '@/assets/Horizontal_Andersen_Properties_Logo.svg'
 import FooterLogo from '@/assets/Square_Andersen_Properties_Logo.svg'
 import LanguageToggle from '@/components/LanguageToggle'
@@ -28,7 +27,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  const isHomePage = pathname === '/'
+  const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/id' || pathname === ''
   const SCROLL_THRESHOLD = 100 // pixels to scroll before background changes
 
   // Mount guard so the overlay is in the DOM before animating in
@@ -38,7 +37,10 @@ export default function Navbar() {
 
   // Track scroll position for navbar background
   useEffect(() => {
-    if (!isHomePage) return // Only apply on home page
+    if (!isHomePage) {
+      setScrolled(false)
+      return
+    }
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY

@@ -33,6 +33,19 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { ColorPickerFieldComponent as ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912 } from '@/(payload)/plugins/colorPicker/component'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
+import { default as default_5c0c2f026d3023312882037f7709f993 } from '@/components/(payload)/Header'
+import { default as default_008e8b984045f6649ae74d03500fd9b7 } from '@/components/(payload)/LogoutButton'
+import { SettingsMenu as SettingsMenu_c1db16d1424dd2e233e655894a0d83a1 } from '@/components/(payload)/SettingsMenu'
+import { SystemActions as SystemActions_c1db16d1424dd2e233e655894a0d83a1 } from '@/components/(payload)/SettingsMenu'
+import { default as default_792e9fb6e08f2d6e579fcb97a3c488e2 } from '@/components/(payload)/Icon'
+import { default as default_4fdf16dcf0b8f0d040d608c9955f3b99 } from '@/components/(payload)/Logo'
+import { default as default_af3ffb99e1c90de4033ccda8c5ff25aa } from '@/components/(payload)/Actions'
+import { default as default_3c3fae6da2296fc0d7854a1f7911557b } from '@/components/(payload)/AfterDashboard'
+import { default as default_32f200ff2fc935194321fd27630bdd76 } from '@/components/(payload)/AfterLogin'
+import { default as default_a0e43bfdbc3ca226070c424ce2f6e33f } from '@/components/(payload)/AfterNavLinks'
+import { default as default_c64e2174c8c61abf1fbe1bf33f178119 } from '@/components/(payload)/BeforeDashboard'
+import { default as default_e650e8609dbac1c8b72807e18d8357a8 } from '@/components/(payload)/BeforeLogin'
+import { default as default_33ad075e6e3ab2baffd40c94b68d8565 } from '@/components/(payload)/BeforeNavLinks'
 import { R2ClientUploadHandler as R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d } from '@payloadcms/storage-r2/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -73,6 +86,19 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@/(payload)/plugins/colorPicker/component#ColorPickerFieldComponent": ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
+  "@/components/(payload)/Header#default": default_5c0c2f026d3023312882037f7709f993,
+  "@/components/(payload)/LogoutButton#default": default_008e8b984045f6649ae74d03500fd9b7,
+  "@/components/(payload)/SettingsMenu#SettingsMenu": SettingsMenu_c1db16d1424dd2e233e655894a0d83a1,
+  "@/components/(payload)/SettingsMenu#SystemActions": SystemActions_c1db16d1424dd2e233e655894a0d83a1,
+  "@/components/(payload)/Icon#default": default_792e9fb6e08f2d6e579fcb97a3c488e2,
+  "@/components/(payload)/Logo#default": default_4fdf16dcf0b8f0d040d608c9955f3b99,
+  "@/components/(payload)/Actions#default": default_af3ffb99e1c90de4033ccda8c5ff25aa,
+  "@/components/(payload)/AfterDashboard#default": default_3c3fae6da2296fc0d7854a1f7911557b,
+  "@/components/(payload)/AfterLogin#default": default_32f200ff2fc935194321fd27630bdd76,
+  "@/components/(payload)/AfterNavLinks#default": default_a0e43bfdbc3ca226070c424ce2f6e33f,
+  "@/components/(payload)/BeforeDashboard#default": default_c64e2174c8c61abf1fbe1bf33f178119,
+  "@/components/(payload)/BeforeLogin#default": default_e650e8609dbac1c8b72807e18d8357a8,
+  "@/components/(payload)/BeforeNavLinks#default": default_33ad075e6e3ab2baffd40c94b68d8565,
   "@payloadcms/storage-r2/client#R2ClientUploadHandler": R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
