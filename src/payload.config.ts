@@ -20,7 +20,7 @@ import { Cities } from './(payload)/collections/Cities'
 import { Portfolios } from './(payload)/collections/Portfolios'
 import { Testimonials } from './(payload)/collections/Testimonials'
 
-import sharp from 'sharp'
+// import sharp from 'sharp' // NOT SUPPORTED ON CF WORKER
 
 import { plugins } from '@/(payload)/plugins'
 import { nodemailerAdapter } from '@/(payload)/email/adapter'
@@ -71,7 +71,7 @@ const cloudflare =
 // console.log('isCLI || !isProduction', isCLI || !isProduction)
 
 export default buildConfig({
-  sharp,
+  // sharp,
   graphQL: {
     disable: false,
   },
