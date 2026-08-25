@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   if (!title && ENABLE_DUMMY_FALLBACK.properties) {
-    const dummyListing = LISTINGS.find((l) => l.slug === slug)
+    const dummyListing = LISTINGS.find((l) => l.slug === slug || l.id === slug)
     if (dummyListing) {
       title = dummyListing.name
       image = dummyListing.image
@@ -172,7 +172,7 @@ export default async function ActiveListingPage({ params }: PageProps) {
     }
   } else if (ENABLE_DUMMY_FALLBACK.properties) {
     // Fallback to dummy data (using slug for dummy data)
-    listing = LISTINGS.find((l) => l.slug === slug) || null
+    listing = LISTINGS.find((l) => l.slug === slug || l.id === slug) || null
     if (listing) {
       details = LISTING_DETAILS[listing.id] || {
         images: [{ url: listing.image, alt: listing.imageAlt }],

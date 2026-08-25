@@ -85,7 +85,7 @@ function transformPropertyData(properties: PayloadProperty[]): Property[] {
 const PROPERTIES: Property[] = [
   {
     id: '1',
-    slug: 'aruna-residence',
+    slug: '1',
     badge: 'Exclusive',
     name: 'The Aruna Residence',
     location: 'Uluwatu, Bali',
@@ -94,12 +94,15 @@ const PROPERTIES: Property[] = [
     area: '620 m²',
     price: 'IDR 28.5 Billion',
     tag: 'villas',
-    href: '/active-listings/aruna-residence',
-    image: { src: DefaultImg, alt: 'The Aruna Residence, Uluwatu, Bali' },
+    href: '/active-listings/1',
+    image: {
+      src: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=900&h=700&fit=crop&auto=format',
+      alt: 'The Aruna Residence, Uluwatu, Bali',
+    },
   },
   {
     id: '2',
-    slug: 'senopati-courtyard',
+    slug: '2',
     badge: 'New',
     name: 'Senopati Courtyard House',
     location: 'South Jakarta',
@@ -108,12 +111,15 @@ const PROPERTIES: Property[] = [
     area: '380 m²',
     price: 'IDR 18.2 Billion',
     tag: 'houses',
-    href: '/active-listings/senopati-courtyard',
-    image: { src: DefaultImg, alt: 'Senopati Courtyard House, South Jakarta' },
+    href: '/active-listings/2',
+    image: {
+      src: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=480&fit=crop&auto=format',
+      alt: 'Senopati Courtyard House, South Jakarta',
+    },
   },
   {
     id: '3',
-    slug: 'terraces-canggu',
+    slug: '3',
     badge: 'Exclusive',
     name: 'The Terraces at Canggu',
     location: 'Canggu, Bali',
@@ -122,12 +128,15 @@ const PROPERTIES: Property[] = [
     area: '280 m²',
     price: 'Price on request',
     tag: 'villas',
-    href: '/active-listings/terraces-canggu',
-    image: { src: DefaultImg, alt: 'The Terraces at Canggu, Canggu, Bali' },
+    href: '/active-listings/3',
+    image: {
+      src: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=480&fit=crop&auto=format',
+      alt: 'The Terraces at Canggu, Canggu, Bali',
+    },
   },
   {
     id: '4',
-    slug: 'dago-hills',
+    slug: '4',
     name: 'Dago Hills Residence',
     location: 'Bandung',
     type: 'Houses',
@@ -135,12 +144,15 @@ const PROPERTIES: Property[] = [
     area: '450 m²',
     price: 'IDR 14.8 Billion',
     tag: 'houses',
-    href: '/active-listings/dago-hills',
-    image: { src: DefaultImg, alt: 'Dago Hills Residence, Bandung' },
+    href: '/active-listings/4',
+    image: {
+      src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=480&fit=crop&auto=format',
+      alt: 'Dago Hills Residence, Bandung',
+    },
   },
   {
     id: '5',
-    slug: 'surabaya-garden',
+    slug: '5',
     name: 'Surabaya Garden Estate',
     location: 'Surabaya',
     type: 'Houses',
@@ -148,8 +160,11 @@ const PROPERTIES: Property[] = [
     area: '780 m²',
     price: 'IDR 22.0 Billion',
     tag: 'houses',
-    href: '/active-listings/surabaya-garden',
-    image: { src: DefaultImg, alt: 'Surabaya Garden Estate, Surabaya' },
+    href: '/active-listings/5',
+    image: {
+      src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=480&fit=crop&auto=format',
+      alt: 'Surabaya Garden Estate, Surabaya',
+    },
   },
 ]
 

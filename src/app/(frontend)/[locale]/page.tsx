@@ -1,12 +1,6 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 
-import config from '@/payload.config'
 import './styles.css'
 import HomePageHero from '@/components/Home/home_hero'
 import HomeAboutAndersenProperties from '@/components/Home/home_about_andersen_properties'
@@ -91,13 +85,6 @@ export default async function HomePage({ params }: PageProps) {
   )()
 
   const posts = postsResult.docs as Post[]
-
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
-
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
     <main>
