@@ -31,11 +31,11 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
-  localization(),
+  // localization(),
   // fieldsSelect(),
 
   betterEditor({
-    collections: ['pages', 'posts'], // collection slugs where the toggle appears
+    collections: ['pages'], // collection slugs where the toggle appears
   }),
 
   // // importExportPlugin({
@@ -57,10 +57,10 @@ export const plugins: Plugin[] = [
   // // Enhanced Sidebar - Organized navigation with tabs
   payloadEnhancedSidebar(sidebarConfig),
 
-  seoPlugin({
-    generateTitle,
-    generateURL,
-  }),
+  // seoPlugin({
+  //   generateTitle,
+  //   generateURL,
+  // }),
   RightPanelPlugin({
     excludedCollections: [], // Add collections to exclude if needed
   }),

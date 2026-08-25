@@ -31,6 +31,7 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { default as default_622ee6d751a3251c92e383ed88de1c86 } from '@shefing/right-panel/components/RightPanelEditView'
 import { ColorPickerFieldComponent as ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912 } from '@/(payload)/plugins/colorPicker/component'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { default as default_5c0c2f026d3023312882037f7709f993 } from '@/components/(payload)/Header'
@@ -46,6 +47,7 @@ import { default as default_a0e43bfdbc3ca226070c424ce2f6e33f } from '@/component
 import { default as default_c64e2174c8c61abf1fbe1bf33f178119 } from '@/components/(payload)/BeforeDashboard'
 import { default as default_e650e8609dbac1c8b72807e18d8357a8 } from '@/components/(payload)/BeforeLogin'
 import { default as default_33ad075e6e3ab2baffd40c94b68d8565 } from '@/components/(payload)/BeforeNavLinks'
+import { CustomContextProvider as CustomContextProvider_eb973206959ea065377b1af967827871 } from '@shefing/right-panel/providers/CustomContext'
 import { R2ClientUploadHandler as R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d } from '@payloadcms/storage-r2/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -84,6 +86,7 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  "@shefing/right-panel/components/RightPanelEditView#default": default_622ee6d751a3251c92e383ed88de1c86,
   "@/(payload)/plugins/colorPicker/component#ColorPickerFieldComponent": ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
   "@/components/(payload)/Header#default": default_5c0c2f026d3023312882037f7709f993,
@@ -99,6 +102,7 @@ export const importMap = {
   "@/components/(payload)/BeforeDashboard#default": default_c64e2174c8c61abf1fbe1bf33f178119,
   "@/components/(payload)/BeforeLogin#default": default_e650e8609dbac1c8b72807e18d8357a8,
   "@/components/(payload)/BeforeNavLinks#default": default_33ad075e6e3ab2baffd40c94b68d8565,
+  "@shefing/right-panel/providers/CustomContext#CustomContextProvider": CustomContextProvider_eb973206959ea065377b1af967827871,
   "@payloadcms/storage-r2/client#R2ClientUploadHandler": R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
