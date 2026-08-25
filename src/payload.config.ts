@@ -63,9 +63,9 @@ const cloudflare =
 // console.log('isCLI || !isProduction', isCLI || !isProduction)
 
 export default buildConfig({
-  // graphQL: {
-  //   disable: true,
-  // },
+  graphQL: {
+    disable: false,
+  },
   // ...
   localization: {
     locales: ['en', 'id'], // required
