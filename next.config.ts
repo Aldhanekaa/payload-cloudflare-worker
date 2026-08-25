@@ -83,18 +83,18 @@ const nextConfig: NextConfig = {
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
   serverExternalPackages: [
-    'jose',
-    'pg-cloudflare',
-    'jsdom',
-    'undici',
-    'cssstyle',
-    'csstools',
-    'css-tree',
-    'sharp',
-    'pino',
-    'pino-pretty',
-    'nodemailer', // Can't send emails from Workers anyway
-    'graphql', // If disabling GraphQL
+    // 'jose',
+    // 'pg-cloudflare',
+    // 'jsdom',
+    // 'undici',
+    // 'cssstyle',
+    // 'csstools',
+    // 'css-tree',
+    // 'sharp',
+    // 'pino',
+    // 'pino-pretty',
+    // 'nodemailer', // Can't send emails from Workers anyway
+    // 'graphql', // If disabling GraphQL
   ],
   redirects,
 }
