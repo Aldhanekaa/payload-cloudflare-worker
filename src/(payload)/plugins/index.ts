@@ -9,7 +9,6 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 
 import RightPanelPlugin from '@shefing/right-panel'
 import { payloadEnhancedSidebar } from '@veiag/payload-enhanced-sidebar'
-// import { importExportPlugin } from '@payloadcms/plugin-import-export'
 import { localization } from '@websolutespa/payload-plugin-localization'
 import { blurDataUrlsPlugin } from '@oversightstudio/blur-data-urls'
 import { fieldsSelect } from '@payload-enchants/fields-select'
@@ -32,30 +31,30 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export const plugins: Plugin[] = [
   localization(),
-  fieldsSelect(),
+  // fieldsSelect(),
 
   betterEditor({
     collections: ['pages', 'posts'], // collection slugs where the toggle appears
   }),
 
-  // importExportPlugin({
-  //   collections: [{ slug: 'properties' }],
-  //   // see below for a list of available options
+  // // importExportPlugin({
+  // //   collections: [{ slug: 'properties' }],
+  // //   // see below for a list of available options
+  // // }),
+
+  // blurDataUrlsPlugin({
+  //   enabled: true,
+  //   collections: [Media],
+  //   // Blur data URLs Settings (Optional)
+  //   blurOptions: {
+  //     blur: 18,
+  //     width: 32,
+  //     height: 'auto',
+  //   },
   // }),
 
-  blurDataUrlsPlugin({
-    enabled: true,
-    collections: [Media],
-    // Blur data URLs Settings (Optional)
-    blurOptions: {
-      blur: 18,
-      width: 32,
-      height: 'auto',
-    },
-  }),
-
-  // Enhanced Sidebar - Organized navigation with tabs
-  payloadEnhancedSidebar(sidebarConfig),
+  // // Enhanced Sidebar - Organized navigation with tabs
+  // payloadEnhancedSidebar(sidebarConfig),
 
   seoPlugin({
     generateTitle,
