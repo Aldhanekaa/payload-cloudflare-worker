@@ -12,12 +12,14 @@ import redirectsImport from './redirects.js'
 const redirects = redirectsImport as () => Promise<any>
 
 const stubPath = path.resolve('./stubs/drizzle-kit.js')
+const sharpStubPath = path.resolve('./stubs/sharp.js')
 
 const nextConfig: NextConfig = {
   turbopack: {
     resolveAlias: {
       'drizzle-kit': './stubs/drizzle-kit.js',
       'drizzle-kit/api': './stubs/drizzle-kit.js',
+      sharp: './stubs/sharp.js',
     },
   },
   webpack: (config) => {
@@ -25,6 +27,7 @@ const nextConfig: NextConfig = {
       ...config.resolve.alias,
       'drizzle-kit': stubPath,
       'drizzle-kit/api': stubPath,
+      sharp: sharpStubPath,
     }
     return config
   },
@@ -77,12 +80,13 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     workerThreads: false,
-    staticGenerationMaxConcurrency: 5,
-    staticGenerationMinPagesPerWorker: 5,
+    staticGenerationMaxConcurrency: 1,
+    staticGenerationMinPagesPerWorker: 1,
   },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
   serverExternalPackages: [
+    'sharp',
     // 'jose',
     // 'pg-cloudflare',
     // 'jsdom',
@@ -90,7 +94,6 @@ const nextConfig: NextConfig = {
     // 'cssstyle',
     // 'csstools',
     // 'css-tree',
-    // 'sharp',
     // 'pino',
     // 'pino-pretty',
     // 'nodemailer', // Can't send emails from Workers anyway

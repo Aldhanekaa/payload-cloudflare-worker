@@ -54,8 +54,15 @@ const cloudflareLogger = {
   silent: () => {},
 } as any // Use PayloadLogger type when it's exported
 
+const isBuild =
+  process.env.NEXT_PHASE === 'phase-production-build' ||
+  process.argv.some((value) => value.includes('build'))
+
+const hasGlobalCloudflareContext =
+  typeof (globalThis as any)[Symbol.for('__cloudflare-context__')] !== 'undefined'
+
 const cloudflare =
-  isCLI || !isProduction
+  isCLI || !isProduction || isBuild || !hasGlobalCloudflareContext
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 
@@ -159,13 +166,39 @@ export default buildConfig({
 })
 
 // Adapted from https://github.com/opennextjs/opennextjs-cloudflare/blob/d00b3a13e42e65aad76fba41774815726422cc39/packages/cloudflare/src/api/cloudflare-context.ts#L328C36-L328C46
-function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
-  return import(/* webpackIgnore: true */ `${'__wrangler'.replaceAll('_', '')}`).then(
-    ({ getPlatformProxy }) =>
-      getPlatformProxy({
-        environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: false,
-        // remoteBindings: process.env.REMOTE_BINDINGS !== 'false',
-      }),
-  )
+function getCloudflareContextFromWrangler(retries = 5, delay = 300): Promise<CloudflareContext> {
+  const global = globalThis as any
+  if (global.__cloudflareContextPromise) {
+    return global.__cloudflareContextPromise
+  }
+  global.__cloudflareContextPromise = (async () => {
+    const isBuild =
+      process.env.NEXT_PHASE === 'phase-production-build' ||
+      process.argv.some((value) => value.includes('build'))
+    for (let attempt = 1; attempt <= retries; attempt++) {
+      try {
+        const { getPlatformProxy } = await import(
+          /* webpackIgnore: true */ `${'__wrangler'.replaceAll('_', '')}`
+        )
+        return await getPlatformProxy({
+          environment: process.env.CLOUDFLARE_ENV,
+          remoteBindings: false,
+          ...(isBuild ? { persist: false } : {}),
+        })
+      } catch (err: any) {
+        const isSqliteBusy =
+          err?.message?.includes('SQLITE_BUSY') ||
+          err?.stack?.includes('SQLITE_BUSY') ||
+          String(err).includes('database is locked')
+        if (isSqliteBusy && attempt < retries) {
+          await new Promise((resolve) => setTimeout(resolve, delay * attempt))
+          continue
+        }
+        global.__cloudflareContextPromise = undefined
+        throw err
+      }
+    }
+    throw new Error('Failed to acquire Cloudflare context from Wrangler after retries')
+  })()
+  return global.__cloudflareContextPromise
 }
