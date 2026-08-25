@@ -1,14 +1,60 @@
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 
-export default createMiddleware(routing)
+const intlMiddleware = createMiddleware(routing)
+
+// Target host for remote resources on the internet
+const TARGET_HOST = process.env.PROXY_TARGET_URL || 'https://andersen.feroworks.com'
+
+// Common static resource file extensions
+const RESOURCE_EXTENSIONS = /\.(png|jpe?g|gif|webp|svg|ico|pdf|txt|xml|json|css|js|woff2?|ttf|eot|otf|mp4|webm|ogv|mp3|wav)$/i
+
+export default async function middleware(request: NextRequest) {
+  const { pathname, search } = request.nextUrl
+
+  // Check if request is for a media route, upload path, or static resource file
+  const isResourcePath =
+    pathname.startsWith('/api/media/') ||
+    pathname.startsWith('/media/') ||
+    pathname.startsWith('/uploads/') ||
+    RESOURCE_EXTENSIONS.test(pathname)
+
+  if (isResourcePath) {
+    try {
+      const targetUrl = new URL(pathname + search, TARGET_HOST)
+
+      const headers = new Headers(request.headers)
+      headers.set('host', targetUrl.host)
+
+      const response = await fetch(targetUrl.toString(), {
+        method: request.method,
+        headers,
+        redirect: 'follow',
+      })
+
+      return response
+    } catch (error) {
+      console.error('Failed to proxy resource:', error)
+      return new NextResponse('Resource proxy error', { status: 502 })
+    }
+  }
+
+  // Bypass next-intl for API and Admin routes
+  if (pathname.startsWith('/api') || pathname.startsWith('/admin')) {
+    return NextResponse.next()
+  }
+
+  // Handle internationalization for page routes
+  return intlMiddleware(request)
+}
 
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/api`, `/_next`, `/_vercel`, or `/admin`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: ['/((?!api|_next|_vercel|admin|.*\\..*).*)'],
+  // Match all paths except Next.js internal files and Vercel system paths
+  matcher: ['/((?!_next|_vercel).*)'],
 }
 
 // Specify experimental-edge runtime for Cloudflare Workers compatibility (Next.js 16+)
 export const runtime = 'experimental-edge'
+

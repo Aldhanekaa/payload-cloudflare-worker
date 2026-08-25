@@ -77,8 +77,8 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     workerThreads: false,
-    staticGenerationMaxConcurrency: 1,
-    staticGenerationMinPagesPerWorker: 1,
+    staticGenerationMaxConcurrency: 5,
+    staticGenerationMinPagesPerWorker: 5,
   },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd

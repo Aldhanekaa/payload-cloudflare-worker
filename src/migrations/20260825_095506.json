@@ -205,13 +205,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "blur_data_url": {
-          "name": "blur_data_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "folder_id": {
           "name": "folder_id",
           "type": "integer",
@@ -11807,109 +11800,6 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
-    },
-    "better_editor_settings": {
-      "name": "better_editor_settings",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "sidebar_position": {
-          "name": "sidebar_position",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'right'"
-        },
-        "force_full_width_fields": {
-          "name": "force_full_width_fields",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": true
-        },
-        "tablet_width": {
-          "name": "tablet_width",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": 800
-        },
-        "mobile_width": {
-          "name": "mobile_width",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": 400
-        },
-        "hover_color_top_level": {
-          "name": "hover_color_top_level",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'#3b82f6'"
-        },
-        "hover_color_nested": {
-          "name": "hover_color_nested",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'#f59e0b'"
-        },
-        "hover_outline_width": {
-          "name": "hover_outline_width",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": 2
-        },
-        "show_hover_toolbar": {
-          "name": "show_hover_toolbar",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": true
-        },
-        "hover_toolbar_position": {
-          "name": "hover_toolbar_position",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'top-right'"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
     }
   },
   "views": {},
@@ -11921,6 +11811,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "117c0369-80f1-4a20-9a1b-f5c79fb2bf95",
+  "id": "cc9752db-0c96-4a65-a387-8b80aa518555",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
