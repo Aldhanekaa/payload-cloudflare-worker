@@ -61,10 +61,10 @@ importers:
         version: 3.0.2
       '@websolutespa/payload-plugin-localization':
         specifier: ^3.0.1
-        version: 3.0.1(68dd6db96a18314b3a0a5ed33b1d8176)
+        version: 3.0.1(625d232a9df1b794442bff8a6bb21b7b)
       '@websolutespa/payload-utils':
         specifier: ^3.0.2
-        version: 3.0.2(@payloadcms/db-mongodb@3.74.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9))(@payloadcms/ui@3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3))(@websolutespa/bom-core@3.0.2)(jsdom@28.0.0(@noble/hashes@1.8.0))(mongodb@6.16.0(socks@2.8.9))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(uuid@13.0.2)
+        version: 3.0.2(@payloadcms/db-mongodb@3.88.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9))(@payloadcms/ui@3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3))(@websolutespa/bom-core@3.0.2)(jsdom@28.0.0(@noble/hashes@1.8.0))(mongodb@6.20.0(socks@2.8.9))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(uuid@13.0.2)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -122,6 +122,9 @@ importers:
       tailwind-merge:
         specifier: ^3.6.0
         version: 3.6.0
+      ts-essentials:
+        specifier: ^10.2.1
+        version: 10.2.1(typescript@5.7.3)
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
@@ -2392,10 +2395,10 @@ packages:
     peerDependencies:
       payload: 3.88.0
 
-  '@payloadcms/db-mongodb@3.74.0':
-    resolution: {integrity: sha512-NuYOaAX/F9rpvT+R6ro3BKTlAI9ktaofCx0fSbUI/WUG5A6H8v8JOeO5/8HWaZBy9XoTzjRgQJmB0BuWzTtVIQ==}
+  '@payloadcms/db-mongodb@3.88.0':
+    resolution: {integrity: sha512-bjXWm7DvUQYLCTe3zJ9Pr57gEX5pQOtH+SgAhJBhh2fMYy/bE7pLf0DJG8z1E6N9Z8b1EX3kWkE1bhTYnR5Gxg==}
     peerDependencies:
-      payload: 3.74.0
+      payload: 3.88.0
 
   '@payloadcms/drizzle@3.88.0':
     resolution: {integrity: sha512-qtPVSLjAFnQl1GwaQPhmnYTwCCWgTnRm4ps5yJxmN3RPdLF6S77gvqZMnC4HTeH7YADQJW3nFgQCVYExxWE6hA==}
@@ -6233,8 +6236,8 @@ packages:
   mongodb-connection-string-url@3.0.2:
     resolution: {integrity: sha512-rMO7CGo/9BFwyZABcKAWL8UJwH/Kc2x0g72uhDWzG48URRax5TCIcJ7Rc3RZqffZzO/Gwff/jyKwCU9TN8gehA==}
 
-  mongodb@6.16.0:
-    resolution: {integrity: sha512-D1PNcdT0y4Grhou5Zi/qgipZOYeWrhLEpk33n3nm6LGtz61jvO88WlrWCK/bigMjpnOdAUKKQwsGIl0NtWMyYw==}
+  mongodb@6.20.0:
+    resolution: {integrity: sha512-Tl6MEIU3K4Rq3TSHd+sZQqRBoGlFsOgNrH5ltAcFBV62Re3Fd+FcaVf8uSEQFOJ51SDowDVttBTONMfoYWrWlQ==}
     engines: {node: '>=16.20.1'}
     peerDependencies:
       '@aws-sdk/credential-providers': ^3.188.0
@@ -6242,7 +6245,7 @@ packages:
       gcp-metadata: ^5.2.0
       kerberos: ^2.0.1
       mongodb-client-encryption: '>=6.0.0 <7'
-      snappy: ^7.2.2
+      snappy: ^7.3.2
       socks: ^2.7.1
     peerDependenciesMeta:
       '@aws-sdk/credential-providers':
@@ -6260,13 +6263,23 @@ packages:
       socks:
         optional: true
 
-  mongoose-paginate-v2@1.8.5:
-    resolution: {integrity: sha512-kFxhot+yw9KmpAGSSrF/o+f00aC2uawgNUbhyaM0USS9L7dln1NA77/pLg4lgOaRgXMtfgCENamjqZwIM1Zrig==}
+  mongoose-lean-virtuals@1.1.1:
+    resolution: {integrity: sha512-8chOqpVE3bcoWT2pIgcJeIZlXaOfQCavZgQZF4qytUtjRBqsNMyzUoR16qdw9XL2kC478N8iA8z0AA+NSS0d1A==}
+    engines: {node: '>=16.20.1'}
+    peerDependencies:
+      mongoose: '>=5.11.10'
+
+  mongoose-paginate-v2@1.9.4:
+    resolution: {integrity: sha512-0LOsVEQmjrbJKVDi/IvFEhIezmuRjUE4loGgslv57j9nK/NMC+mbKT0QnaPSPpib4lByKVBcy3VbDa1TvlHZjA==}
     engines: {node: '>=4.0.0'}
 
-  mongoose@8.15.1:
-    resolution: {integrity: sha512-RhQ4DzmBi5BNGcS0w4u1vdMRIKcteXTCNzDt1j7XRcdWYBz1MjMjulBhPaeC5jBCHOD1yinuOFTTSOWLLGexWw==}
+  mongoose@8.24.1:
+    resolution: {integrity: sha512-UpHBA0l5kHyKJQFjmBaFYQFo5sgz1DK0TRqDkOyBLYbqiIbKKhIvBpHWBXqeo0rgW4kGI1UhhAw+kTQZoj1BdA==}
     engines: {node: '>=16.20.1'}
+
+  mpath@0.8.4:
+    resolution: {integrity: sha512-DTxNZomBcTWlrMW76jy1wvV37X/cNNxPW1y2Jzd4DZkAaC5ZGsm8bfGfNOthcDuRJujXLqiuS6o3Tpy0JEoh7g==}
+    engines: {node: '>=4.0.0'}
 
   mpath@0.9.0:
     resolution: {integrity: sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==}
@@ -7378,6 +7391,14 @@ packages:
       typescript:
         optional: true
 
+  ts-essentials@10.2.1:
+    resolution: {integrity: sha512-+Id1fRkuir+CsgK2x04/icS2b4V1hQmq7ObzIrDjhN0ozfRYivnP7aaKMVJfLApQm0trjR39A6NIMVchiB9Erw==}
+    peerDependencies:
+      typescript: '>=4.5.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   ts-morph@26.0.0:
     resolution: {integrity: sha512-ztMO++owQnz8c/gIENcM9XfCEzgoGphTv+nKpYNM1bgsdOVC/jRZuEBf6N+mLLDNg68Kl+GgUZfOySaRiG1/Ug==}
 
@@ -7565,11 +7586,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  uuid@10.0.0:
-    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
-    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
-    hasBin: true
 
   uuid@13.0.2:
     resolution: {integrity: sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==}
@@ -10185,13 +10201,13 @@ snapshots:
       - sqlite3
       - supports-color
 
-  '@payloadcms/db-mongodb@3.74.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9)':
+  '@payloadcms/db-mongodb@3.88.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9)':
     dependencies:
-      mongoose: 8.15.1(socks@2.8.9)
-      mongoose-paginate-v2: 1.8.5
+      mongoose: 8.24.1(socks@2.8.9)
+      mongoose-paginate-v2: 1.9.4(mongoose@8.24.1(socks@2.8.9))
       payload: 3.88.0(graphql@16.14.2)(typescript@5.7.3)
       prompts: 2.4.2
-      uuid: 10.0.0
+      uuid: 13.0.2
     transitivePeerDependencies:
       - '@aws-sdk/credential-providers'
       - '@mongodb-js/zstd'
@@ -12046,28 +12062,28 @@ snapshots:
     dependencies:
       pluralize: 8.0.0
 
-  '@websolutespa/payload-plugin-localization@3.0.1(68dd6db96a18314b3a0a5ed33b1d8176)':
+  '@websolutespa/payload-plugin-localization@3.0.1(625d232a9df1b794442bff8a6bb21b7b)':
     dependencies:
-      '@payloadcms/db-mongodb': 3.74.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9)
+      '@payloadcms/db-mongodb': 3.88.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9)
       '@payloadcms/next': 3.88.0(@types/react@19.2.9)(graphql@16.14.2)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3)
       '@payloadcms/translations': 3.88.0
       '@payloadcms/ui': 3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3)
       '@websolutespa/bom-core': 3.0.2
-      '@websolutespa/payload-utils': 3.0.2(@payloadcms/db-mongodb@3.74.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9))(@payloadcms/ui@3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3))(@websolutespa/bom-core@3.0.2)(jsdom@28.0.0(@noble/hashes@1.8.0))(mongodb@6.16.0(socks@2.8.9))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(uuid@13.0.2)
+      '@websolutespa/payload-utils': 3.0.2(@payloadcms/db-mongodb@3.88.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9))(@payloadcms/ui@3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3))(@websolutespa/bom-core@3.0.2)(jsdom@28.0.0(@noble/hashes@1.8.0))(mongodb@6.20.0(socks@2.8.9))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(uuid@13.0.2)
       payload: 3.88.0(graphql@16.14.2)(typescript@5.7.3)
       react: 19.2.8
       react-dom: 19.2.8(react@19.2.8)
 
-  '@websolutespa/payload-utils@3.0.2(@payloadcms/db-mongodb@3.74.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9))(@payloadcms/ui@3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3))(@websolutespa/bom-core@3.0.2)(jsdom@28.0.0(@noble/hashes@1.8.0))(mongodb@6.16.0(socks@2.8.9))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(uuid@13.0.2)':
+  '@websolutespa/payload-utils@3.0.2(@payloadcms/db-mongodb@3.88.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9))(@payloadcms/ui@3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3))(@websolutespa/bom-core@3.0.2)(jsdom@28.0.0(@noble/hashes@1.8.0))(mongodb@6.20.0(socks@2.8.9))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(uuid@13.0.2)':
     dependencies:
-      '@payloadcms/db-mongodb': 3.74.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9)
+      '@payloadcms/db-mongodb': 3.88.0(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(socks@2.8.9)
       '@payloadcms/ui': 3.88.0(@types/react@19.2.9)(monaco-editor@0.56.0)(next@16.3.2(@babel/core@7.29.7)(@playwright/test@1.58.2)(@types/node@22.19.9)(babel-plugin-macros@3.1.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.77.4))(payload@3.88.0(graphql@16.14.2)(typescript@5.7.3))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.7.3)
       '@slate-serializers/html': 2.2.3
       '@websolutespa/bom-core': 3.0.2
       escape-html: 1.0.3
       http-status: 2.1.0
       jsdom: 28.0.0(@noble/hashes@1.8.0)
-      mongodb: 6.16.0(socks@2.8.9)
+      mongodb: 6.20.0(socks@2.8.9)
       payload: 3.88.0(graphql@16.14.2)(typescript@5.7.3)
       slate: 0.91.4
       transliteration: 2.6.1
@@ -14550,7 +14566,7 @@ snapshots:
       '@types/whatwg-url': 11.0.5
       whatwg-url: 14.2.0
 
-  mongodb@6.16.0(socks@2.8.9):
+  mongodb@6.20.0(socks@2.8.9):
     dependencies:
       '@mongodb-js/saslprep': 1.5.0
       bson: 6.10.4
@@ -14558,13 +14574,22 @@ snapshots:
     optionalDependencies:
       socks: 2.8.9
 
-  mongoose-paginate-v2@1.8.5: {}
+  mongoose-lean-virtuals@1.1.1(mongoose@8.24.1(socks@2.8.9)):
+    dependencies:
+      mongoose: 8.24.1(socks@2.8.9)
+      mpath: 0.8.4
 
-  mongoose@8.15.1(socks@2.8.9):
+  mongoose-paginate-v2@1.9.4(mongoose@8.24.1(socks@2.8.9)):
+    dependencies:
+      mongoose-lean-virtuals: 1.1.1(mongoose@8.24.1(socks@2.8.9))
+    transitivePeerDependencies:
+      - mongoose
+
+  mongoose@8.24.1(socks@2.8.9):
     dependencies:
       bson: 6.10.4
       kareem: 2.6.3
-      mongodb: 6.16.0(socks@2.8.9)
+      mongodb: 6.20.0(socks@2.8.9)
       mpath: 0.9.0
       mquery: 5.0.0
       ms: 2.1.3
@@ -14578,6 +14603,8 @@ snapshots:
       - snappy
       - socks
       - supports-color
+
+  mpath@0.8.4: {}
 
   mpath@0.9.0: {}
 
@@ -15936,6 +15963,10 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.3
 
+  ts-essentials@10.2.1(typescript@5.7.3):
+    optionalDependencies:
+      typescript: 5.7.3
+
   ts-morph@26.0.0:
     dependencies:
       '@ts-morph/common': 0.27.0
@@ -16156,8 +16187,6 @@ snapshots:
   utf8-byte-length@1.0.5: {}
 
   util-deprecate@1.0.2: {}
-
-  uuid@10.0.0: {}
 
   uuid@13.0.2: {}
 
