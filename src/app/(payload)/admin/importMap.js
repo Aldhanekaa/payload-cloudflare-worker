@@ -1,3 +1,7 @@
+import { AdminInviteButton as AdminInviteButton_5a568d0e24198ca3140489e0d330f424 } from 'payload-auth/better-auth/plugin/client'
+import { AdminButtons as AdminButtons_5a568d0e24198ca3140489e0d330f424 } from 'payload-auth/better-auth/plugin/client'
+import { GenerateUuidButton as GenerateUuidButton_ce3a59fe00f4e2209a6e5804babc005e } from 'payload-auth/shared/payload/fields'
+import { FieldCopyButton as FieldCopyButton_ce3a59fe00f4e2209a6e5804babc005e } from 'payload-auth/shared/payload/fields'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -31,26 +35,41 @@ import { MetaTitleComponent as MetaTitleComponent_a8a977ebc872c5d5ea7ee689724c08
 import { MetaImageComponent as MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
+import { LiveEditorToggle as LiveEditorToggle_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
+import { default as default_622ee6d751a3251c92e383ed88de1c86 } from '@shefing/right-panel/components/RightPanelEditView'
 import { ColorPickerFieldComponent as ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912 } from '@/(payload)/plugins/colorPicker/component'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
+import { SettingsBanner as SettingsBanner_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
+import { EnhancedSidebar as EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371 } from '@veiag/payload-enhanced-sidebar/rsc'
 import { default as default_5c0c2f026d3023312882037f7709f993 } from '@/components/(payload)/Header'
-import { default as default_008e8b984045f6649ae74d03500fd9b7 } from '@/components/(payload)/LogoutButton'
+import { LogoutButton as LogoutButton_5a568d0e24198ca3140489e0d330f424 } from 'payload-auth/better-auth/plugin/client'
 import { SettingsMenu as SettingsMenu_c1db16d1424dd2e233e655894a0d83a1 } from '@/components/(payload)/SettingsMenu'
 import { SystemActions as SystemActions_c1db16d1424dd2e233e655894a0d83a1 } from '@/components/(payload)/SettingsMenu'
 import { default as default_792e9fb6e08f2d6e579fcb97a3c488e2 } from '@/components/(payload)/Icon'
 import { default as default_4fdf16dcf0b8f0d040d608c9955f3b99 } from '@/components/(payload)/Logo'
 import { default as default_af3ffb99e1c90de4033ccda8c5ff25aa } from '@/components/(payload)/Actions'
 import { default as default_3c3fae6da2296fc0d7854a1f7911557b } from '@/components/(payload)/AfterDashboard'
+import { RSCRedirect as RSCRedirect_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
 import { default as default_32f200ff2fc935194321fd27630bdd76 } from '@/components/(payload)/AfterLogin'
 import { default as default_a0e43bfdbc3ca226070c424ce2f6e33f } from '@/components/(payload)/AfterNavLinks'
 import { default as default_c64e2174c8c61abf1fbe1bf33f178119 } from '@/components/(payload)/BeforeDashboard'
 import { default as default_e650e8609dbac1c8b72807e18d8357a8 } from '@/components/(payload)/BeforeLogin'
 import { default as default_33ad075e6e3ab2baffd40c94b68d8565 } from '@/components/(payload)/BeforeNavLinks'
+import { InternalBadgeProvider as InternalBadgeProvider_bb20d92177fcc2ccf9f674de15933324 } from '@veiag/payload-enhanced-sidebar/client'
+import { CustomContextProvider as CustomContextProvider_eb973206959ea065377b1af967827871 } from '@shefing/right-panel/providers/CustomContext'
 import { R2ClientUploadHandler as R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d } from '@payloadcms/storage-r2/client'
+import { AdminLogin as AdminLogin_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
+import { AdminSignup as AdminSignup_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
+import { ForgotPassword as ForgotPassword_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
+import { ResetPassword as ResetPassword_5afe2312a68aef77a0242fe42f239ed0 } from 'payload-auth/better-auth/plugin/rsc'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "payload-auth/better-auth/plugin/client#AdminInviteButton": AdminInviteButton_5a568d0e24198ca3140489e0d330f424,
+  "payload-auth/better-auth/plugin/client#AdminButtons": AdminButtons_5a568d0e24198ca3140489e0d330f424,
+  "payload-auth/shared/payload/fields#GenerateUuidButton": GenerateUuidButton_ce3a59fe00f4e2209a6e5804babc005e,
+  "payload-auth/shared/payload/fields#FieldCopyButton": FieldCopyButton_ce3a59fe00f4e2209a6e5804babc005e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -84,21 +103,32 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
+  "payload-better-editor/client#LiveEditorToggle": LiveEditorToggle_d26de2934fab2f5e50b16fb3e402473a,
+  "@shefing/right-panel/components/RightPanelEditView#default": default_622ee6d751a3251c92e383ed88de1c86,
   "@/(payload)/plugins/colorPicker/component#ColorPickerFieldComponent": ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
+  "payload-better-editor/client#SettingsBanner": SettingsBanner_d26de2934fab2f5e50b16fb3e402473a,
+  "@veiag/payload-enhanced-sidebar/rsc#EnhancedSidebar": EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371,
   "@/components/(payload)/Header#default": default_5c0c2f026d3023312882037f7709f993,
-  "@/components/(payload)/LogoutButton#default": default_008e8b984045f6649ae74d03500fd9b7,
+  "payload-auth/better-auth/plugin/client#LogoutButton": LogoutButton_5a568d0e24198ca3140489e0d330f424,
   "@/components/(payload)/SettingsMenu#SettingsMenu": SettingsMenu_c1db16d1424dd2e233e655894a0d83a1,
   "@/components/(payload)/SettingsMenu#SystemActions": SystemActions_c1db16d1424dd2e233e655894a0d83a1,
   "@/components/(payload)/Icon#default": default_792e9fb6e08f2d6e579fcb97a3c488e2,
   "@/components/(payload)/Logo#default": default_4fdf16dcf0b8f0d040d608c9955f3b99,
   "@/components/(payload)/Actions#default": default_af3ffb99e1c90de4033ccda8c5ff25aa,
   "@/components/(payload)/AfterDashboard#default": default_3c3fae6da2296fc0d7854a1f7911557b,
+  "payload-auth/better-auth/plugin/rsc#RSCRedirect": RSCRedirect_5afe2312a68aef77a0242fe42f239ed0,
   "@/components/(payload)/AfterLogin#default": default_32f200ff2fc935194321fd27630bdd76,
   "@/components/(payload)/AfterNavLinks#default": default_a0e43bfdbc3ca226070c424ce2f6e33f,
   "@/components/(payload)/BeforeDashboard#default": default_c64e2174c8c61abf1fbe1bf33f178119,
   "@/components/(payload)/BeforeLogin#default": default_e650e8609dbac1c8b72807e18d8357a8,
   "@/components/(payload)/BeforeNavLinks#default": default_33ad075e6e3ab2baffd40c94b68d8565,
+  "@veiag/payload-enhanced-sidebar/client#InternalBadgeProvider": InternalBadgeProvider_bb20d92177fcc2ccf9f674de15933324,
+  "@shefing/right-panel/providers/CustomContext#CustomContextProvider": CustomContextProvider_eb973206959ea065377b1af967827871,
   "@payloadcms/storage-r2/client#R2ClientUploadHandler": R2ClientUploadHandler_85cc02ed84006fcc91d3aff39dda669d,
+  "payload-auth/better-auth/plugin/rsc#AdminLogin": AdminLogin_5afe2312a68aef77a0242fe42f239ed0,
+  "payload-auth/better-auth/plugin/rsc#AdminSignup": AdminSignup_5afe2312a68aef77a0242fe42f239ed0,
+  "payload-auth/better-auth/plugin/rsc#ForgotPassword": ForgotPassword_5afe2312a68aef77a0242fe42f239ed0,
+  "payload-auth/better-auth/plugin/rsc#ResetPassword": ResetPassword_5afe2312a68aef77a0242fe42f239ed0,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

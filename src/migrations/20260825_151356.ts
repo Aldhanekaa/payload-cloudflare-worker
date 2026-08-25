@@ -1,33 +1,97 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-d1-sqlite'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
-  await db.run(sql`CREATE TABLE \`users_sessions\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` integer NOT NULL,
-  	\`id\` text PRIMARY KEY NOT NULL,
-  	\`created_at\` text,
-  	\`expires_at\` text NOT NULL,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`users\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  await db.run(sql`CREATE TABLE \`users_role\` (
+  	\`order\` integer NOT NULL,
+  	\`parent_id\` integer NOT NULL,
+  	\`value\` text,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	FOREIGN KEY (\`parent_id\`) REFERENCES \`users\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`users_sessions_order_idx\` ON \`users_sessions\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`users_sessions_parent_id_idx\` ON \`users_sessions\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`users_role_order_idx\` ON \`users_role\` (\`order\`);`)
+  await db.run(sql`CREATE INDEX \`users_role_parent_idx\` ON \`users_role\` (\`parent_id\`);`)
   await db.run(sql`CREATE TABLE \`users\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
-  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`name\` text NOT NULL,
   	\`email\` text NOT NULL,
-  	\`reset_password_token\` text,
-  	\`reset_password_expiration\` text,
-  	\`salt\` text,
-  	\`hash\` text,
-  	\`login_attempts\` numeric DEFAULT 0,
-  	\`lock_until\` text
+  	\`email_verified\` integer DEFAULT false NOT NULL,
+  	\`image\` text,
+  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`banned\` integer DEFAULT false,
+  	\`ban_reason\` text,
+  	\`ban_expires\` text
   );
   `)
-  await db.run(sql`CREATE INDEX \`users_updated_at_idx\` ON \`users\` (\`updated_at\`);`)
-  await db.run(sql`CREATE INDEX \`users_created_at_idx\` ON \`users\` (\`created_at\`);`)
   await db.run(sql`CREATE UNIQUE INDEX \`users_email_idx\` ON \`users\` (\`email\`);`)
+  await db.run(sql`CREATE INDEX \`users_created_at_idx\` ON \`users\` (\`created_at\`);`)
+  await db.run(sql`CREATE INDEX \`users_updated_at_idx\` ON \`users\` (\`updated_at\`);`)
+  await db.run(sql`CREATE TABLE \`sessions\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`expires_at\` text NOT NULL,
+  	\`token\` text NOT NULL,
+  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`ip_address\` text,
+  	\`user_agent\` text,
+  	\`user_id\` integer NOT NULL,
+  	\`impersonated_by_id\` integer,
+  	FOREIGN KEY (\`user_id\`) REFERENCES \`users\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`impersonated_by_id\`) REFERENCES \`users\`(\`id\`) ON UPDATE no action ON DELETE set null
+  );
+  `)
+  await db.run(sql`CREATE UNIQUE INDEX \`sessions_token_idx\` ON \`sessions\` (\`token\`);`)
+  await db.run(sql`CREATE INDEX \`sessions_created_at_idx\` ON \`sessions\` (\`created_at\`);`)
+  await db.run(sql`CREATE INDEX \`sessions_updated_at_idx\` ON \`sessions\` (\`updated_at\`);`)
+  await db.run(sql`CREATE INDEX \`sessions_user_idx\` ON \`sessions\` (\`user_id\`);`)
+  await db.run(sql`CREATE INDEX \`sessions_impersonated_by_idx\` ON \`sessions\` (\`impersonated_by_id\`);`)
+  await db.run(sql`CREATE TABLE \`accounts\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`issuer\` text NOT NULL,
+  	\`account_id\` text NOT NULL,
+  	\`provider_id\` text NOT NULL,
+  	\`user_id\` integer NOT NULL,
+  	\`access_token\` text,
+  	\`refresh_token\` text,
+  	\`id_token\` text,
+  	\`access_token_expires_at\` text,
+  	\`refresh_token_expires_at\` text,
+  	\`scope\` text,
+  	\`password\` text,
+  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	FOREIGN KEY (\`user_id\`) REFERENCES \`users\`(\`id\`) ON UPDATE no action ON DELETE set null
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`accounts_account_id_idx\` ON \`accounts\` (\`account_id\`);`)
+  await db.run(sql`CREATE INDEX \`accounts_user_idx\` ON \`accounts\` (\`user_id\`);`)
+  await db.run(sql`CREATE INDEX \`accounts_created_at_idx\` ON \`accounts\` (\`created_at\`);`)
+  await db.run(sql`CREATE INDEX \`accounts_updated_at_idx\` ON \`accounts\` (\`updated_at\`);`)
+  await db.run(sql`CREATE TABLE \`verifications\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`identifier\` text NOT NULL,
+  	\`value\` text NOT NULL,
+  	\`expires_at\` text NOT NULL,
+  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`verifications_identifier_idx\` ON \`verifications\` (\`identifier\`);`)
+  await db.run(sql`CREATE INDEX \`verifications_created_at_idx\` ON \`verifications\` (\`created_at\`);`)
+  await db.run(sql`CREATE INDEX \`verifications_updated_at_idx\` ON \`verifications\` (\`updated_at\`);`)
+  await db.run(sql`CREATE TABLE \`admin_invitations\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`role\` text DEFAULT 'admin' NOT NULL,
+  	\`token\` text NOT NULL,
+  	\`expires_at\` text NOT NULL,
+  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`admin_invitations_token_idx\` ON \`admin_invitations\` (\`token\`);`)
+  await db.run(sql`CREATE INDEX \`admin_invitations_updated_at_idx\` ON \`admin_invitations\` (\`updated_at\`);`)
+  await db.run(sql`CREATE INDEX \`admin_invitations_created_at_idx\` ON \`admin_invitations\` (\`created_at\`);`)
   await db.run(sql`CREATE TABLE \`media\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`alt\` text,
@@ -1531,6 +1595,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`parent_id\` integer NOT NULL,
   	\`path\` text NOT NULL,
   	\`users_id\` integer,
+  	\`sessions_id\` integer,
+  	\`accounts_id\` integer,
+  	\`verifications_id\` integer,
+  	\`admin_invitations_id\` integer,
   	\`media_id\` integer,
   	\`categories_id\` integer,
   	\`posts_id\` integer,
@@ -1547,6 +1615,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`payload_folders_id\` integer,
   	FOREIGN KEY (\`parent_id\`) REFERENCES \`payload_locked_documents\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`users_id\`) REFERENCES \`users\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`sessions_id\`) REFERENCES \`sessions\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`accounts_id\`) REFERENCES \`accounts\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`verifications_id\`) REFERENCES \`verifications\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`admin_invitations_id\`) REFERENCES \`admin_invitations\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`media_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`categories_id\`) REFERENCES \`categories\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`posts_id\`) REFERENCES \`posts\`(\`id\`) ON UPDATE no action ON DELETE cascade,
@@ -1567,6 +1639,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_parent_idx\` ON \`payload_locked_documents_rels\` (\`parent_id\`);`)
   await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_path_idx\` ON \`payload_locked_documents_rels\` (\`path\`);`)
   await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_users_id_idx\` ON \`payload_locked_documents_rels\` (\`users_id\`);`)
+  await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_sessions_id_idx\` ON \`payload_locked_documents_rels\` (\`sessions_id\`);`)
+  await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_accounts_id_idx\` ON \`payload_locked_documents_rels\` (\`accounts_id\`);`)
+  await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_verifications_id_idx\` ON \`payload_locked_documents_rels\` (\`verifications_id\`);`)
+  await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_admin_invitations_id_idx\` ON \`payload_locked_documents_rels\` (\`admin_invitations_id\`);`)
   await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_media_id_idx\` ON \`payload_locked_documents_rels\` (\`media_id\`);`)
   await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_categories_id_idx\` ON \`payload_locked_documents_rels\` (\`categories_id\`);`)
   await db.run(sql`CREATE INDEX \`payload_locked_documents_rels_posts_id_idx\` ON \`payload_locked_documents_rels\` (\`posts_id\`);`)
@@ -1683,11 +1759,30 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`global_settings_rels_path_idx\` ON \`global_settings_rels\` (\`path\`);`)
   await db.run(sql`CREATE INDEX \`global_settings_rels_pages_id_idx\` ON \`global_settings_rels\` (\`pages_id\`);`)
   await db.run(sql`CREATE INDEX \`global_settings_rels_posts_id_idx\` ON \`global_settings_rels\` (\`posts_id\`);`)
+  await db.run(sql`CREATE TABLE \`better_editor_settings\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`sidebar_position\` text DEFAULT 'right',
+  	\`force_full_width_fields\` integer DEFAULT true,
+  	\`tablet_width\` numeric DEFAULT 800,
+  	\`mobile_width\` numeric DEFAULT 400,
+  	\`hover_color_top_level\` text DEFAULT '#3b82f6',
+  	\`hover_color_nested\` text DEFAULT '#f59e0b',
+  	\`hover_outline_width\` numeric DEFAULT 2,
+  	\`show_hover_toolbar\` integer DEFAULT true,
+  	\`hover_toolbar_position\` text DEFAULT 'top-right',
+  	\`updated_at\` text,
+  	\`created_at\` text
+  );
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
-  await db.run(sql`DROP TABLE \`users_sessions\`;`)
+  await db.run(sql`DROP TABLE \`users_role\`;`)
   await db.run(sql`DROP TABLE \`users\`;`)
+  await db.run(sql`DROP TABLE \`sessions\`;`)
+  await db.run(sql`DROP TABLE \`accounts\`;`)
+  await db.run(sql`DROP TABLE \`verifications\`;`)
+  await db.run(sql`DROP TABLE \`admin_invitations\`;`)
   await db.run(sql`DROP TABLE \`media\`;`)
   await db.run(sql`DROP TABLE \`categories\`;`)
   await db.run(sql`DROP TABLE \`categories_locales\`;`)
@@ -1797,4 +1892,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`global_settings\`;`)
   await db.run(sql`DROP TABLE \`global_settings_locales\`;`)
   await db.run(sql`DROP TABLE \`global_settings_rels\`;`)
+  await db.run(sql`DROP TABLE \`better_editor_settings\`;`)
 }

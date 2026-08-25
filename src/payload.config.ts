@@ -11,7 +11,7 @@ import { r2Storage } from '@payloadcms/storage-r2'
 import { Categories } from './(payload)/collections/Categories'
 import { Pages } from './(payload)/collections/Pages'
 import { Posts } from './(payload)/collections/Posts'
-import { Users } from './(payload)/collections/Users'
+// import { Users } from './(payload)/collections/Users'
 import { Media } from './(payload)/collections/Media'
 import { Properties } from './(payload)/collections/Properties'
 import { PropertyTypes } from './(payload)/collections/PropertyTypes'
@@ -23,7 +23,9 @@ import { Testimonials } from './(payload)/collections/Testimonials'
 import sharp from 'sharp'
 
 import { plugins } from '@/(payload)/plugins'
-// import { nodemailerAdapter } from '@/(payload)/email/adapter'
+import { betterAuthPlugin } from 'payload-auth/better-auth'
+import { payloadAuthOptions } from './lib/auth/options'
+import { nodemailerAdapter } from '@/(payload)/email/adapter'
 import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
 // import { migrations } from './migrations'
 // import migrations from './db/migrations'
@@ -83,7 +85,7 @@ export default buildConfig({
   },
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
-    user: Users.slug,
+    user: 'users',
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -118,7 +120,6 @@ export default buildConfig({
     },
   },
   collections: [
-    Users,
     Media,
     Categories,
     Posts,
@@ -141,26 +142,10 @@ export default buildConfig({
     // prodMigrations: migrations as any,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
-  // email: nodemailerAdapter,
+  email: nodemailerAdapter,
   plugins: [
     ...plugins,
-    // s3Storage({
-    //   collections: {
-    //     media: true,
-    //   },
-    //   bucket: 'payloadcms-cf-worker-template',
-    //   config: {
-    //     credentials: {
-    //       accessKeyId: process.env.S3_ACCESS_KEY_ID,
-    //       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
-    //     },
-    //     endpoint: process.env.S3_ENDPOINT,
-    //     region: process.env.S3_REGION, // asia pacific
-    //     // region: process.env.S3_REGION,
-
-    //     // ... Other S3 configuration
-    //   },
-    // }),
+    betterAuthPlugin(payloadAuthOptions),
     r2Storage({
       bucket: cloudflare.env.R2,
       collections: { media: true },
