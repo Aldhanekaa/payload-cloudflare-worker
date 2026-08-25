@@ -14,6 +14,10 @@ export default {
       'undici',
       'cssstyle',
       'css-tree',
+      'sharp',
+      '@img/sharp-darwin-arm64',
+      '@img/sharp-wasm32',
+      '*.node',
     ],
   },
   edgeExternals: [
@@ -25,5 +29,9 @@ export default {
     'undici',
     'cssstyle',
     'css-tree',
+    'sharp',
+    '@img/sharp-darwin-arm64',
+    '@img/sharp-wasm32',
+    '*.node',
   ],
 }
