@@ -1,6 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
+import path from 'path'
 
 const withNextIntl = createNextIntlPlugin({
   requestConfig: './src/i18n/request.ts',
@@ -60,7 +61,13 @@ const nextConfig: NextConfig = {
   },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
-  serverExternalPackages: ['jose', 'pg-cloudflare', 'drizzle-kit', 'sharp'],
+  serverExternalPackages: [
+    'jose',
+    'pg-cloudflare',
+    'drizzle-kit',
+    'drizzle-kit-e722632bd56cd1a1/api',
+    'drizzle-kit-*/api',
+  ],
 
   // Your Next.js config here
   webpack: (webpackConfig: any, { isServer }: any) => {
@@ -72,11 +79,19 @@ const nextConfig: NextConfig = {
 
     // Ignore drizzle-kit in production builds (it's a dev-only tool)
     if (isServer) {
+      // Alias drizzle-kit and all its subpaths to an empty stub
+      webpackConfig.resolve.alias = webpackConfig.resolve.alias || {}
+      webpackConfig.resolve.alias['drizzle-kit'] = path.resolve('./stubs/drizzle-kit.js')
+      webpackConfig.resolve.alias['drizzle-kit/api'] = path.resolve('./stubs/drizzle-kit.js')
+
       webpackConfig.externals = webpackConfig.externals || []
-      webpackConfig.externals.push({
-        'drizzle-kit': 'commonjs drizzle-kit',
-        'drizzle-kit/api': 'commonjs drizzle-kit/api',
-      })
+      // Mark drizzle-kit as external - it should never be bundled
+      webpackConfig.externals.push(
+        'drizzle-kit',
+        'drizzle-kit/api',
+        /^drizzle-kit\/.*/,
+        /^drizzle-kit-.*\/api$/,
+      )
     }
 
     return webpackConfig
