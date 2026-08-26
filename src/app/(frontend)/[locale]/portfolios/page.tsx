@@ -30,7 +30,7 @@ export default async function PortfoliosPage({ params }: PageProps) {
   const result = await getCachedCollection(
     {
       collection: 'portfolios',
-      depth: 1,
+      depth: 3,
       limit: 100,
       sort: '-createdAt',
     },
@@ -40,7 +40,7 @@ export default async function PortfoliosPage({ params }: PageProps) {
   const portfolios = result.docs as Portfolio[]
 
   return (
-    <main className="  bg-[#f7f5f0] min-h-screen">
+    <main className="  bg-[#f7f5f0] min-h-screen pt-10">
       <PortfoliosHero portfolios={portfolios} />
       <PortfoliosGrid portfolios={portfolios} />
     </main>

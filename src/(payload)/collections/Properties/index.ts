@@ -188,6 +188,30 @@ export const Properties: CollectionConfig = {
       },
     },
 
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'isFurnished',
+          type: 'checkbox',
+          label: 'Is it Furnished',
+          defaultValue: false,
+          admin: {
+            width: '50%',
+          },
+        },
+        {
+          name: 'stagingAvailableOnRequest',
+          type: 'checkbox',
+          label: 'Is staging available on request',
+          defaultValue: false,
+          admin: {
+            width: '50%',
+          },
+        },
+      ],
+    },
+
     // ── Pricing (Conditional) ───────────────────────────────────────
     {
       type: 'collapsible',

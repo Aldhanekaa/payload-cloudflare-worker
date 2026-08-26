@@ -11,18 +11,18 @@ import { Feature2 } from '@/(payload)/blocks/Features/Feature2/Component'
 import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/Component'
 import { Steps } from '@/(payload)/blocks/Steps/Component'
 import { FormBlock } from '@/(payload)/blocks/Form'
-import { HomeHero } from '@/(payload)/blocks/HomeHero'
-import { HomeAbout } from '@/(payload)/blocks/HomeAbout'
-import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment'
-import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps'
-import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial'
-import { HomeExpertise } from '@/(payload)/blocks/Expertise'
-import { Path } from '@/(payload)/blocks/Path'
-import { HomeFAQs } from '@/(payload)/blocks/FAQs'
-import { AndersenCTA } from '@/(payload)/blocks/CTA'
-import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties'
-import { HomePlaces } from '@/(payload)/blocks/HomePlaces'
-import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection'
+// import { HomeHero } from '@/(payload)/blocks/HomeHero'
+// import { HomeAbout } from '@/(payload)/blocks/HomeAbout'
+// import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment'
+// import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps'
+// import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial'
+// import { HomeExpertise } from '@/(payload)/blocks/Expertise'
+// import { Path } from '@/(payload)/blocks/Path'
+// import { HomeFAQs } from '@/(payload)/blocks/FAQs'
+// import { AndersenCTA } from '@/(payload)/blocks/CTA'
+// import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties'
+// import { HomePlaces } from '@/(payload)/blocks/HomePlaces'
+// import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection'
 
 const blockComponents: Record<string, React.FC<any>> = {
   archive: ArchiveBlock,
@@ -34,19 +34,19 @@ const blockComponents: Record<string, React.FC<any>> = {
   heroHeadline: HeroHeadline,
   steps: Steps,
   formBlock: FormBlock,
-  homeHero: HomeHero,
-  homeAbout: HomeAbout,
-  homeFeaturedProperties: HomeFeaturedProperties,
-  homeSignatureDevelopment: HomeSignatureDevelopment,
-  homeConsiderationSteps: HomeConsiderationSteps,
-  homePlaces: HomePlaces,
-  homeClientTestimonial: HomeClientTestimonial,
-  expertise: HomeExpertise,
-  path: Path,
-  faqs: HomeFAQs,
-  andersen_cta: AndersenCTA,
+  // homeHero: HomeHero,
+  // homeAbout: HomeAbout,
+  // homeFeaturedProperties: HomeFeaturedProperties,
+  // homeSignatureDevelopment: HomeSignatureDevelopment,
+  // homeConsiderationSteps: HomeConsiderationSteps,
+  // homePlaces: HomePlaces,
+  // homeClientTestimonial: HomeClientTestimonial,
+  // expertise: HomeExpertise,
+  // path: Path,
+  // faqs: HomeFAQs,
+  // andersen_cta: AndersenCTA,
 
-  homeJournalSection: HomeJournalSection,
+  // homeJournalSection: HomeJournalSection,
 }
 
 export const RenderBlocks: React.FC<{

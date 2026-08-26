@@ -75,15 +75,6 @@ export async function seedGlobalSettings() {
             },
           },
         ],
-
-        // Current Season Promotion Link (optional)
-        currentSeasonPromotionLink: {
-          type: 'custom',
-          url: '/summer-promotion',
-          label: 'Summer Special Offers - Learn More',
-          newTab: false,
-          appearance: 'default',
-        },
       },
     })
 

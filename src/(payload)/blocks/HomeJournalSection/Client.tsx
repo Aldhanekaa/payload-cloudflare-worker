@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
-import type { Post, Media } from '@/payload-types'
+import type { Post, Media, Category } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -37,6 +37,8 @@ type Props = {
 function transformPostData(posts: Post[], readTimeLabel: string): JournalPost[] {
   return posts.map((post) => {
     const heroImageData = typeof post.heroImage === 'object' ? (post.heroImage as Media) : null
+    const categoryValue =
+      typeof post.category === 'object' ? (post.category as Category).title : 'Article'
 
     // Format date
     const formatDate = (dateString: string | undefined) => {
@@ -49,7 +51,7 @@ function transformPostData(posts: Post[], readTimeLabel: string): JournalPost[] 
     const readTime = post.readTime ? `${post.readTime} ${readTimeLabel}` : `5 ${readTimeLabel}`
 
     return {
-      category: post.category || 'Article',
+      category: categoryValue,
       date: formatDate(post.publishedAt),
       title: post.title,
       readTime,

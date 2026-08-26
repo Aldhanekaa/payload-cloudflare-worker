@@ -22,20 +22,20 @@ import { Feature1 } from '@/(payload)/blocks/Features/Feature1/config'
 import { Feature2 } from '@/(payload)/blocks/Features/Feature2/config'
 import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/config'
 import { Steps } from '@/(payload)/blocks/Steps/config'
-import { colorPickerField } from '@/(payload)/plugins/colorPicker'
+// import { colorPickerField } from '@/(payload)/plugins/colorPicker'
 import { FormBlock } from '@/(payload)/fields/Form'
-import { HomeHero } from '@/(payload)/blocks/HomeHero/config'
-import { HomeAbout } from '@/(payload)/blocks/HomeAbout/config'
-import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties/config'
-import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment/config'
-import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps/config'
-import { Expertise } from '@/(payload)/blocks/Expertise/config'
-import { HomePlaces } from '@/(payload)/blocks/HomePlaces/config'
-import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial/config'
-import { Path } from '@/(payload)/blocks/Path/config'
-import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection/config'
-import { FAQs } from '@/(payload)/blocks/FAQs/config'
-import { CTA } from '@/(payload)/blocks/CTA/config'
+// import { HomeHero } from '@/(payload)/blocks/HomeHero/config'
+// import { HomeAbout } from '@/(payload)/blocks/HomeAbout/config'
+// import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties/config'
+// import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment/config'
+// import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps/config'
+// import { Expertise } from '@/(payload)/blocks/Expertise/config'
+// import { HomePlaces } from '@/(payload)/blocks/HomePlaces/config'
+// import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial/config'
+// import { Path } from '@/(payload)/blocks/Path/config'
+// import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection/config'
+// import { FAQs } from '@/(payload)/blocks/FAQs/config'
+// import { CTA } from '@/(payload)/blocks/CTA/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -109,18 +109,18 @@ export const Pages: CollectionConfig<'pages'> = {
                 Feature2,
                 HeroHeadline,
                 Steps,
-                HomeHero,
-                HomeAbout,
-                HomeFeaturedProperties,
-                HomeSignatureDevelopment,
-                HomeConsiderationSteps,
-                HomePlaces,
-                HomeClientTestimonial,
-                Expertise,
-                Path,
-                FAQs,
-                CTA,
-                HomeJournalSection,
+                // HomeHero,
+                // HomeAbout,
+                // HomeFeaturedProperties,
+                // HomeSignatureDevelopment,
+                // HomeConsiderationSteps,
+                // HomePlaces,
+                // HomeClientTestimonial,
+                // Expertise,
+                // Path,
+                // FAQs,
+                // CTA,
+                // HomeJournalSection,
               ],
               required: true,
               localized: true,

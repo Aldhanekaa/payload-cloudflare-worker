@@ -12,7 +12,7 @@ import { PORTFOLIO_DETAILS } from '@/components/Portfolios/portfolio-details-dat
 import { getCachedCollection } from '@/utilities/getCollection'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { LocaleCodes } from '@/i18n/localization'
-import type { Portfolio, Media, City } from '@/payload-types'
+import type { Portfolio, Media, City, PortfolioCategory } from '@/payload-types'
 import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
 import { JsonLd } from '@/components/JsonLd'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -44,8 +44,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cmsPortfolio = result.docs[0] as any
 
   let title = cmsPortfolio?.meta?.title || cmsPortfolio?.name
-  let description = cmsPortfolio?.meta?.description || cmsPortfolio?.description || cmsPortfolio?.tagline
-  let image: number | string | Media | null = cmsPortfolio?.meta?.image || cmsPortfolio?.heroImage || null
+  let description =
+    cmsPortfolio?.meta?.description || cmsPortfolio?.description || cmsPortfolio?.tagline
+  let image: number | string | Media | null =
+    cmsPortfolio?.meta?.image || cmsPortfolio?.heroImage || null
 
   if (!title && ENABLE_DUMMY_FALLBACK.portfolios) {
     const dummyPortfolio = PORTFOLIOS.find((p) => p.slug === slug)
@@ -86,7 +88,7 @@ export default async function PortfolioPage({ params }: PageProps) {
   const result = await getCachedCollection(
     {
       collection: 'portfolios',
-      depth: 1,
+      depth: 3,
       limit: 1,
       where: {
         slug: {
@@ -106,6 +108,10 @@ export default async function PortfolioPage({ params }: PageProps) {
   if (cmsPortfolio) {
     // Transform CMS data
     const cityData = typeof cmsPortfolio.city === 'object' ? cmsPortfolio.city : null
+    const categoryData =
+      typeof cmsPortfolio.category === 'object'
+        ? (cmsPortfolio.category as PortfolioCategory)
+        : null
     const heroImageData =
       typeof cmsPortfolio.heroImage === 'object' ? (cmsPortfolio.heroImage as Media) : null
 
@@ -113,7 +119,7 @@ export default async function PortfolioPage({ params }: PageProps) {
       id: String(cmsPortfolio.id),
       slug: cmsPortfolio.slug || String(cmsPortfolio.id),
       status: cmsPortfolio.status as any,
-      category: cmsPortfolio.category || 'Uncategorized',
+      category: categoryData?.name || 'Uncategorized',
       name: cmsPortfolio.name,
       location: cmsPortfolio.location || '',
       city: cityData?.name || 'Unknown',
@@ -164,6 +170,8 @@ export default async function PortfolioPage({ params }: PageProps) {
   }
 
   const statusDisplay = formatStatus(portfolio.status)
+  const enquiryLink = cmsPortfolio?.enquiryLink
+  const waitlistLink = cmsPortfolio?.waitlistLink
 
   const serverUrl = getServerSideURL()
   const pageUrl = `${serverUrl}/${locale}/portfolios/${slug}`
@@ -194,7 +202,7 @@ export default async function PortfolioPage({ params }: PageProps) {
   }
 
   return (
-    <main className=" ">
+    <main className=" pt-30 ">
       <JsonLd data={breadcrumbJsonLd} />
       <div className="bg-[#f7f5f0] min-h-screen">
         {/* Breadcrumb */}
@@ -248,6 +256,8 @@ export default async function PortfolioPage({ params }: PageProps) {
                 location={portfolio.location}
                 totalUnits={portfolio.units}
                 completion={portfolio.completion}
+                enquiryLink={enquiryLink}
+                waitlistLink={waitlistLink}
               />
             </div>
           </div>

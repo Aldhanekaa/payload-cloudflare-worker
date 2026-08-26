@@ -72,12 +72,11 @@ export function LocalizationModal({
 
   // ── Fetch all locale values for this field ───────────────────────────────
   const allCodes = useMemo(() => localeList.map((l: LocaleItem) => l.code), [localeList])
-  const { data: localeData, isFetching, refetch } = useLocaleData(
-    collectionSlug,
-    docId,
-    fieldPath,
-    allCodes,
-  )
+  const {
+    data: localeData,
+    isFetching,
+    refetch,
+  } = useLocaleData(collectionSlug, docId, fieldPath, allCodes)
 
   // Track if user has modified a locale's text manually
   const touchedRef = useRef<Record<string, boolean>>({})
@@ -116,8 +115,7 @@ export function LocalizationModal({
   const getEditedLocales = useCallback(() => {
     return allCodes.filter(
       (code: string) =>
-        code !== referenceCode &&
-        (edits[code] ?? '') !== (localeData[code]?.value ?? ''),
+        code !== referenceCode && (edits[code] ?? '') !== (localeData[code]?.value ?? ''),
     )
   }, [allCodes, edits, localeData, referenceCode])
 
@@ -149,15 +147,12 @@ export function LocalizationModal({
               headers.Authorization = `JWT ${token}`
             }
 
-            const res = await fetch(
-              `/api/${collectionSlug}/${docId}?${params.toString()}`,
-              {
-                method: 'PATCH',
-                headers,
-                credentials: 'include',
-                body: JSON.stringify(body),
-              },
-            )
+            const res = await fetch(`/api/${collectionSlug}/${docId}?${params.toString()}`, {
+              method: 'PATCH',
+              headers,
+              credentials: 'include',
+              body: JSON.stringify(body),
+            })
 
             if (!res.ok) {
               const msg = await res.text()
@@ -293,9 +288,7 @@ export function LocalizationModal({
             </button>
 
             {otherLocales.map((locale: LocaleItem) => {
-              const hasValue = Boolean(
-                edits[locale.code] ?? localeData[locale.code]?.value,
-              )
+              const hasValue = Boolean(edits[locale.code] ?? localeData[locale.code]?.value)
               return (
                 <button
                   key={locale.code}
@@ -325,7 +318,9 @@ export function LocalizationModal({
           <div className="loc-modal__pane loc-modal__pane--reference">
             <div className="loc-modal__pane-label">
               Reference language&nbsp;
-              {(localeList.find((l: LocaleItem) => l.code === referenceCode)?.label ?? referenceCode).toUpperCase()}
+              {(
+                localeList.find((l: LocaleItem) => l.code === referenceCode)?.label ?? referenceCode
+              ).toUpperCase()}
             </div>
             {isFetching && !referenceValue ? (
               <div className="loc-modal__reference-value loc-modal__reference-value--empty">
@@ -343,9 +338,7 @@ export function LocalizationModal({
 
           {/* Target locale panel */}
           <div className="loc-modal__pane">
-            <div className="loc-modal__pane-label">
-              {activeLocale?.label ?? activeTargetCode}
-            </div>
+            <div className="loc-modal__pane-label">{activeLocale?.label ?? activeTargetCode}</div>
             <textarea
               className="loc-modal__textarea"
               placeholder={`Enter ${activeLocale?.label ?? activeTargetCode} translation…`}
@@ -372,11 +365,7 @@ export function LocalizationModal({
                 disabled={isTranslating || isFetching || !referenceValue}
                 title="Generate translation automatically"
               >
-                {isTranslating ? (
-                  <span className="loc-spinner" />
-                ) : (
-                  <Wand2 size={13} />
-                )}
+                {isTranslating ? <span className="loc-spinner" /> : <Wand2 size={13} />}
                 Autotranslate
               </button>
             )}
@@ -397,11 +386,7 @@ export function LocalizationModal({
           </div>
 
           <div className="loc-modal__footer-right">
-            <button
-              type="button"
-              className="loc-btn loc-btn--ghost"
-              onClick={onClose}
-            >
+            <button type="button" className="loc-btn loc-btn--ghost" onClick={onClose}>
               Cancel
             </button>
             <button

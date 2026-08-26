@@ -40,16 +40,12 @@ import { authenticated } from '@/(payload)/access/authenticated'
 import { authenticatedOrPublished } from '@/(payload)/access/authenticatedOrPublished'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
-const INSIGHT_CATEGORIES: { label: string; value: string }[] = [
-  { label: 'Architecture', value: 'architecture' },
-  { label: 'Market Insight', value: 'market-insight' },
-  { label: "Buyer's Guide", value: 'buyers-guide' },
-  { label: 'Design', value: 'design' },
-  { label: 'Lifestyle', value: 'lifestyle' },
-]
-
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
+  labels: {
+    plural: 'posts',
+    singular: 'Post',
+  },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -119,11 +115,11 @@ export const Posts: CollectionConfig<'posts'> = {
     // ── Classification (Sidebar) ───────────────────────────────────────
     {
       name: 'category',
-      type: 'select',
+      type: 'relationship',
       label: 'Category',
       required: true,
       hasMany: false,
-      options: INSIGHT_CATEGORIES,
+      relationTo: 'categories',
       admin: {
         position: 'sidebar',
         description: 'Select the primary category for this insight article.',

@@ -35,15 +35,18 @@ export const nodemailerAdapter: EmailAdapter = ({ payload }: { payload: Payload 
     sendEmail: async (message) => {
       const transport = getTransporter()
 
+      const from =
+        message.from ||
+        `${process.env.SMTP_FROM_NAME || 'Anderson Properties'} <${process.env.SMTP_FROM_EMAIL || 'noreply@example.com'}>`
       const mailOptions: SendMailOptions = {
-        from:
-          message.from ||
-          `${process.env.SMTP_FROM_NAME || 'Anderson Properties'} <${process.env.SMTP_FROM_EMAIL || 'noreply@example.com'}>`,
+        from: from,
         to: message.to,
         subject: message.subject,
         html: message.html,
         text: message.text,
       }
+
+      console.log('from', from)
 
       try {
         const info = await transport.sendMail(mailOptions)

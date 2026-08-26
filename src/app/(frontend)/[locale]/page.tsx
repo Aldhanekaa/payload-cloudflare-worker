@@ -15,12 +15,20 @@ import HomeJournalSection from '@/components/Home/home_journal_section'
 import HomeClientTestimonial from '@/components/Home/home_client_testimonial'
 import HomeCTA from '@/components/Home/home_cta'
 import { getCachedCollection } from '@/utilities/getCollection'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import type { LocaleCodes } from '@/i18n/localization'
-import type { Property, City as PayloadCity, Post } from '@/payload-types'
+import type { GlobalSetting, Property, City as PayloadCity, Post, Portfolio } from '@/payload-types'
 import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
 
 type PageProps = {
   params: Promise<{ locale: LocaleCodes }>
+}
+
+type GlobalSettingsWithSignatureDevelopments = GlobalSetting & {
+  signatureDevelopments?: Array<{
+    portfolio?: number | Portfolio | null
+    id?: string | null
+  }> | null
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -42,7 +50,7 @@ export default async function HomePage({ params }: PageProps) {
   const citiesResult = await getCachedCollection(
     {
       collection: 'cities',
-      depth: 1,
+      depth: 2,
       limit: 100,
     },
     locale,
@@ -86,13 +94,32 @@ export default async function HomePage({ params }: PageProps) {
 
   const posts = postsResult.docs as Post[]
 
+  // Fetch homepage global settings for featured signature development.
+  const globalSettings =
+    ((await getCachedGlobal(
+      'global-settings',
+      3,
+      locale,
+    )()) as GlobalSettingsWithSignatureDevelopments) || null
+
+  const featuredSignaturePortfolios =
+    globalSettings?.signatureDevelopments
+      ?.map((item) => item?.portfolio)
+      .filter((portfolio): portfolio is Portfolio =>
+        Boolean(portfolio && typeof portfolio === 'object'),
+      ) || []
+
+  console.log('featuredSignaturePortfolios', featuredSignaturePortfolios)
+  console.log('globalSettings?.signatureDevelopments', globalSettings?.signatureDevelopments)
+  console.log('globalSettings', globalSettings)
+
   return (
     <main>
       <HomePageHero />
 
       <HomeAboutAndersenProperties />
       <HomeFeaturedProperties properties={properties} />
-      <HomeSignaturedDevelopment />
+      <HomeSignaturedDevelopment featuredPortfolios={featuredSignaturePortfolios} />
       <HomeExpertise />
       <HomeConsiderationSteps />
       <HomePlaces cities={cities} />
