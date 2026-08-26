@@ -30,22 +30,32 @@ export function useLocaleData(
   const [data, setData] = useState<LocaleDataMap>({})
   const [isFetching, setIsFetching] = useState(false)
 
+  const localeKey = localeCodes.join(',')
+
   const fetchAll = useCallback(async () => {
-    if (!collectionSlug || !docId || !localeCodes.length) return
+    const codes = localeKey.split(',').filter(Boolean)
+    if (!collectionSlug || !docId || !codes.length) {
+      setIsFetching(false)
+      return
+    }
 
     setIsFetching(true)
 
     const results: LocaleDataMap = {}
 
     await Promise.all(
-      localeCodes.map(async (locale) => {
+      codes.map(async (locale) => {
         try {
+          const headers: Record<string, string> = {}
+          if (token) {
+            headers.Authorization = `JWT ${token}`
+          }
+
           const res = await fetch(
-            `/api/${collectionSlug}/${docId}?locale=${locale}&depth=0`,
+            `/api/${collectionSlug}/${docId}?locale=${locale}&depth=0&draft=true&fallback-locale=null`,
             {
-              headers: {
-                Authorization: `JWT ${token}`,
-              },
+              headers,
+              credentials: 'include',
             },
           )
 
@@ -64,7 +74,7 @@ export function useLocaleData(
           const value = resolvePath(doc, fieldPath)
 
           results[locale] = {
-            value: typeof value === 'string' ? value : value ? String(value) : null,
+            value: typeof value === 'string' ? value : value != null ? String(value) : null,
             isLoading: false,
             error: null,
           }
@@ -80,7 +90,7 @@ export function useLocaleData(
 
     setData(results)
     setIsFetching(false)
-  }, [collectionSlug, docId, fieldPath, localeCodes, token])
+  }, [collectionSlug, docId, fieldPath, localeKey, token])
 
   useEffect(() => {
     fetchAll()

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useDocumentInfo } from '@payloadcms/ui'
+import { useDocumentInfo, useField } from '@payloadcms/ui'
 import { Globe } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import { LocalizationModal } from './LocalizationModal'
@@ -31,6 +31,7 @@ export function LocalizeFieldButton({
   hasAutotranslate = false,
 }: LocalizeFieldButtonProps) {
   const { id, collectionSlug } = useDocumentInfo()
+  const fieldState = useField<string>({ path: fieldPath || fieldName })
   const [isModalOpen, setIsModalOpen] = useState(false)
   // Gate portal rendering until after client-side hydration
   const [mounted, setMounted] = useState(false)
@@ -47,6 +48,13 @@ export function LocalizeFieldButton({
   }
 
   const handleClose = () => setIsModalOpen(false)
+
+  const currentFieldValue =
+    typeof fieldState?.value === 'string'
+      ? fieldState.value
+      : fieldState?.value != null
+      ? String(fieldState.value)
+      : undefined
 
   // ── Unsaved state: disabled button with tooltip ──────────────────────────
   if (!isSaved) {
@@ -94,6 +102,7 @@ export function LocalizeFieldButton({
             fieldPath={fieldPath || fieldName}
             collectionSlug={collectionSlug as string}
             docId={id as string | number}
+            initialReferenceValue={currentFieldValue}
             hasAutotranslate={hasAutotranslate}
             onClose={handleClose}
           />,
