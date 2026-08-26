@@ -1683,6 +1683,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`global_settings_rels_path_idx\` ON \`global_settings_rels\` (\`path\`);`)
   await db.run(sql`CREATE INDEX \`global_settings_rels_pages_id_idx\` ON \`global_settings_rels\` (\`pages_id\`);`)
   await db.run(sql`CREATE INDEX \`global_settings_rels_posts_id_idx\` ON \`global_settings_rels\` (\`posts_id\`);`)
+  await db.run(sql`CREATE TABLE \`better_editor_settings\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`sidebar_position\` text DEFAULT 'right',
+  	\`force_full_width_fields\` integer DEFAULT true,
+  	\`tablet_width\` numeric DEFAULT 800,
+  	\`mobile_width\` numeric DEFAULT 400,
+  	\`hover_color_top_level\` text DEFAULT '#3b82f6',
+  	\`hover_color_nested\` text DEFAULT '#f59e0b',
+  	\`hover_outline_width\` numeric DEFAULT 2,
+  	\`show_hover_toolbar\` integer DEFAULT true,
+  	\`hover_toolbar_position\` text DEFAULT 'top-right',
+  	\`updated_at\` text,
+  	\`created_at\` text
+  );
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -1797,4 +1812,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`global_settings\`;`)
   await db.run(sql`DROP TABLE \`global_settings_locales\`;`)
   await db.run(sql`DROP TABLE \`global_settings_rels\`;`)
+  await db.run(sql`DROP TABLE \`better_editor_settings\`;`)
 }

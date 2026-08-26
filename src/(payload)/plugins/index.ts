@@ -10,10 +10,12 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import RightPanelPlugin from '@shefing/right-panel'
 import { payloadEnhancedSidebar } from '@veiag/payload-enhanced-sidebar'
 // import { importExportPlugin } from '@payloadcms/plugin-import-export'
-import { localization } from '@websolutespa/payload-plugin-localization'
+// import { localization } from '@websolutespa/payload-plugin-localization'  ← replaced by custom plugin
 import { blurDataUrlsPlugin } from '@oversightstudio/blur-data-urls'
 import { fieldsSelect } from '@payload-enchants/fields-select'
 import { betterEditor } from 'payload-better-editor'
+
+// import { localizationPlugin } from './localization'
 
 import { Page, Post } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -31,7 +33,19 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
-  // localization(),
+  // ── Custom Localization Plugin ──────────────────────────────────────────
+  // Adds sticky locale selector + "Change localization" buttons to all collections.
+  // To enable autotranslation, pass `autotranslateAdapter: yourAdapter` below.
+  // localizationPlugin({
+  //   enabled: true,
+  //   // autotranslateAdapter: async ({ text, fromLocale, toLocale }) => {
+  //   //   // Example: call DeepL or Google Translate here
+  //   //   return text // stub: return original text
+  //   // },
+  //   // excludedCollections: ['media'], // skip media from locale bar if desired
+  // }),
+
+  // localization(),  ← replaced by the custom plugin above
   // fieldsSelect(),
 
   betterEditor({
