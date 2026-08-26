@@ -2350,7 +2350,7 @@ export interface GlobalSetting {
   createdAt?: string | null;
 }
 /**
- * Editor-wide preferences for the Better Editor overlay.
+ * Editor-wide preferences for the Editor overlay.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "better-editor-settings".
