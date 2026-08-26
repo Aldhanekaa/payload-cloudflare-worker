@@ -28,17 +28,18 @@ export const State: React.FC<
   return (
     <Width width={width}>
       <div className="space-y-2">
-        <Label htmlFor={name}>{label}</Label>
+        {label && <Label htmlFor={name}>{label}</Label>}
         <Controller
           control={control}
           defaultValue=""
           name={name}
+          rules={{ required }}
           render={({ field: { onChange, value } }) => (
             <ShadcnSelect onValueChange={onChange} value={value}>
-              <SelectTrigger id={name}>
+              <SelectTrigger id={name} className="w-full">
                 <SelectValue placeholder="Select a state" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-60">
                 {stateOptions.map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
@@ -47,7 +48,6 @@ export const State: React.FC<
               </SelectContent>
             </ShadcnSelect>
           )}
-          rules={{ required }}
         />
         {required && errors[name] && <Error />}
       </div>
