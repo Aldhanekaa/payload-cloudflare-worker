@@ -619,46 +619,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_parent_id_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_path_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_path\`);`)
   await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_locale_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_expertise_services\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` text NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`id\` text PRIMARY KEY NOT NULL,
-  	\`title\` text,
-  	\`description\` text,
-  	\`href\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_expertise\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_services_order_idx\` ON \`pages_blocks_home_expertise_services\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_services_parent_id_idx\` ON \`pages_blocks_home_expertise_services\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_services_locale_idx\` ON \`pages_blocks_home_expertise_services\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_expertise\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` integer NOT NULL,
-  	\`_path\` text NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`id\` text PRIMARY KEY NOT NULL,
-  	\`eyebrow\` text DEFAULT 'Our Expertise',
-  	\`title\` text DEFAULT 'Comprehensive service across every stage of your property journey',
-  	\`learn_more_label\` text DEFAULT 'Learn More',
-  	\`background_color\` text DEFAULT '#f7f5f0',
-  	\`eyebrow_color\` text DEFAULT '#b89a5b',
-  	\`title_color\` text DEFAULT '#0a0a0a',
-  	\`service_title_color\` text DEFAULT '#0a0a0a',
-  	\`service_description_color\` text DEFAULT '#a5a19a',
-  	\`learn_more_color\` text DEFAULT '#b89a5b',
-  	\`icon_color\` text DEFAULT '#a5a19a',
-  	\`card_border_color\` text DEFAULT '#e5e0d7',
-  	\`card_border_hover_color\` text DEFAULT '#b89a5b',
-  	\`block_name\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_order_idx\` ON \`pages_blocks_home_expertise\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_parent_id_idx\` ON \`pages_blocks_home_expertise\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_path_idx\` ON \`pages_blocks_home_expertise\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_locale_idx\` ON \`pages_blocks_home_expertise\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`pages_blocks_home_places\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
@@ -711,7 +671,47 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_path_idx\` ON \`pages_blocks_home_client_testimonial\` (\`_path\`);`)
   await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_locale_idx\` ON \`pages_blocks_home_client_testimonial\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_image_idx\` ON \`pages_blocks_home_client_testimonial\` (\`image_id\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_path_steps\` (
+  await db.run(sql`CREATE TABLE \`pages_blocks_expertise_services\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text,
+  	\`description\` text,
+  	\`href\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_expertise\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_services_order_idx\` ON \`pages_blocks_expertise_services\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_services_parent_id_idx\` ON \`pages_blocks_expertise_services\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_services_locale_idx\` ON \`pages_blocks_expertise_services\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_expertise\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Our Expertise',
+  	\`title\` text DEFAULT 'Comprehensive service across every stage of your property journey',
+  	\`learn_more_label\` text DEFAULT 'Learn More',
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`eyebrow_color\` text DEFAULT '#b89a5b',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`service_title_color\` text DEFAULT '#0a0a0a',
+  	\`service_description_color\` text DEFAULT '#a5a19a',
+  	\`learn_more_color\` text DEFAULT '#b89a5b',
+  	\`icon_color\` text DEFAULT '#a5a19a',
+  	\`card_border_color\` text DEFAULT '#e5e0d7',
+  	\`card_border_hover_color\` text DEFAULT '#b89a5b',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_order_idx\` ON \`pages_blocks_expertise\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_parent_id_idx\` ON \`pages_blocks_expertise\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_path_idx\` ON \`pages_blocks_expertise\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_expertise_locale_idx\` ON \`pages_blocks_expertise\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_path_steps\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` text NOT NULL,
   	\`_locale\` text NOT NULL,
@@ -719,13 +719,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`number\` text,
   	\`title\` text,
   	\`description\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_path\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_path\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_steps_order_idx\` ON \`pages_blocks_home_path_steps\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_steps_parent_id_idx\` ON \`pages_blocks_home_path_steps\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_steps_locale_idx\` ON \`pages_blocks_home_path_steps\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_path\` (
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_steps_order_idx\` ON \`pages_blocks_path_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_steps_parent_id_idx\` ON \`pages_blocks_path_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_steps_locale_idx\` ON \`pages_blocks_path_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_path\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
@@ -744,55 +744,24 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_order_idx\` ON \`pages_blocks_home_path\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_parent_id_idx\` ON \`pages_blocks_home_path\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_path_idx\` ON \`pages_blocks_home_path\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_locale_idx\` ON \`pages_blocks_home_path\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_journal_section\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` integer NOT NULL,
-  	\`_path\` text NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`id\` text PRIMARY KEY NOT NULL,
-  	\`eyebrow\` text DEFAULT 'The Journal',
-  	\`title\` text DEFAULT 'Insights & Ideas',
-  	\`view_all_label\` text DEFAULT 'View All Articles',
-  	\`view_all_href\` text DEFAULT '/insights',
-  	\`read_time_label\` text DEFAULT 'min read',
-  	\`no_posts_message\` text DEFAULT 'No articles available at the moment.',
-  	\`data_source\` text DEFAULT 'auto',
-  	\`limit\` numeric DEFAULT 3,
-  	\`background_color\` text DEFAULT '#ffffff',
-  	\`eyebrow_color\` text DEFAULT '#c8b97a',
-  	\`title_color\` text DEFAULT '#1a1a1a',
-  	\`category_color\` text DEFAULT '#c8b97a',
-  	\`date_color\` text DEFAULT '#aaa',
-  	\`post_title_color\` text DEFAULT '#1a1a1a',
-  	\`post_title_hover_color\` text DEFAULT '#a8894a',
-  	\`read_time_color\` text DEFAULT '#aaa',
-  	\`view_all_color\` text DEFAULT '#1a1a1a',
-  	\`block_name\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_order_idx\` ON \`pages_blocks_home_journal_section\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_parent_id_idx\` ON \`pages_blocks_home_journal_section\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_path_idx\` ON \`pages_blocks_home_journal_section\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_locale_idx\` ON \`pages_blocks_home_journal_section\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_faqs_faqs\` (
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_order_idx\` ON \`pages_blocks_path\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_parent_id_idx\` ON \`pages_blocks_path\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_path_idx\` ON \`pages_blocks_path\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_path_locale_idx\` ON \`pages_blocks_path\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_faqs_faqs\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` text NOT NULL,
   	\`_locale\` text NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
   	\`question\` text,
   	\`answer\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_faqs\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_faqs\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_faqs_order_idx\` ON \`pages_blocks_home_faqs_faqs\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_faqs_parent_id_idx\` ON \`pages_blocks_home_faqs_faqs\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_faqs_locale_idx\` ON \`pages_blocks_home_faqs_faqs\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_faqs\` (
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_faqs_order_idx\` ON \`pages_blocks_faqs_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_faqs_parent_id_idx\` ON \`pages_blocks_faqs_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_faqs_locale_idx\` ON \`pages_blocks_faqs_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_faqs\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
@@ -813,11 +782,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_order_idx\` ON \`pages_blocks_home_faqs\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_parent_id_idx\` ON \`pages_blocks_home_faqs\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_path_idx\` ON \`pages_blocks_home_faqs\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_locale_idx\` ON \`pages_blocks_home_faqs\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`pages_blocks_home_cta\` (
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_order_idx\` ON \`pages_blocks_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_parent_id_idx\` ON \`pages_blocks_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_path_idx\` ON \`pages_blocks_faqs\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_faqs_locale_idx\` ON \`pages_blocks_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_andersen_cta\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
@@ -849,11 +818,42 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_order_idx\` ON \`pages_blocks_home_cta\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_parent_id_idx\` ON \`pages_blocks_home_cta\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_path_idx\` ON \`pages_blocks_home_cta\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_locale_idx\` ON \`pages_blocks_home_cta\` (\`_locale\`);`)
-  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_background_image_idx\` ON \`pages_blocks_home_cta\` (\`background_image_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_andersen_cta_order_idx\` ON \`pages_blocks_andersen_cta\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_andersen_cta_parent_id_idx\` ON \`pages_blocks_andersen_cta\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_andersen_cta_path_idx\` ON \`pages_blocks_andersen_cta\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_andersen_cta_locale_idx\` ON \`pages_blocks_andersen_cta\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_andersen_cta_background_image_idx\` ON \`pages_blocks_andersen_cta\` (\`background_image_id\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_journal_section\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'The Journal',
+  	\`title\` text DEFAULT 'Insights & Ideas',
+  	\`view_all_label\` text DEFAULT 'View All Articles',
+  	\`view_all_href\` text DEFAULT '/insights',
+  	\`read_time_label\` text DEFAULT 'min read',
+  	\`no_posts_message\` text DEFAULT 'No articles available at the moment.',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 3,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#c8b97a',
+  	\`title_color\` text DEFAULT '#1a1a1a',
+  	\`category_color\` text DEFAULT '#c8b97a',
+  	\`date_color\` text DEFAULT '#aaa',
+  	\`post_title_color\` text DEFAULT '#1a1a1a',
+  	\`post_title_hover_color\` text DEFAULT '#a8894a',
+  	\`read_time_color\` text DEFAULT '#aaa',
+  	\`view_all_color\` text DEFAULT '#1a1a1a',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_order_idx\` ON \`pages_blocks_home_journal_section\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_parent_id_idx\` ON \`pages_blocks_home_journal_section\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_path_idx\` ON \`pages_blocks_home_journal_section\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_locale_idx\` ON \`pages_blocks_home_journal_section\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`pages\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`published_at\` text,
@@ -1336,48 +1336,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_parent_id_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_path_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_path\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_locale_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_expertise_services\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` integer NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`title\` text,
-  	\`description\` text,
-  	\`href\` text,
-  	\`_uuid\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_expertise\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_services_order_idx\` ON \`_pages_v_blocks_home_expertise_services\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_services_parent_id_idx\` ON \`_pages_v_blocks_home_expertise_services\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_services_locale_idx\` ON \`_pages_v_blocks_home_expertise_services\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_expertise\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` integer NOT NULL,
-  	\`_path\` text NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`eyebrow\` text DEFAULT 'Our Expertise',
-  	\`title\` text DEFAULT 'Comprehensive service across every stage of your property journey',
-  	\`learn_more_label\` text DEFAULT 'Learn More',
-  	\`background_color\` text DEFAULT '#f7f5f0',
-  	\`eyebrow_color\` text DEFAULT '#b89a5b',
-  	\`title_color\` text DEFAULT '#0a0a0a',
-  	\`service_title_color\` text DEFAULT '#0a0a0a',
-  	\`service_description_color\` text DEFAULT '#a5a19a',
-  	\`learn_more_color\` text DEFAULT '#b89a5b',
-  	\`icon_color\` text DEFAULT '#a5a19a',
-  	\`card_border_color\` text DEFAULT '#e5e0d7',
-  	\`card_border_hover_color\` text DEFAULT '#b89a5b',
-  	\`_uuid\` text,
-  	\`block_name\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_order_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_parent_id_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_path_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_locale_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_places\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
@@ -1432,7 +1390,49 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_path_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`_path\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_locale_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`_locale\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_image_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`image_id\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_path_steps\` (
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_expertise_services\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`title\` text,
+  	\`description\` text,
+  	\`href\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_expertise\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_services_order_idx\` ON \`_pages_v_blocks_expertise_services\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_services_parent_id_idx\` ON \`_pages_v_blocks_expertise_services\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_services_locale_idx\` ON \`_pages_v_blocks_expertise_services\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_expertise\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Our Expertise',
+  	\`title\` text DEFAULT 'Comprehensive service across every stage of your property journey',
+  	\`learn_more_label\` text DEFAULT 'Learn More',
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`eyebrow_color\` text DEFAULT '#b89a5b',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`service_title_color\` text DEFAULT '#0a0a0a',
+  	\`service_description_color\` text DEFAULT '#a5a19a',
+  	\`learn_more_color\` text DEFAULT '#b89a5b',
+  	\`icon_color\` text DEFAULT '#a5a19a',
+  	\`card_border_color\` text DEFAULT '#e5e0d7',
+  	\`card_border_hover_color\` text DEFAULT '#b89a5b',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_order_idx\` ON \`_pages_v_blocks_expertise\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_parent_id_idx\` ON \`_pages_v_blocks_expertise\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_path_idx\` ON \`_pages_v_blocks_expertise\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_expertise_locale_idx\` ON \`_pages_v_blocks_expertise\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_path_steps\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_locale\` text NOT NULL,
@@ -1441,13 +1441,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`title\` text,
   	\`description\` text,
   	\`_uuid\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_path\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_path\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_steps_order_idx\` ON \`_pages_v_blocks_home_path_steps\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_steps_parent_id_idx\` ON \`_pages_v_blocks_home_path_steps\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_steps_locale_idx\` ON \`_pages_v_blocks_home_path_steps\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_path\` (
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_steps_order_idx\` ON \`_pages_v_blocks_path_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_steps_parent_id_idx\` ON \`_pages_v_blocks_path_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_steps_locale_idx\` ON \`_pages_v_blocks_path_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_path\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
@@ -1467,43 +1467,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_order_idx\` ON \`_pages_v_blocks_home_path\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_parent_id_idx\` ON \`_pages_v_blocks_home_path\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_path_idx\` ON \`_pages_v_blocks_home_path\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_locale_idx\` ON \`_pages_v_blocks_home_path\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_journal_section\` (
-  	\`_order\` integer NOT NULL,
-  	\`_parent_id\` integer NOT NULL,
-  	\`_path\` text NOT NULL,
-  	\`_locale\` text NOT NULL,
-  	\`id\` integer PRIMARY KEY NOT NULL,
-  	\`eyebrow\` text DEFAULT 'The Journal',
-  	\`title\` text DEFAULT 'Insights & Ideas',
-  	\`view_all_label\` text DEFAULT 'View All Articles',
-  	\`view_all_href\` text DEFAULT '/insights',
-  	\`read_time_label\` text DEFAULT 'min read',
-  	\`no_posts_message\` text DEFAULT 'No articles available at the moment.',
-  	\`data_source\` text DEFAULT 'auto',
-  	\`limit\` numeric DEFAULT 3,
-  	\`background_color\` text DEFAULT '#ffffff',
-  	\`eyebrow_color\` text DEFAULT '#c8b97a',
-  	\`title_color\` text DEFAULT '#1a1a1a',
-  	\`category_color\` text DEFAULT '#c8b97a',
-  	\`date_color\` text DEFAULT '#aaa',
-  	\`post_title_color\` text DEFAULT '#1a1a1a',
-  	\`post_title_hover_color\` text DEFAULT '#a8894a',
-  	\`read_time_color\` text DEFAULT '#aaa',
-  	\`view_all_color\` text DEFAULT '#1a1a1a',
-  	\`_uuid\` text,
-  	\`block_name\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
-  );
-  `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_order_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_parent_id_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_path_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_locale_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_faqs_faqs\` (
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_order_idx\` ON \`_pages_v_blocks_path\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_parent_id_idx\` ON \`_pages_v_blocks_path\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_path_idx\` ON \`_pages_v_blocks_path\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_path_locale_idx\` ON \`_pages_v_blocks_path\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_faqs_faqs\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_locale\` text NOT NULL,
@@ -1511,13 +1479,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`question\` text,
   	\`answer\` text,
   	\`_uuid\` text,
-  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_faqs\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_faqs\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_faqs_order_idx\` ON \`_pages_v_blocks_home_faqs_faqs\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_faqs_parent_id_idx\` ON \`_pages_v_blocks_home_faqs_faqs\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_faqs_locale_idx\` ON \`_pages_v_blocks_home_faqs_faqs\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_faqs\` (
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_faqs_order_idx\` ON \`_pages_v_blocks_faqs_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_faqs_parent_id_idx\` ON \`_pages_v_blocks_faqs_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_faqs_locale_idx\` ON \`_pages_v_blocks_faqs_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_faqs\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
@@ -1539,11 +1507,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_order_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_parent_id_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_path_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_locale_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_locale\`);`)
-  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_cta\` (
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_order_idx\` ON \`_pages_v_blocks_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_parent_id_idx\` ON \`_pages_v_blocks_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_path_idx\` ON \`_pages_v_blocks_faqs\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_faqs_locale_idx\` ON \`_pages_v_blocks_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_andersen_cta\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`_path\` text NOT NULL,
@@ -1576,11 +1544,43 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_order_idx\` ON \`_pages_v_blocks_home_cta\` (\`_order\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_parent_id_idx\` ON \`_pages_v_blocks_home_cta\` (\`_parent_id\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_path_idx\` ON \`_pages_v_blocks_home_cta\` (\`_path\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_locale_idx\` ON \`_pages_v_blocks_home_cta\` (\`_locale\`);`)
-  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_background_image_idx\` ON \`_pages_v_blocks_home_cta\` (\`background_image_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_andersen_cta_order_idx\` ON \`_pages_v_blocks_andersen_cta\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_andersen_cta_parent_id_idx\` ON \`_pages_v_blocks_andersen_cta\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_andersen_cta_path_idx\` ON \`_pages_v_blocks_andersen_cta\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_andersen_cta_locale_idx\` ON \`_pages_v_blocks_andersen_cta\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_andersen_cta_background_image_idx\` ON \`_pages_v_blocks_andersen_cta\` (\`background_image_id\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_journal_section\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'The Journal',
+  	\`title\` text DEFAULT 'Insights & Ideas',
+  	\`view_all_label\` text DEFAULT 'View All Articles',
+  	\`view_all_href\` text DEFAULT '/insights',
+  	\`read_time_label\` text DEFAULT 'min read',
+  	\`no_posts_message\` text DEFAULT 'No articles available at the moment.',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 3,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#c8b97a',
+  	\`title_color\` text DEFAULT '#1a1a1a',
+  	\`category_color\` text DEFAULT '#c8b97a',
+  	\`date_color\` text DEFAULT '#aaa',
+  	\`post_title_color\` text DEFAULT '#1a1a1a',
+  	\`post_title_hover_color\` text DEFAULT '#a8894a',
+  	\`read_time_color\` text DEFAULT '#aaa',
+  	\`view_all_color\` text DEFAULT '#1a1a1a',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_order_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_parent_id_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_path_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_locale_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_locale\`);`)
   await db.run(sql`CREATE TABLE \`_pages_v\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`parent_id\` integer,
@@ -2600,16 +2600,16 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`pages_blocks_home_signature_development\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_home_consideration_steps_steps\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_home_consideration_steps\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_expertise_services\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_expertise\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_home_places\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_home_client_testimonial\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_path_steps\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_path\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_expertise_services\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_expertise\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_path_steps\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_path\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_faqs_faqs\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_faqs\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_andersen_cta\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_home_journal_section\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_faqs_faqs\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_faqs\`;`)
-  await db.run(sql`DROP TABLE \`pages_blocks_home_cta\`;`)
   await db.run(sql`DROP TABLE \`pages\`;`)
   await db.run(sql`DROP TABLE \`pages_locales\`;`)
   await db.run(sql`DROP TABLE \`pages_rels\`;`)
@@ -2633,16 +2633,16 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`_pages_v_blocks_home_signature_development\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_home_consideration_steps_steps\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_home_consideration_steps\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_expertise_services\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_expertise\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_home_places\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_home_client_testimonial\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_path_steps\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_path\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_expertise_services\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_expertise\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_path_steps\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_path\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_faqs_faqs\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_faqs\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_andersen_cta\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_home_journal_section\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_faqs_faqs\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_faqs\`;`)
-  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_cta\`;`)
   await db.run(sql`DROP TABLE \`_pages_v\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_locales\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_rels\`;`)
