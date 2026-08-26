@@ -75,6 +75,7 @@ export interface Config {
     properties: Property;
     'property-types': PropertyType;
     'property-categories': PropertyCategory;
+    'portfolio-categories': PortfolioCategory;
     cities: City;
     portfolios: Portfolio;
     testimonials: Testimonial;
@@ -106,6 +107,7 @@ export interface Config {
     properties: PropertiesSelect<false> | PropertiesSelect<true>;
     'property-types': PropertyTypesSelect<false> | PropertyTypesSelect<true>;
     'property-categories': PropertyCategoriesSelect<false> | PropertyCategoriesSelect<true>;
+    'portfolio-categories': PortfolioCategoriesSelect<false> | PortfolioCategoriesSelect<true>;
     cities: CitiesSelect<false> | CitiesSelect<true>;
     portfolios: PortfoliosSelect<false> | PortfoliosSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
@@ -286,7 +288,7 @@ export interface Post {
   /**
    * Select the primary category for this insight article.
    */
-  category: 'architecture' | 'market-insight' | 'buyers-guide' | 'design' | 'lifestyle';
+  category: number | Category;
   /**
    * If checked, this article will be displayed as the featured article on the insights page when 'All' category is selected.
    */
@@ -950,7 +952,7 @@ export interface Feature1Block {
   title: string;
   secondaryColor: string;
   description?: string | null;
-  media: number | Media;
+  media?: (number | null) | Media;
   buttonPrimary: {
     label: string;
     href: string;
@@ -970,7 +972,7 @@ export interface Feature1Block {
 export interface Feature2Block {
   title: string;
   description?: string | null;
-  media: number | Media;
+  media?: (number | null) | Media;
   buttonPrimary: {
     label: string;
     href: string;
@@ -1078,6 +1080,8 @@ export interface Property {
    * Total land/plot area in square metres
    */
   landArea?: number | null;
+  isFurnished?: boolean | null;
+  stagingAvailableOnRequest?: boolean | null;
   /**
    * e.g. IDR 28.5 Billion, Price on request
    */
@@ -1220,9 +1224,9 @@ export interface Portfolio {
    */
   status: 'active' | 'sold-out' | 'coming-soon';
   /**
-   * e.g. Villa Collection, Residential Houses, Boutique Apartments
+   * Select the category for this portfolio project.
    */
-  category: string;
+  category: number | PortfolioCategory;
   /**
    * Select the city where the portfolio is located.
    */
@@ -1247,6 +1251,10 @@ export interface Portfolio {
    * URL for project enquiry form or contact page
    */
   enquiryLink?: string | null;
+  /**
+   * URL for project waitlist form or registration page
+   */
+  waitlistLink?: string | null;
   /**
    * URL for booking a project viewing or site visit
    */
@@ -1285,6 +1293,20 @@ export interface Portfolio {
     highlight: string;
     id?: string | null;
   }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-categories".
+ */
+export interface PortfolioCategory {
+  id: number;
+  /**
+   * e.g. Villa Collection, Residential Houses, Boutique Apartments
+   */
+  name: string;
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1496,6 +1518,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'property-categories';
         value: number | PropertyCategory;
+      } | null)
+    | ({
+        relationTo: 'portfolio-categories';
+        value: number | PortfolioCategory;
       } | null)
     | ({
         relationTo: 'cities';
@@ -1861,6 +1887,8 @@ export interface PropertiesSelect<T extends boolean = true> {
   bathrooms?: T;
   buildArea?: T;
   landArea?: T;
+  isFurnished?: T;
+  stagingAvailableOnRequest?: T;
   purchasePrice?: T;
   rentalPrice?: T;
   images?:
@@ -1909,6 +1937,16 @@ export interface PropertyCategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-categories_select".
+ */
+export interface PortfolioCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cities_select".
  */
 export interface CitiesSelect<T extends boolean = true> {
@@ -1939,6 +1977,7 @@ export interface PortfoliosSelect<T extends boolean = true> {
   completion?: T;
   from?: T;
   enquiryLink?: T;
+  waitlistLink?: T;
   visitScheduleLink?: T;
   heroImage?: T;
   imageAlt?: T;
@@ -2265,15 +2304,15 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface GlobalSetting {
   id: number;
-  whatsapp: {
+  whatsapp?: {
     /**
      * Include the + symbol (e.g., +1, +44, +971)
      */
-    countryCode: string;
+    countryCode?: string | null;
     /**
      * Enter number without spaces or special characters
      */
-    number: string;
+    number?: string | null;
     /**
      * Text to display alongside WhatsApp number
      */
@@ -2284,68 +2323,17 @@ export interface GlobalSetting {
    */
   scheduleConsultationLink?: string | null;
   /**
-   * Manage important announcements displayed across the site
+   * Choose portfolio projects to feature in the homepage Signature Development section. The first item will be displayed.
    */
-  announcements?:
+  signatureDevelopments?:
     | {
-        isActive?: boolean | null;
-        priority?: ('high' | 'normal' | 'low') | null;
-        announcement: string;
         /**
-         * Optional link for users to learn more or take action
+         * Select a portfolio project to feature.
          */
-        announcementLink?: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label?: string | null;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        /**
-         * When to start displaying this announcement
-         */
-        startDate?: string | null;
-        /**
-         * When to stop displaying this announcement
-         */
-        endDate?: string | null;
+        portfolio: number | Portfolio;
         id?: string | null;
       }[]
     | null;
-  /**
-   * Link label for seasonal promotions (e.g., Learn More & Get Involved)
-   */
-  currentSeasonPromotionLink?: {
-    type?: ('reference' | 'custom') | null;
-    newTab?: boolean | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: number | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: number | Post;
-        } | null);
-    url?: string | null;
-    label?: string | null;
-    /**
-     * Choose how the link should be rendered.
-     */
-    appearance?: ('default' | 'outline') | null;
-  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2394,35 +2382,11 @@ export interface GlobalSettingsSelect<T extends boolean = true> {
         displayText?: T;
       };
   scheduleConsultationLink?: T;
-  announcements?:
+  signatureDevelopments?:
     | T
     | {
-        isActive?: T;
-        priority?: T;
-        announcement?: T;
-        announcementLink?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-              appearance?: T;
-            };
-        startDate?: T;
-        endDate?: T;
+        portfolio?: T;
         id?: T;
-      };
-  currentSeasonPromotionLink?:
-    | T
-    | {
-        type?: T;
-        newTab?: T;
-        reference?: T;
-        url?: T;
-        label?: T;
-        appearance?: T;
       };
   updatedAt?: T;
   createdAt?: T;
