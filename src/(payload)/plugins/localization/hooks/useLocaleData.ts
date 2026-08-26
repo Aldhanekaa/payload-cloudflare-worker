@@ -47,7 +47,7 @@ export function useLocaleData(
       codes.map(async (locale) => {
         try {
           const headers: Record<string, string> = {}
-          if (token) {
+          if (token && typeof token === 'string' && token !== 'null' && token !== 'undefined') {
             headers.Authorization = `JWT ${token}`
           }
 
