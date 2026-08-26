@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useConfig, useLocale, useAuth } from '@payloadcms/ui'
 import { X, Globe, Wand2, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
 import { useLocaleData } from '../hooks/useLocaleData'
@@ -15,6 +15,8 @@ export type LocalizationModalProps = {
   collectionSlug: string
   /** The document ID */
   docId: string | number
+  /** Initial field value in current locale (from live form state) */
+  initialReferenceValue?: string
   /** Whether autotranslation is available */
   hasAutotranslate?: boolean
   /** Callback to close the modal */
@@ -22,6 +24,11 @@ export type LocalizationModalProps = {
 }
 
 type SaveStatus = 'idle' | 'saving' | 'success' | 'error'
+
+type LocaleItem = {
+  code: string
+  label: string
+}
 
 /**
  * LocalizationModal — side-by-side editor for managing field translations.
@@ -35,6 +42,7 @@ export function LocalizationModal({
   fieldPath,
   collectionSlug,
   docId,
+  initialReferenceValue,
   hasAutotranslate = false,
   onClose,
 }: LocalizationModalProps) {
@@ -42,16 +50,20 @@ export function LocalizationModal({
   const currentLocale = useLocale()
   const { token } = useAuth()
 
-  // ── Locale list ──────────────────────────────────────────────────────────
-  const localeList: { code: string; label: string }[] = (
-    (config.localization as any)?.locales ?? []
-  ).map((l: any) => ({
-    code: typeof l === 'string' ? l : l.code,
-    label: typeof l === 'string' ? l.toUpperCase() : (l.label ?? l.code).toUpperCase(),
-  }))
+  // ── Locale list (memoized to prevent re-creation on every render) ───────────
+  const localeList: LocaleItem[] = useMemo(() => {
+    const raw = (config.localization as any)?.locales ?? []
+    return raw.map((l: any) => ({
+      code: typeof l === 'string' ? l : l.code,
+      label: typeof l === 'string' ? l.toUpperCase() : (l.label ?? l.code).toUpperCase(),
+    }))
+  }, [config.localization])
 
   const referenceCode = currentLocale?.code ?? localeList[0]?.code ?? 'en'
-  const otherLocales = localeList.filter((l) => l.code !== referenceCode)
+  const otherLocales = useMemo(
+    () => localeList.filter((l: LocaleItem) => l.code !== referenceCode),
+    [localeList, referenceCode],
+  )
 
   // Active target locale (not the reference)
   const [activeTargetCode, setActiveTargetCode] = useState(
@@ -59,7 +71,7 @@ export function LocalizationModal({
   )
 
   // ── Fetch all locale values for this field ───────────────────────────────
-  const allCodes = localeList.map((l) => l.code)
+  const allCodes = useMemo(() => localeList.map((l: LocaleItem) => l.code), [localeList])
   const { data: localeData, isFetching, refetch } = useLocaleData(
     collectionSlug,
     docId,
@@ -67,8 +79,16 @@ export function LocalizationModal({
     allCodes,
   )
 
+  // Track if user has modified a locale's text manually
+  const touchedRef = useRef<Record<string, boolean>>({})
+
   // ── Local edits per locale ───────────────────────────────────────────────
-  const [edits, setEdits] = useState<Record<string, string>>({})
+  const [edits, setEdits] = useState<Record<string, string>>(() => {
+    if (initialReferenceValue !== undefined) {
+      return { [referenceCode]: initialReferenceValue }
+    }
+    return {}
+  })
 
   // Pre-populate edits when data loads
   useEffect(() => {
@@ -76,13 +96,18 @@ export function LocalizationModal({
     setEdits((prev) => {
       const next = { ...prev }
       for (const code of allCodes) {
-        if (!(code in next)) {
-          next[code] = localeData[code]?.value ?? ''
+        if (!touchedRef.current[code]) {
+          const fetchedVal = localeData[code]?.value
+          if (fetchedVal != null) {
+            next[code] = fetchedVal
+          } else if (code === referenceCode && initialReferenceValue !== undefined) {
+            next[code] = initialReferenceValue
+          }
         }
       }
       return next
     })
-  }, [isFetching, localeData, allCodes])
+  }, [isFetching, localeData, allCodes, referenceCode, initialReferenceValue])
 
   // ── Save / Publish ───────────────────────────────────────────────────────
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
@@ -90,7 +115,7 @@ export function LocalizationModal({
 
   const getEditedLocales = useCallback(() => {
     return allCodes.filter(
-      (code) =>
+      (code: string) =>
         code !== referenceCode &&
         (edits[code] ?? '') !== (localeData[code]?.value ?? ''),
     )
@@ -111,20 +136,25 @@ export function LocalizationModal({
 
       try {
         await Promise.all(
-          edited.map(async (code) => {
+          edited.map(async (code: string) => {
             const body = buildNestedBody(fieldPath, edits[code] ?? '')
 
             const params = new URLSearchParams({ locale: code })
             if (!publish) params.set('draft', 'true')
 
+            const headers: Record<string, string> = {
+              'Content-Type': 'application/json',
+            }
+            if (token) {
+              headers.Authorization = `JWT ${token}`
+            }
+
             const res = await fetch(
               `/api/${collectionSlug}/${docId}?${params.toString()}`,
               {
                 method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `JWT ${token}`,
-                },
+                headers,
+                credentials: 'include',
                 body: JSON.stringify(body),
               },
             )
@@ -153,17 +183,23 @@ export function LocalizationModal({
   const [isTranslating, setIsTranslating] = useState(false)
 
   const handleAutotranslate = useCallback(async () => {
-    const referenceText = edits[referenceCode] ?? localeData[referenceCode]?.value ?? ''
+    const referenceText =
+      edits[referenceCode] ?? localeData[referenceCode]?.value ?? initialReferenceValue ?? ''
     if (!referenceText) return
 
     setIsTranslating(true)
     try {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      }
+      if (token) {
+        headers.Authorization = `JWT ${token}`
+      }
+
       const res = await fetch('/api/localization/autotranslate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `JWT ${token}`,
-        },
+        headers,
+        credentials: 'include',
         body: JSON.stringify({
           text: referenceText,
           fromLocale: referenceCode,
@@ -172,8 +208,9 @@ export function LocalizationModal({
       })
 
       if (res.ok) {
-        const data = await res.json() as { translated?: string }
+        const data = (await res.json()) as { translated?: string }
         if (data.translated) {
+          touchedRef.current[activeTargetCode] = true
           setEdits((prev) => ({ ...prev, [activeTargetCode]: data.translated! }))
         }
       }
@@ -182,7 +219,7 @@ export function LocalizationModal({
     } finally {
       setIsTranslating(false)
     }
-  }, [activeTargetCode, edits, localeData, referenceCode, token])
+  }, [activeTargetCode, edits, initialReferenceValue, localeData, referenceCode, token])
 
   // ── Close on Escape ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -194,9 +231,13 @@ export function LocalizationModal({
   }, [onClose])
 
   // ── Values ────────────────────────────────────────────────────────────────
-  const referenceValue = edits[referenceCode] ?? localeData[referenceCode]?.value ?? ''
-  const targetValue = edits[activeTargetCode] ?? localeData[activeTargetCode]?.value ?? ''
-  const activeLocale = localeList.find((l) => l.code === activeTargetCode)
+  const referenceValue =
+    edits[referenceCode] ?? localeData[referenceCode]?.value ?? initialReferenceValue ?? ''
+  const targetValue =
+    edits[activeTargetCode] !== undefined
+      ? edits[activeTargetCode]
+      : (localeData[activeTargetCode]?.value ?? '')
+  const activeLocale = localeList.find((l: LocaleItem) => l.code === activeTargetCode)
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -247,11 +288,11 @@ export function LocalizationModal({
               style={{ opacity: 0.3, cursor: 'default' }}
               disabled
             >
-              {localeList.find((l) => l.code === referenceCode)?.label ?? referenceCode}
+              {localeList.find((l: LocaleItem) => l.code === referenceCode)?.label ?? referenceCode}
               &nbsp;(ref)
             </button>
 
-            {otherLocales.map((locale) => {
+            {otherLocales.map((locale: LocaleItem) => {
               const hasValue = Boolean(
                 edits[locale.code] ?? localeData[locale.code]?.value,
               )
@@ -284,9 +325,9 @@ export function LocalizationModal({
           <div className="loc-modal__pane loc-modal__pane--reference">
             <div className="loc-modal__pane-label">
               Reference language&nbsp;
-              {(localeList.find((l) => l.code === referenceCode)?.label ?? referenceCode).toUpperCase()}
+              {(localeList.find((l: LocaleItem) => l.code === referenceCode)?.label ?? referenceCode).toUpperCase()}
             </div>
-            {isFetching ? (
+            {isFetching && !referenceValue ? (
               <div className="loc-modal__reference-value loc-modal__reference-value--empty">
                 <span className="loc-spinner" style={{ marginRight: 6 }} />
                 Loading…
@@ -308,11 +349,12 @@ export function LocalizationModal({
             <textarea
               className="loc-modal__textarea"
               placeholder={`Enter ${activeLocale?.label ?? activeTargetCode} translation…`}
-              value={isFetching ? '' : (edits[activeTargetCode] ?? '')}
-              disabled={isFetching}
-              onChange={(e) =>
-                setEdits((prev) => ({ ...prev, [activeTargetCode]: e.target.value }))
-              }
+              value={targetValue}
+              onChange={(e) => {
+                const val = e.target.value
+                touchedRef.current[activeTargetCode] = true
+                setEdits((prev) => ({ ...prev, [activeTargetCode]: val }))
+              }}
               rows={6}
             />
           </div>

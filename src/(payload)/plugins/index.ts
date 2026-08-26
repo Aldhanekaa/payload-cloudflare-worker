@@ -36,14 +36,14 @@ export const plugins: Plugin[] = [
   // ── Custom Localization Plugin ──────────────────────────────────────────
   // Adds sticky locale selector + "Change localization" buttons to all collections.
   // To enable autotranslation, pass `autotranslateAdapter: yourAdapter` below.
-  // localizationPlugin({
-  //   enabled: true,
-  //   // autotranslateAdapter: async ({ text, fromLocale, toLocale }) => {
-  //   //   // Example: call DeepL or Google Translate here
-  //   //   return text // stub: return original text
-  //   // },
-  //   // excludedCollections: ['media'], // skip media from locale bar if desired
-  // }),
+  localizationPlugin({
+    enabled: true,
+    // autotranslateAdapter: async ({ text, fromLocale, toLocale }) => {
+    //   // Example: call DeepL or Google Translate here
+    //   return text // stub: return original text
+    // },
+    // excludedCollections: ['media'], // skip media from locale bar if desired
+  }),
 
   // localization(),  ← replaced by the custom plugin above
   // fieldsSelect(),
@@ -58,7 +58,7 @@ export const plugins: Plugin[] = [
   // // }),
 
   blurDataUrlsPlugin({
-    enabled: true,
+    enabled: false, // sharp is not supported in Cloudflare Workers runtime
     collections: [Media],
     // Blur data URLs Settings (Optional)
     blurOptions: {

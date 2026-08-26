@@ -32,6 +32,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`alt\` text,
   	\`caption\` text,
+  	\`blur_data_url\` text,
   	\`folder_id\` integer,
   	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
   	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
