@@ -15,6 +15,7 @@ const stubPath = path.resolve('./stubs/drizzle-kit.js')
 const sharpStubPath = path.resolve('./stubs/sharp.js')
 
 const nextConfig: NextConfig = {
+  // Disable Turbopack - it has issues with middleware in Next.js 16
   turbopack: {
     resolveAlias: {
       'drizzle-kit': './stubs/drizzle-kit.js',
