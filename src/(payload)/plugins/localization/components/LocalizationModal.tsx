@@ -145,7 +145,7 @@ export function LocalizationModal({
             const headers: Record<string, string> = {
               'Content-Type': 'application/json',
             }
-            if (token) {
+            if (token && typeof token === 'string' && token !== 'null' && token !== 'undefined') {
               headers.Authorization = `JWT ${token}`
             }
 
@@ -192,7 +192,7 @@ export function LocalizationModal({
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
       }
-      if (token) {
+      if (token && typeof token === 'string' && token !== 'null' && token !== 'undefined') {
         headers.Authorization = `JWT ${token}`
       }
 

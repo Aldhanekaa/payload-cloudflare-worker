@@ -69,6 +69,7 @@ export function addLocalizationToFields(
                 fieldName: field.name,
                 fieldLabel,
                 fieldPath,
+                fieldType: field.type,
               },
             },
           ],

@@ -93,7 +93,9 @@ export function LocaleSelectorBar({ hasAutotranslate }: LocaleSelectorBarProps) 
           const code = typeof localeItem === 'string' ? localeItem : (localeItem as any).code
           try {
             const headers: Record<string, string> = {}
-            if (token) headers.Authorization = `JWT ${token}`
+            if (token && typeof token === 'string' && token !== 'null' && token !== 'undefined') {
+              headers.Authorization = `JWT ${token}`
+            }
 
             const res = await fetch(
               `/api/${collectionSlug}/${id}?locale=${code}&depth=0&draft=true&fallback-locale=null`,
