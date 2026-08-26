@@ -1,1 +1,1 @@
-export { HomeCTA } from './Component'
+export { HomeCTA as AndersenCTA } from './Component'

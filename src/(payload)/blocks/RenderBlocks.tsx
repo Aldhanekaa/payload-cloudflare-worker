@@ -15,11 +15,11 @@ import { HomeHero } from '@/(payload)/blocks/HomeHero'
 import { HomeAbout } from '@/(payload)/blocks/HomeAbout'
 import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment'
 import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps'
-import { HomeExpertise } from '@/(payload)/blocks/HomeExpertise'
 import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial'
-import { HomePath } from '@/(payload)/blocks/HomePath'
-import { HomeFAQs } from '@/(payload)/blocks/HomeFAQs'
-import { HomeCTA } from '@/(payload)/blocks/HomeCTA'
+import { HomeExpertise } from '@/(payload)/blocks/Expertise'
+import { Path } from '@/(payload)/blocks/Path'
+import { HomeFAQs } from '@/(payload)/blocks/FAQs'
+import { AndersenCTA } from '@/(payload)/blocks/CTA'
 import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties'
 import { HomePlaces } from '@/(payload)/blocks/HomePlaces'
 import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection'
@@ -39,13 +39,14 @@ const blockComponents: Record<string, React.FC<any>> = {
   homeFeaturedProperties: HomeFeaturedProperties,
   homeSignatureDevelopment: HomeSignatureDevelopment,
   homeConsiderationSteps: HomeConsiderationSteps,
-  homeExpertise: HomeExpertise,
   homePlaces: HomePlaces,
   homeClientTestimonial: HomeClientTestimonial,
-  homePath: HomePath,
+  expertise: HomeExpertise,
+  path: Path,
+  faqs: HomeFAQs,
+  andersen_cta: AndersenCTA,
+
   homeJournalSection: HomeJournalSection,
-  homeFaqs: HomeFAQs,
-  homeCta: HomeCTA,
 }
 
 export const RenderBlocks: React.FC<{

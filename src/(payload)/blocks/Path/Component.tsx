@@ -56,7 +56,7 @@ export const Path = ({
   stepTitleColor = '#0a0a0a',
   stepDescriptionColor = '#a5a19a',
   connectorColor = '#b89a5b',
-}: HomePathProps) => {
+}: PathProps) => {
   return (
     <section className="py-[clamp(80px,10vw,140px)]" style={{ backgroundColor }}>
       <PageContainer>

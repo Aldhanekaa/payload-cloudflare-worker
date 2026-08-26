@@ -385,13 +385,13 @@ export interface Page {
     | HomeFeaturedPropertiesBlock
     | HomeSignatureDevelopmentBlock
     | HomeConsiderationStepsBlock
-    | HomeExpertiseBlock
     | HomePlacesBlock
     | HomeClientTestimonialBlock
-    | HomePathBlock
+    | ExpertiseBlock
+    | PathBlock
+    | FAQsBlock
+    | CTABlock
     | HomeJournalSectionBlock
-    | HomeFAQsBlock
-    | HomeCTABlock
   )[];
   meta?: {
     title?: string | null;
@@ -962,7 +962,7 @@ export interface Feature1Block {
   title: string;
   secondaryColor: string;
   description?: string | null;
-  media: number | Media;
+  media?: (number | null) | Media;
   buttonPrimary: {
     label: string;
     href: string;
@@ -982,7 +982,7 @@ export interface Feature1Block {
 export interface Feature2Block {
   title: string;
   description?: string | null;
-  media: number | Media;
+  media?: (number | null) | Media;
   buttonPrimary: {
     label: string;
     href: string;
@@ -1451,33 +1451,6 @@ export interface HomeConsiderationStepsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeExpertiseBlock".
- */
-export interface HomeExpertiseBlock {
-  eyebrow?: string | null;
-  title: string;
-  services: {
-    title: string;
-    description: string;
-    href: string;
-    id?: string | null;
-  }[];
-  learnMoreLabel?: string | null;
-  backgroundColor?: string | null;
-  eyebrowColor?: string | null;
-  titleColor?: string | null;
-  serviceTitleColor?: string | null;
-  serviceDescriptionColor?: string | null;
-  learnMoreColor?: string | null;
-  iconColor?: string | null;
-  cardBorderColor?: string | null;
-  cardBorderHoverColor?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'homeExpertise';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HomePlacesBlock".
  */
 export interface HomePlacesBlock {
@@ -1519,9 +1492,36 @@ export interface HomeClientTestimonialBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomePathBlock".
+ * via the `definition` "ExpertiseBlock".
  */
-export interface HomePathBlock {
+export interface ExpertiseBlock {
+  eyebrow?: string | null;
+  title: string;
+  services: {
+    title: string;
+    description: string;
+    href: string;
+    id?: string | null;
+  }[];
+  learnMoreLabel?: string | null;
+  backgroundColor?: string | null;
+  eyebrowColor?: string | null;
+  titleColor?: string | null;
+  serviceTitleColor?: string | null;
+  serviceDescriptionColor?: string | null;
+  learnMoreColor?: string | null;
+  iconColor?: string | null;
+  cardBorderColor?: string | null;
+  cardBorderHoverColor?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'expertise';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PathBlock".
+ */
+export interface PathBlock {
   title: string;
   steps: {
     number: string;
@@ -1538,40 +1538,13 @@ export interface HomePathBlock {
   connectorColor?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'homePath';
+  blockType: 'path';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeJournalSectionBlock".
+ * via the `definition` "FAQsBlock".
  */
-export interface HomeJournalSectionBlock {
-  eyebrow?: string | null;
-  title: string;
-  viewAllLabel?: string | null;
-  viewAllHref?: string | null;
-  readTimeLabel?: string | null;
-  noPostsMessage?: string | null;
-  dataSource: 'auto' | 'manual';
-  posts?: (number | Post)[] | null;
-  limit?: number | null;
-  backgroundColor?: string | null;
-  eyebrowColor?: string | null;
-  titleColor?: string | null;
-  categoryColor?: string | null;
-  dateColor?: string | null;
-  postTitleColor?: string | null;
-  postTitleHoverColor?: string | null;
-  readTimeColor?: string | null;
-  viewAllColor?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'homeJournalSection';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeFAQsBlock".
- */
-export interface HomeFAQsBlock {
+export interface FAQsBlock {
   title: string;
   subtitle?: string | null;
   faqs: {
@@ -1589,13 +1562,13 @@ export interface HomeFAQsBlock {
   toggleIconColor?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'homeFaqs';
+  blockType: 'faqs';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeCTABlock".
+ * via the `definition` "CTABlock".
  */
-export interface HomeCTABlock {
+export interface CTABlock {
   eyebrow?: string | null;
   title: string;
   subtitle?: string | null;
@@ -1625,7 +1598,34 @@ export interface HomeCTABlock {
   ctaSecondaryHoverTextColor?: string | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'homeCta';
+  blockType: 'andersen_cta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeJournalSectionBlock".
+ */
+export interface HomeJournalSectionBlock {
+  eyebrow?: string | null;
+  title: string;
+  viewAllLabel?: string | null;
+  viewAllHref?: string | null;
+  readTimeLabel?: string | null;
+  noPostsMessage?: string | null;
+  dataSource: 'auto' | 'manual';
+  posts?: (number | Post)[] | null;
+  limit?: number | null;
+  backgroundColor?: string | null;
+  eyebrowColor?: string | null;
+  titleColor?: string | null;
+  categoryColor?: string | null;
+  dateColor?: string | null;
+  postTitleColor?: string | null;
+  postTitleHoverColor?: string | null;
+  readTimeColor?: string | null;
+  viewAllColor?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeJournalSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2023,13 +2023,13 @@ export interface PagesSelect<T extends boolean = true> {
         homeFeaturedProperties?: T | HomeFeaturedPropertiesBlockSelect<T>;
         homeSignatureDevelopment?: T | HomeSignatureDevelopmentBlockSelect<T>;
         homeConsiderationSteps?: T | HomeConsiderationStepsBlockSelect<T>;
-        homeExpertise?: T | HomeExpertiseBlockSelect<T>;
         homePlaces?: T | HomePlacesBlockSelect<T>;
         homeClientTestimonial?: T | HomeClientTestimonialBlockSelect<T>;
-        homePath?: T | HomePathBlockSelect<T>;
+        expertise?: T | ExpertiseBlockSelect<T>;
+        path?: T | PathBlockSelect<T>;
+        faqs?: T | FAQsBlockSelect<T>;
+        andersen_cta?: T | CTABlockSelect<T>;
         homeJournalSection?: T | HomeJournalSectionBlockSelect<T>;
-        homeFaqs?: T | HomeFAQsBlockSelect<T>;
-        homeCta?: T | HomeCTABlockSelect<T>;
       };
   meta?:
     | T
@@ -2347,34 +2347,6 @@ export interface HomeConsiderationStepsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeExpertiseBlock_select".
- */
-export interface HomeExpertiseBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  title?: T;
-  services?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        href?: T;
-        id?: T;
-      };
-  learnMoreLabel?: T;
-  backgroundColor?: T;
-  eyebrowColor?: T;
-  titleColor?: T;
-  serviceTitleColor?: T;
-  serviceDescriptionColor?: T;
-  learnMoreColor?: T;
-  iconColor?: T;
-  cardBorderColor?: T;
-  cardBorderHoverColor?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HomePlacesBlock_select".
  */
 export interface HomePlacesBlockSelect<T extends boolean = true> {
@@ -2414,9 +2386,37 @@ export interface HomeClientTestimonialBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomePathBlock_select".
+ * via the `definition` "ExpertiseBlock_select".
  */
-export interface HomePathBlockSelect<T extends boolean = true> {
+export interface ExpertiseBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  services?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        href?: T;
+        id?: T;
+      };
+  learnMoreLabel?: T;
+  backgroundColor?: T;
+  eyebrowColor?: T;
+  titleColor?: T;
+  serviceTitleColor?: T;
+  serviceDescriptionColor?: T;
+  learnMoreColor?: T;
+  iconColor?: T;
+  cardBorderColor?: T;
+  cardBorderHoverColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PathBlock_select".
+ */
+export interface PathBlockSelect<T extends boolean = true> {
   title?: T;
   steps?:
     | T
@@ -2438,35 +2438,9 @@ export interface HomePathBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeJournalSectionBlock_select".
+ * via the `definition` "FAQsBlock_select".
  */
-export interface HomeJournalSectionBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  title?: T;
-  viewAllLabel?: T;
-  viewAllHref?: T;
-  readTimeLabel?: T;
-  noPostsMessage?: T;
-  dataSource?: T;
-  posts?: T;
-  limit?: T;
-  backgroundColor?: T;
-  eyebrowColor?: T;
-  titleColor?: T;
-  categoryColor?: T;
-  dateColor?: T;
-  postTitleColor?: T;
-  postTitleHoverColor?: T;
-  readTimeColor?: T;
-  viewAllColor?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeFAQsBlock_select".
- */
-export interface HomeFAQsBlockSelect<T extends boolean = true> {
+export interface FAQsBlockSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   faqs?:
@@ -2489,9 +2463,9 @@ export interface HomeFAQsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "HomeCTABlock_select".
+ * via the `definition` "CTABlock_select".
  */
-export interface HomeCTABlockSelect<T extends boolean = true> {
+export interface CTABlockSelect<T extends boolean = true> {
   eyebrow?: T;
   title?: T;
   subtitle?: T;
@@ -2520,6 +2494,32 @@ export interface HomeCTABlockSelect<T extends boolean = true> {
   ctaSecondaryHoverBorderColor?: T;
   ctaSecondaryTextColor?: T;
   ctaSecondaryHoverTextColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeJournalSectionBlock_select".
+ */
+export interface HomeJournalSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  viewAllLabel?: T;
+  viewAllHref?: T;
+  readTimeLabel?: T;
+  noPostsMessage?: T;
+  dataSource?: T;
+  posts?: T;
+  limit?: T;
+  backgroundColor?: T;
+  eyebrowColor?: T;
+  titleColor?: T;
+  categoryColor?: T;
+  dateColor?: T;
+  postTitleColor?: T;
+  postTitleHoverColor?: T;
+  readTimeColor?: T;
+  viewAllColor?: T;
   id?: T;
   blockName?: T;
 }

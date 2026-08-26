@@ -1,1 +1,1 @@
-export { HomePath } from './Component'
+export { Path } from './Component'
