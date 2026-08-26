@@ -66,13 +66,14 @@ export const Portfolios: CollectionConfig = {
 
     {
       name: 'category',
-      type: 'text',
+      type: 'relationship',
       label: 'Category',
+      relationTo: 'portfolio-categories',
       required: true,
-      localized: true,
+      hasMany: false,
       admin: {
         position: 'sidebar',
-        description: 'e.g. Villa Collection, Residential Houses, Boutique Apartments',
+        description: 'Select the category for this portfolio project.',
       },
     },
 
@@ -145,6 +146,17 @@ export const Portfolios: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'URL for project enquiry form or contact page',
+      },
+    },
+
+    {
+      name: 'waitlistLink',
+      type: 'text',
+      label: 'Waitlist Link',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'URL for project waitlist form or registration page',
       },
     },
 

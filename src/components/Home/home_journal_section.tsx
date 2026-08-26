@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
-import type { Post, Media } from '@/payload-types'
+import type { Post, Media, Category } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -32,10 +32,12 @@ type Props = {
 function transformPostData(posts: Post[], t: any): JournalPost[] {
   return posts.map((post) => {
     const heroImageData = typeof post.heroImage === 'object' ? (post.heroImage as Media) : null
+    const categoryValue =
+      typeof post.category === 'object' ? (post.category as Category).title : 'Article'
 
     // Format category with translation
-    const categoryKey = `categories.${post.category}` as const
-    const category = t(categoryKey, { default: post.category })
+    const categoryKey = `categories.${categoryValue}` as const
+    const category = t(categoryKey, { default: categoryValue })
 
     // Format date
     const formatDate = (dateString: string | undefined) => {

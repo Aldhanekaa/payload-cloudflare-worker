@@ -35,7 +35,7 @@ export const Feature1 = ({
     label: 'Learn More',
     href: 'https://shadcnblocks.com',
   },
-  secondaryColor,
+  secondaryColor = '#0000',
 }: Feature1Props) => {
   return (
     <section className="py-32">

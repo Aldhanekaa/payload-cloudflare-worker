@@ -192,6 +192,10 @@ export default async function ActiveListingPage({ params }: PageProps) {
 
   const listingTypeText =
     listing.listingType === 'both' ? 'Buy or Rent' : listing.listingType === 'buy' ? 'Buy' : 'Rent'
+  const isFurnished = Boolean(cmsProperty?.isFurnished)
+  const stagingAvailableOnRequest = Boolean(cmsProperty?.stagingAvailableOnRequest)
+  const enquiryLink = cmsProperty?.enquiryLink
+  const visitScheduleLink = cmsProperty?.visitScheduleLink
 
   const serverUrl = getServerSideURL()
   const pageUrl = `${serverUrl}/${locale}/active-listings/${slug}`
@@ -274,7 +278,12 @@ export default async function ActiveListingPage({ params }: PageProps) {
                 dataPoints={details.dataPoints}
               />
 
-              <PropertyDescription description={details.description} note={details.note} />
+              <PropertyDescription
+                description={details.description}
+                note={details.note}
+                isFurnished={isFurnished}
+                stagingAvailableOnRequest={stagingAvailableOnRequest}
+              />
 
               <PropertyFeatures features={details.features} />
             </div>
@@ -290,6 +299,8 @@ export default async function ActiveListingPage({ params }: PageProps) {
                 baths={listing.baths}
                 buildArea={listing.area}
                 landArea={details.landArea}
+                enquiryLink={enquiryLink}
+                visitScheduleLink={visitScheduleLink}
               />
             </div>
           </div>

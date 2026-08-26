@@ -1,0 +1,1 @@
+export { HomeFeaturedProperties } from './Component'

@@ -24,10 +24,16 @@ export interface Announcement {
   id?: string
 }
 
+export interface SignatureDevelopmentItem {
+  portfolio?: string | number
+  id?: string
+}
+
 export interface GlobalSettings {
   whatsapp: WhatsAppContact
   scheduleConsultationLink?: string
   announcements?: Announcement[]
+  signatureDevelopments?: SignatureDevelopmentItem[]
   currentSeasonPromotionLink?: {
     type: 'reference' | 'custom'
     reference?: {

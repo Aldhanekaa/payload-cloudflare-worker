@@ -1,10 +1,14 @@
 import type { GlobalConfig } from 'payload'
 import { link } from '@/(payload)/fields/link'
+import { revalidateGlobal } from './hooks/revalidateGlobal'
 
 export const GlobalSettings: GlobalConfig = {
   slug: 'global-settings',
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateGlobal],
   },
   fields: [
     {
@@ -25,7 +29,7 @@ export const GlobalSettings: GlobalConfig = {
                       name: 'countryCode',
                       type: 'text',
                       label: 'Country Code',
-                      required: true,
+                      required: false,
                       defaultValue: '+1',
                       admin: {
                         width: '30%',
@@ -37,7 +41,7 @@ export const GlobalSettings: GlobalConfig = {
                       name: 'number',
                       type: 'text',
                       label: 'WhatsApp Number',
-                      required: true,
+                      required: false,
                       admin: {
                         width: '70%',
                         placeholder: '1234567890',
@@ -85,130 +89,137 @@ export const GlobalSettings: GlobalConfig = {
             },
           ],
         },
+        // {
+        //   label: 'Announcements',
+        //   fields: [
+        //     {
+        //       name: 'announcements',
+        //       type: 'array',
+        //       label: 'Site Announcements',
+        //       admin: {
+        //         description: 'Manage important announcements displayed across the site',
+        //         initCollapsed: true,
+        //       },
+        //       fields: [
+        //         {
+        //           type: 'row',
+        //           fields: [
+        //             {
+        //               name: 'isActive',
+        //               type: 'checkbox',
+        //               label: 'Active',
+        //               defaultValue: true,
+        //               admin: {
+        //                 width: '15%',
+        //               },
+        //             },
+        //             {
+        //               name: 'priority',
+        //               type: 'select',
+        //               label: 'Priority',
+        //               defaultValue: 'normal',
+        //               options: [
+        //                 {
+        //                   label: 'High',
+        //                   value: 'high',
+        //                 },
+        //                 {
+        //                   label: 'Normal',
+        //                   value: 'normal',
+        //                 },
+        //                 {
+        //                   label: 'Low',
+        //                   value: 'low',
+        //                 },
+        //               ],
+        //               admin: {
+        //                 width: '25%',
+        //               },
+        //             },
+        //           ],
+        //         },
+        //         {
+        //           name: 'announcement',
+        //           type: 'textarea',
+        //           label: 'Announcement Text',
+        //           required: true,
+        //           admin: {
+        //             placeholder: 'Enter your announcement here...',
+        //             rows: 3,
+        //           },
+        //         },
+        //         link({
+        //           appearances: ['default', 'outline'],
+        //           required: false,
+        //           name: 'announcementLink',
+        //           label: 'Announcement Link (Optional)',
+        //           overrides: {
+        //             admin: {
+        //               description: 'Optional link for users to learn more or take action',
+        //             },
+        //           },
+        //         }),
+        //         {
+        //           type: 'row',
+        //           fields: [
+        //             {
+        //               name: 'startDate',
+        //               type: 'date',
+        //               label: 'Start Date (Optional)',
+        //               admin: {
+        //                 width: '50%',
+        //                 date: {
+        //                   pickerAppearance: 'dayAndTime',
+        //                 },
+        //                 description: 'When to start displaying this announcement',
+        //               },
+        //             },
+        //             {
+        //               name: 'endDate',
+        //               type: 'date',
+        //               label: 'End Date (Optional)',
+        //               admin: {
+        //                 width: '50%',
+        //                 date: {
+        //                   pickerAppearance: 'dayAndTime',
+        //                 },
+        //                 description: 'When to stop displaying this announcement',
+        //               },
+        //             },
+        //           ],
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
         {
-          label: 'Announcements',
+          label: 'Homepage Featured Content',
           fields: [
             {
-              name: 'announcements',
+              name: 'signatureDevelopments',
               type: 'array',
-              label: 'Site Announcements',
+              label: 'Signature Developments',
               admin: {
-                description: 'Manage important announcements displayed across the site',
+                description:
+                  'Choose portfolio projects to feature in the homepage Signature Development section. The first item will be displayed.',
                 initCollapsed: true,
               },
               fields: [
                 {
-                  type: 'row',
-                  fields: [
-                    {
-                      name: 'isActive',
-                      type: 'checkbox',
-                      label: 'Active',
-                      defaultValue: true,
-                      admin: {
-                        width: '15%',
-                      },
-                    },
-                    {
-                      name: 'priority',
-                      type: 'select',
-                      label: 'Priority',
-                      defaultValue: 'normal',
-                      options: [
-                        {
-                          label: 'High',
-                          value: 'high',
-                        },
-                        {
-                          label: 'Normal',
-                          value: 'normal',
-                        },
-                        {
-                          label: 'Low',
-                          value: 'low',
-                        },
-                      ],
-                      admin: {
-                        width: '25%',
-                      },
-                    },
-                  ],
-                },
-                {
-                  name: 'announcement',
-                  type: 'textarea',
-                  label: 'Announcement Text',
+                  name: 'portfolio',
+                  type: 'relationship',
+                  relationTo: 'portfolios',
                   required: true,
+                  hasMany: false,
                   admin: {
-                    placeholder: 'Enter your announcement here...',
-                    rows: 3,
+                    description: 'Select a portfolio project to feature.',
                   },
-                },
-                link({
-                  appearances: ['default', 'outline'],
-                  required: false,
-                  name: 'announcementLink',
-                  label: 'Announcement Link (Optional)',
-                  overrides: {
-                    admin: {
-                      description: 'Optional link for users to learn more or take action',
-                    },
-                  },
-                }),
-                {
-                  type: 'row',
-                  fields: [
-                    {
-                      name: 'startDate',
-                      type: 'date',
-                      label: 'Start Date (Optional)',
-                      admin: {
-                        width: '50%',
-                        date: {
-                          pickerAppearance: 'dayAndTime',
-                        },
-                        description: 'When to start displaying this announcement',
-                      },
-                    },
-                    {
-                      name: 'endDate',
-                      type: 'date',
-                      label: 'End Date (Optional)',
-                      admin: {
-                        width: '50%',
-                        date: {
-                          pickerAppearance: 'dayAndTime',
-                        },
-                        description: 'When to stop displaying this announcement',
-                      },
-                    },
-                  ],
                 },
               ],
             },
           ],
         },
-        {
-          label: 'Promotions',
-          fields: [
-            link({
-              appearances: ['default', 'outline'],
-              required: false,
-              name: 'currentSeasonPromotionLink',
-              label: 'Current Season Promotion Link',
-              overrides: {
-                admin: {
-                  description:
-                    'Link label for seasonal promotions (e.g., Learn More & Get Involved)',
-                },
-              },
-            }),
-          ],
-        },
       ],
     },
   ],
-  // hooks: {
-  //   afterChange: [revalidateHeader],
-  // },
 }

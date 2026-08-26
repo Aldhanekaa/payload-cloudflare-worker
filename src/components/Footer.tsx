@@ -15,7 +15,7 @@ const columns = [
       { label: 'Portfolios', href: '/portfolios' },
       { label: 'Services', href: '/services' },
       { label: 'About', href: '/about' },
-      { label: 'Insights', href: '/insights' },
+      { label: 'posts', href: '/insights' },
     ],
   },
   {

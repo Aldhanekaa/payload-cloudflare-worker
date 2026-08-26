@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { PORTFOLIOS, type StatusFilter, type CityFilter, type Portfolio } from './portfolios.data'
 import PortfolioCard from './PortfolioCard'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
-import type { Portfolio as PayloadPortfolio, Media } from '@/payload-types'
+import type { Portfolio as PayloadPortfolio, Media, PortfolioCategory } from '@/payload-types'
 
 type Props = {
   portfolios: PayloadPortfolio[]
@@ -15,13 +15,14 @@ type Props = {
 function transformPortfolioData(portfolios: PayloadPortfolio[]): Portfolio[] {
   return portfolios.map((p) => {
     const cityData = typeof p.city === 'object' ? p.city : null
+    const categoryData = typeof p.category === 'object' ? (p.category as PortfolioCategory) : null
     const heroImageData = typeof p.heroImage === 'object' ? (p.heroImage as Media) : null
 
     return {
       id: String(p.id),
       slug: p.slug || String(p.id),
       status: p.status as Portfolio['status'],
-      category: p.category || 'Uncategorized',
+      category: categoryData?.name || 'Uncategorized',
       name: p.name,
       location: p.location || '',
       city: cityData?.name || 'Unknown',

@@ -1,0 +1,1 @@
+export { HomeFAQs } from './Component'

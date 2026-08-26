@@ -6,7 +6,6 @@ import { useState, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import PageContainer from '@/components/PageContainer'
 import DefaultImg from '@/assets/ANDERSEN_PROPERTIES_DEFAULT_IMG.avif'
-import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { Property as PayloadProperty, Media } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -45,14 +44,18 @@ function transformPropertyData(properties: PayloadProperty[]): Property[] {
     const propertyTypeData = typeof p.propertyType === 'object' ? p.propertyType : null
     const typeName = propertyTypeData?.name || 'Property'
 
-    // Map property type to tag
+    // Map property type to filter tag (supports singular/plural CMS values)
+    const normalizedType = typeName.trim().toLowerCase()
     const typeToTag: Record<string, Property['tag']> = {
-      Houses: 'houses',
-      Villas: 'villas',
-      Apartments: 'apartments',
-      Land: 'land',
+      house: 'houses',
+      houses: 'houses',
+      villa: 'villas',
+      villas: 'villas',
+      apartment: 'apartments',
+      apartments: 'apartments',
+      land: 'land',
     }
-    const tag = typeToTag[typeName] || 'all'
+    const tag = typeToTag[normalizedType] || 'all'
 
     // Format build area
     const buildAreaText = p.buildArea ? `${p.buildArea} m²` : '0 m²'
@@ -302,7 +305,7 @@ export default function HomeFeaturedProperties({ properties: cmsProperties }: Pr
 
   // Use CMS data or fallback to dummy data
   const allProperties = useMemo(() => {
-    if (cmsProperties.length > 0 || !ENABLE_DUMMY_FALLBACK.properties) {
+    if (cmsProperties.length > 0) {
       return transformPropertyData(cmsProperties)
     }
     return PROPERTIES

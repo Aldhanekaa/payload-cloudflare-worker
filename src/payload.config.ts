@@ -16,6 +16,7 @@ import { Media } from './(payload)/collections/Media'
 import { Properties } from './(payload)/collections/Properties'
 import { PropertyTypes } from './(payload)/collections/PropertyTypes'
 import { PropertyCategories } from './(payload)/collections/PropertyCategories'
+import { PortfolioCategories } from './(payload)/collections/PortfolioCategories'
 import { Cities } from './(payload)/collections/Cities'
 import { Portfolios } from './(payload)/collections/Portfolios'
 import { Testimonials } from './(payload)/collections/Testimonials'
@@ -26,7 +27,6 @@ import { plugins } from '@/(payload)/plugins'
 import { nodemailerAdapter } from '@/(payload)/email/adapter'
 import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
 // import { migrations } from './migrations'
-// import migrations from './db/migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -116,6 +116,16 @@ export default buildConfig({
       //   Button: '@/components/(payload)/LogoutButton',
       // },
     },
+    meta: {
+      titleSuffix: '- Andersen Properties',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          url: '/favicon.ico',
+        },
+      ],
+    },
   },
   collections: [
     Users,
@@ -126,6 +136,7 @@ export default buildConfig({
     Properties,
     PropertyTypes,
     PropertyCategories,
+    PortfolioCategories,
     Cities,
     Portfolios,
     Testimonials,

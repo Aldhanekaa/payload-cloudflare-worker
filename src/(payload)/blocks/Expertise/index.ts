@@ -1,0 +1,1 @@
+export { HomeExpertise } from './Component'

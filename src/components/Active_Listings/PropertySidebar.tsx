@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { cn } from '@/utilities/cn'
 
@@ -12,6 +13,8 @@ interface PropertySidebarProps {
   baths: number
   buildArea: string
   landArea: string
+  enquiryLink?: string | null
+  visitScheduleLink?: string | null
 }
 
 export function PropertySidebar({
@@ -23,6 +26,8 @@ export function PropertySidebar({
   baths,
   buildArea,
   landArea,
+  enquiryLink,
+  visitScheduleLink,
 }: PropertySidebarProps) {
   const [activeTab, setActiveTab] = useState<'purchase' | 'rental'>(
     salePrice ? 'purchase' : 'rental',
@@ -111,12 +116,34 @@ export function PropertySidebar({
 
       {/* CTA Buttons */}
       <div className="flex flex-col gap-3">
-        <button className="w-full px-0 py-4 bg-[#b89a5b] border-0 text-[#0a0a0a] font-sans text-[11px] tracking-[0.14em] uppercase font-semibold cursor-pointer transition-colors hover:bg-[#a68a4b]">
-          Enquire About This Property
-        </button>
-        <button className="w-full px-0 py-4 bg-transparent border border-white/20 text-white/70 font-sans text-[11px] tracking-[0.14em] uppercase font-medium cursor-pointer transition-all hover:border-white/40 hover:text-white/90">
-          Schedule a Viewing
-        </button>
+        {enquiryLink ? (
+          <Link
+            href={enquiryLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full px-0 py-4 bg-[#b89a5b] border-0 text-[#0a0a0a] font-sans text-[11px] tracking-[0.14em] uppercase font-semibold cursor-pointer transition-colors hover:bg-[#a68a4b] text-center"
+          >
+            Enquire About This Property
+          </Link>
+        ) : (
+          <button className="w-full px-0 py-4 bg-[#b89a5b] border-0 text-[#0a0a0a] font-sans text-[11px] tracking-[0.14em] uppercase font-semibold cursor-pointer transition-colors hover:bg-[#a68a4b]">
+            Enquire About This Property
+          </button>
+        )}
+        {visitScheduleLink ? (
+          <Link
+            href={visitScheduleLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full px-0 py-4 bg-transparent border border-white/20 text-white/70 font-sans text-[11px] tracking-[0.14em] uppercase font-medium cursor-pointer transition-all hover:border-white/40 hover:text-white/90 text-center"
+          >
+            Schedule a Viewing
+          </Link>
+        ) : (
+          <button className="w-full px-0 py-4 bg-transparent border border-white/20 text-white/70 font-sans text-[11px] tracking-[0.14em] uppercase font-medium cursor-pointer transition-all hover:border-white/40 hover:text-white/90">
+            Schedule a Viewing
+          </button>
+        )}
       </div>
 
       <p className="font-sans text-[11px] text-white/25 mt-5 leading-[1.6] text-center">

@@ -6,7 +6,7 @@ export default function AfterDashboard() {
   // Collection stats data
   const collectionStats = [
     { name: 'Properties', slug: 'properties' },
-    { name: 'Posts', slug: 'posts' },
+    { name: 'posts', slug: 'posts' },
     { name: 'Media', slug: 'media' },
     { name: 'Portfolios', slug: 'portfolios' },
   ]
