@@ -1,6 +1,10 @@
 import type { FormFieldBlock } from '@payloadcms/plugin-form-builder/types'
+import type { TelephoneFieldType } from './Telephone'
 
-export const buildInitialFormState = (fields?: FormFieldBlock[]) => {
+// Extend the union to include our custom telephone block
+type AnyFormField = FormFieldBlock | TelephoneFieldType
+
+export const buildInitialFormState = (fields?: AnyFormField[]) => {
   if (!fields) return {}
 
   return fields.reduce(
@@ -18,22 +22,16 @@ export const buildInitialFormState = (fields?: FormFieldBlock[]) => {
         return initialSchema
       }
 
-      // All other supported field types get empty string default
-      if (
-        field.blockType === 'country' ||
-        field.blockType === 'email' ||
-        field.blockType === 'text' ||
-        field.blockType === 'select' ||
-        field.blockType === 'state' ||
-        field.blockType === 'textarea'
-      ) {
+      // Telephone stores two sub-fields: dialCode + number
+      if (field.blockType === 'telephone') {
         return {
           ...initialSchema,
-          [field.name]: '',
+          [`${field.name}_dialCode`]: field.defaultDialCode ?? '',
+          [`${field.name}_number`]: '',
         }
       }
 
-      // Handle other field types that have name property
+      // All other supported field types get empty string default
       if ('name' in field) {
         return {
           ...initialSchema,

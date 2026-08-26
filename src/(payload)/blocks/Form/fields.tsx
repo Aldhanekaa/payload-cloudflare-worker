@@ -7,6 +7,7 @@ import { Number } from './Number'
 import { Radio } from './Radio'
 import { Select } from './Select'
 import { State } from './State'
+import { Telephone } from './Telephone'
 import { Text } from './Text'
 import { Textarea } from './Textarea'
 
@@ -20,6 +21,7 @@ export const fields = {
   radio: Radio,
   select: Select,
   state: State,
+  telephone: Telephone,
   text: Text,
   textarea: Textarea,
 }

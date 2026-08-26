@@ -1,4 +1,5 @@
 import { Plugin } from 'payload'
+import { telephoneBlock } from '@/(payload)/blocks/Form/Telephone/block'
 
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
@@ -113,7 +114,7 @@ export const plugins: Plugin[] = [
       country: true,
       checkbox: true,
       number: true,
-      telephone: true,
+      telephone: telephoneBlock,
       message: true,
       date: true,
       payment: false,

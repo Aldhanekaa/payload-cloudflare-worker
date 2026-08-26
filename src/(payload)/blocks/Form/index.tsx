@@ -1,5 +1,5 @@
 'use client'
-import type { Form as FormType } from '@payloadcms/plugin-form-builder/types'
+import type { Form as FormType, FormFieldBlock } from '@payloadcms/plugin-form-builder/types'
 
 import { useRouter } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
@@ -10,6 +10,9 @@ import RichText from '@/components/(payload)/RichText'
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
 import { cn } from '@/utilities/ui'
+import type { TelephoneFieldType } from './Telephone'
+
+type AnyFormField = FormFieldBlock | TelephoneFieldType
 
 export type Value = unknown
 
@@ -72,7 +75,22 @@ export const FormBlock: React.FC<
       const submitForm = async () => {
         setError(undefined)
 
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
+        // Merge telephone sub-fields ({name}_dialCode + {name}_number) into one combined value.
+        // Strip the helper keys from the final payload.
+        const telephoneFields = (formFromProps.fields as AnyFormField[])
+          .filter((f): f is TelephoneFieldType => f.blockType === 'telephone')
+          .map((f) => f.name)
+
+        const mergedData: Record<string, unknown> = { ...data as Record<string, unknown> }
+        for (const telName of telephoneFields) {
+          const dialCode = mergedData[`${telName}_dialCode`] as string | undefined
+          const number = mergedData[`${telName}_number`] as string | undefined
+          mergedData[telName] = [dialCode, number].filter(Boolean).join(' ')
+          delete mergedData[`${telName}_dialCode`]
+          delete mergedData[`${telName}_number`]
+        }
+
+        const dataToSend = Object.entries(mergedData).map(([name, value]) => ({
           field: name,
           value,
         }))
@@ -162,7 +180,6 @@ export const FormBlock: React.FC<
               {formFromProps &&
                 formFromProps.fields &&
                 formFromProps.fields.map((field, index) => {
-                  console.log('field.blockType', field.blockType)
                   const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                   if (Field) {
                     return (

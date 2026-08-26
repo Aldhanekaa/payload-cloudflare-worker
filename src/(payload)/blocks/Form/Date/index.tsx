@@ -88,7 +88,6 @@ export const DatePicker: React.FC<
                         onChange(date ? date.toISOString() : '')
                         setOpen(false)
                       }}
-                      initialFocus
                     />
                   </div>
                 )}

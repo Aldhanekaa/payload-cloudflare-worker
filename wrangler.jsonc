@@ -24,10 +24,11 @@
   "d1_databases": [
     {
       "binding": "D1",
-      "database_name": "andersen-properties",
-      "database_id": "7e7c480c-c434-40eb-bf05-c10d39c68750",
       "remote": true,
       "migrations_dir": "./src/migrations",
+
+      "database_name": "andersen-properties",
+      "database_id": "216f1396-2ab3-49ee-bd93-23347e41b006",
     },
   ],
   "services": [
