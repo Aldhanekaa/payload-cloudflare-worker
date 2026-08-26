@@ -2,10 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDocumentInfo, useField } from '@payloadcms/ui'
-import { Globe, Copy } from 'lucide-react'
+import { Globe } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import { LocalizationModal } from './LocalizationModal'
-import { DuplicateFieldModal } from './DuplicateFieldModal'
 import './styles.css'
 
 export type LocalizeFieldButtonProps = {
@@ -22,10 +21,10 @@ export type LocalizeFieldButtonProps = {
 }
 
 /**
- * LocalizeFieldButton — rendered below every field with `localized: true`.
+ * LocalizeFieldButton — rendered below fields with `localized: true`.
  *
- * - For string fields (text, textarea, code, email): shows "Change localization" button (opens translation modal).
- * - For object/non-string fields (group, array, blocks, json, relationship, upload): shows "Duplicate to another locale" button (opens duplication confirmation modal).
+ * - Only string/text fields (`text`, `textarea`, `code`, `email`, `richText`) display the "Change localization" button.
+ * - Non-string fields (groups, arrays, blocks, json, relationships, uploads) return `null` (no button rendered).
  */
 export function LocalizeFieldButton({
   fieldName,
@@ -35,7 +34,7 @@ export function LocalizeFieldButton({
   hasAutotranslate = false,
 }: LocalizeFieldButtonProps) {
   const { id, collectionSlug } = useDocumentInfo()
-  const fieldState = useField<any>({ path: fieldPath || fieldName })
+  const fieldState = useField<string>({ path: fieldPath || fieldName })
   const [isModalOpen, setIsModalOpen] = useState(false)
   // Gate portal rendering until after client-side hydration
   const [mounted, setMounted] = useState(false)
@@ -43,6 +42,19 @@ export function LocalizeFieldButton({
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Only display button for string/text fields
+  const isStringField =
+    fieldType === 'text' ||
+    fieldType === 'textarea' ||
+    fieldType === 'code' ||
+    fieldType === 'email' ||
+    fieldType === 'richText' ||
+    typeof fieldState?.value === 'string'
+
+  if (!isStringField) {
+    return null
+  }
 
   const isSaved = Boolean(id)
 
@@ -52,14 +64,6 @@ export function LocalizeFieldButton({
   }
 
   const handleClose = () => setIsModalOpen(false)
-
-  // Determine if the field is a primitive string field vs complex object/array/blocks field
-  const isStringField =
-    (fieldType === 'text' ||
-      fieldType === 'textarea' ||
-      fieldType === 'code' ||
-      fieldType === 'email') &&
-    (typeof fieldState?.value === 'string' || fieldState?.value == null)
 
   const currentFieldValue =
     typeof fieldState?.value === 'string'
@@ -79,9 +83,9 @@ export function LocalizeFieldButton({
           aria-label="Save document to enable localizations"
         >
           <span className="loc-field-btn__icon">
-            {isStringField ? <Globe size={13} /> : <Copy size={13} />}
+            <Globe size={13} />
           </span>
-          {isStringField ? 'Change localization' : 'Duplicate to another locale'}
+          Change localization
         </button>
         <span className="loc-field-tooltip__text" role="tooltip">
           Save document to enable localizations
@@ -92,50 +96,35 @@ export function LocalizeFieldButton({
 
   // ── Saved state: trigger button + portal modal ───────────────────────────
   return (
-    <>
+    <div className="loc-field-wrapper">
       <button
         type="button"
         className="loc-field-btn"
         onClick={handleOpen}
-        aria-label={
-          isStringField
-            ? `Open localization editor for ${fieldLabel}`
-            : `Duplicate field data for ${fieldLabel} to another locale`
-        }
+        aria-label={`Open localization editor for ${fieldLabel}`}
       >
         <span className="loc-field-btn__icon">
-          {isStringField ? <Globe size={13} /> : <Copy size={13} />}
+          <Globe size={13} />
         </span>
-        {isStringField ? 'Change localization' : 'Duplicate to another locale'}
+        Change localization
       </button>
 
       {/* Portal: only mounts after client-side hydration to avoid SSR mismatch */}
       {mounted &&
         isModalOpen &&
         createPortal(
-          isStringField ? (
-            <LocalizationModal
-              fieldLabel={fieldLabel || fieldName}
-              fieldPath={fieldPath || fieldName}
-              collectionSlug={collectionSlug as string}
-              docId={id as string | number}
-              initialReferenceValue={currentFieldValue}
-              hasAutotranslate={hasAutotranslate}
-              onClose={handleClose}
-            />
-          ) : (
-            <DuplicateFieldModal
-              fieldLabel={fieldLabel || fieldName}
-              fieldPath={fieldPath || fieldName}
-              collectionSlug={collectionSlug as string}
-              docId={id as string | number}
-              fieldValue={fieldState?.value}
-              onClose={handleClose}
-            />
-          ),
+          <LocalizationModal
+            fieldLabel={fieldLabel || fieldName}
+            fieldPath={fieldPath || fieldName}
+            collectionSlug={collectionSlug as string}
+            docId={id as string | number}
+            initialReferenceValue={currentFieldValue}
+            hasAutotranslate={hasAutotranslate}
+            onClose={handleClose}
+          />,
           document.body,
         )}
-    </>
+    </div>
   )
 }
 
