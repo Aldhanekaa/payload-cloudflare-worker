@@ -67,14 +67,8 @@ export const sidebarConfig: PayloadEnhancedSidebarConfig = {
     },
   ],
 
-  // Badge Configuration - Show counts on tabs
-  badges: {
-    // Show properties count
-    properties: {
-      type: 'collection-count',
-      color: 'default',
-    },
-  },
+  // Badge Configuration
+  badges: {},
 
   // Sorting configuration for better organization
   sort: {
