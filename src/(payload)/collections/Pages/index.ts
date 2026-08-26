@@ -24,6 +24,18 @@ import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/config'
 import { Steps } from '@/(payload)/blocks/Steps/config'
 import { colorPickerField } from '@/(payload)/plugins/colorPicker'
 import { FormBlock } from '@/(payload)/fields/Form'
+import { HomeHero } from '@/(payload)/blocks/HomeHero/config'
+import { HomeAbout } from '@/(payload)/blocks/HomeAbout/config'
+import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties/config'
+import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment/config'
+import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps/config'
+import { HomeExpertise } from '@/(payload)/blocks/HomeExpertise/config'
+import { HomePlaces } from '@/(payload)/blocks/HomePlaces/config'
+import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial/config'
+import { HomePath } from '@/(payload)/blocks/HomePath/config'
+import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection/config'
+import { HomeFAQs } from '@/(payload)/blocks/HomeFAQs/config'
+import { HomeCTA } from '@/(payload)/blocks/HomeCTA/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -93,11 +105,22 @@ export const Pages: CollectionConfig<'pages'> = {
                 Content,
                 MediaBlock,
                 Archive,
-                // FormBlock,
                 Feature1,
                 Feature2,
                 HeroHeadline,
                 Steps,
+                HomeHero,
+                HomeAbout,
+                HomeFeaturedProperties,
+                HomeSignatureDevelopment,
+                HomeConsiderationSteps,
+                HomeExpertise,
+                HomePlaces,
+                HomeClientTestimonial,
+                HomePath,
+                HomeJournalSection,
+                HomeFAQs,
+                HomeCTA,
               ],
               required: true,
               localized: true,

@@ -423,6 +423,437 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`pages_blocks_steps_parent_id_idx\` ON \`pages_blocks_steps\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`pages_blocks_steps_path_idx\` ON \`pages_blocks_steps\` (\`_path\`);`)
   await db.run(sql`CREATE INDEX \`pages_blocks_steps_locale_idx\` ON \`pages_blocks_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_hero\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Indonesia''s Premier Real Estate',
+  	\`title\` text DEFAULT 'Contemporary Living,
+  Refined by Design',
+  	\`subtitle\` text DEFAULT 'Curated properties across Indonesia''s most desirable locations — from modernist villas in Bali to architectural residences in Jakarta.',
+  	\`cta_primary_label\` text DEFAULT 'View Active Listings',
+  	\`cta_primary_href\` text DEFAULT '/active-listings',
+  	\`cta_secondary_label\` text DEFAULT 'Speak with an Advisor',
+  	\`cta_secondary_href\` text DEFAULT 'https://wa.me/62812345678',
+  	\`scroll_indicator\` text DEFAULT 'Scroll to explore',
+  	\`background_image_id\` integer,
+  	\`background_color\` text DEFAULT '#000000',
+  	\`overlay_opacity\` text DEFAULT '0.48',
+  	\`text_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#D7F205',
+  	\`cta_primary_bg_color\` text DEFAULT '#D7F205',
+  	\`cta_primary_text_color\` text DEFAULT '#0a0a0a',
+  	\`cta_secondary_border_color\` text DEFAULT 'rgba(255,255,255,0.4)',
+  	\`cta_secondary_text_color\` text DEFAULT '#ffffff',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`background_image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_hero_order_idx\` ON \`pages_blocks_home_hero\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_hero_parent_id_idx\` ON \`pages_blocks_home_hero\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_hero_path_idx\` ON \`pages_blocks_home_hero\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_hero_locale_idx\` ON \`pages_blocks_home_hero\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_hero_background_image_idx\` ON \`pages_blocks_home_hero\` (\`background_image_id\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_about_stats\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`value\` text,
+  	\`label\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_about\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_stats_order_idx\` ON \`pages_blocks_home_about_stats\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_stats_parent_id_idx\` ON \`pages_blocks_home_about_stats\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_stats_locale_idx\` ON \`pages_blocks_home_about_stats\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_about\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`headline\` text DEFAULT 'About Andersen
+  Properties',
+  	\`description\` text DEFAULT 'We represent a new standard in Indonesian luxury real estate — one built on curation, intelligence, and integrity. Our portfolio focuses exclusively on contemporary architecture and design-forward properties across the country''s most compelling markets.',
+  	\`cta_label\` text DEFAULT 'Learn More About Us',
+  	\`cta_href\` text DEFAULT '/about',
+  	\`background_color\` text DEFAULT '#f5f2eb',
+  	\`headline_color\` text DEFAULT '#1a1a1a',
+  	\`description_color\` text DEFAULT '#555',
+  	\`cta_color\` text DEFAULT '#a8894a',
+  	\`divider_color\` text DEFAULT '#d6d0c4',
+  	\`stat_value_color\` text DEFAULT '#1a1a1a',
+  	\`stat_label_color\` text DEFAULT '#888',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_order_idx\` ON \`pages_blocks_home_about\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_parent_id_idx\` ON \`pages_blocks_home_about\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_path_idx\` ON \`pages_blocks_home_about\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_about_locale_idx\` ON \`pages_blocks_home_about\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_featured_properties\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Active Listings',
+  	\`title\` text DEFAULT 'Featured Properties',
+  	\`view_all_label\` text DEFAULT 'View All Properties',
+  	\`view_all_href\` text DEFAULT '/active-listings',
+  	\`view_property_label\` text DEFAULT 'View Property',
+  	\`bed_label\` text DEFAULT 'Bed',
+  	\`no_properties_message\` text DEFAULT 'No properties available at the moment.',
+  	\`filters_all_label\` text DEFAULT 'All',
+  	\`filters_houses_label\` text DEFAULT 'Houses',
+  	\`filters_villas_label\` text DEFAULT 'Villas',
+  	\`filters_apartments_label\` text DEFAULT 'Apartments',
+  	\`filters_land_label\` text DEFAULT 'Land',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 5,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#D7F205',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`property_name_color\` text DEFAULT '#0a0a0a',
+  	\`property_location_color\` text DEFAULT '#a5a19a',
+  	\`property_stats_color\` text DEFAULT '#a5a19a',
+  	\`property_price_color\` text DEFAULT '#242424',
+  	\`filter_active_color\` text DEFAULT '#b89a5b',
+  	\`filter_inactive_color\` text DEFAULT '#a5a19a',
+  	\`filter_border_color\` text DEFAULT '#e5e0d7',
+  	\`view_all_color\` text DEFAULT '#0a0a0a',
+  	\`view_all_border_color\` text DEFAULT '#e5e0d7',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_featured_properties_order_idx\` ON \`pages_blocks_home_featured_properties\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_featured_properties_parent_id_idx\` ON \`pages_blocks_home_featured_properties\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_featured_properties_path_idx\` ON \`pages_blocks_home_featured_properties\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_featured_properties_locale_idx\` ON \`pages_blocks_home_featured_properties\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_signature_development_stats\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`label\` text,
+  	\`value\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_signature_development\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_stats_order_idx\` ON \`pages_blocks_home_signature_development_stats\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_stats_parent_id_idx\` ON \`pages_blocks_home_signature_development_stats\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_stats_locale_idx\` ON \`pages_blocks_home_signature_development_stats\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_signature_development\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Signature Development',
+  	\`title\` text DEFAULT 'Andersen Residences
+  No. 01',
+  	\`description\` text DEFAULT 'Our first proprietary development: a collection of six architect-designed villas in Seminyak, redefining modern tropical living with considered materials and refined spatial planning.',
+  	\`cta_label\` text DEFAULT 'Explore the Development',
+  	\`cta_href\` text DEFAULT '/properties/andersen-residences-01',
+  	\`image_id\` integer,
+  	\`background_color\` text DEFAULT '#0e0e0e',
+  	\`eyebrow_color\` text DEFAULT '#D7F205',
+  	\`title_color\` text DEFAULT '#ffffff',
+  	\`description_color\` text DEFAULT 'rgba(255,255,255,0.6)',
+  	\`stat_label_color\` text DEFAULT 'rgba(255,255,255,0.4)',
+  	\`stat_value_color\` text DEFAULT 'rgba(255,255,255,0.9)',
+  	\`divider_color\` text DEFAULT 'rgba(255,255,255,0.1)',
+  	\`cta_border_color\` text DEFAULT 'rgba(208,186,122,0.7)',
+  	\`cta_text_color\` text DEFAULT '#D7F205',
+  	\`cta_hover_bg_color\` text DEFAULT '#D7F205',
+  	\`cta_hover_text_color\` text DEFAULT '#ffffff',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_order_idx\` ON \`pages_blocks_home_signature_development\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_parent_id_idx\` ON \`pages_blocks_home_signature_development\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_path_idx\` ON \`pages_blocks_home_signature_development\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_locale_idx\` ON \`pages_blocks_home_signature_development\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_signature_development_image_idx\` ON \`pages_blocks_home_signature_development\` (\`image_id\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_consideration_steps_steps\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`number\` text,
+  	\`title\` text,
+  	\`description\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_consideration_steps\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_steps_order_idx\` ON \`pages_blocks_home_consideration_steps_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_steps_parent_id_idx\` ON \`pages_blocks_home_consideration_steps_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_steps_locale_idx\` ON \`pages_blocks_home_consideration_steps_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_consideration_steps\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Why choose
+  Andersen Properties?',
+  	\`background_color\` text DEFAULT '#111110',
+  	\`title_color\` text DEFAULT '#ffffff',
+  	\`step_number_color\` text DEFAULT '#c8b97a',
+  	\`step_title_color\` text DEFAULT '#ffffff',
+  	\`step_description_color\` text DEFAULT 'rgba(255,255,255,0.4)',
+  	\`divider_color\` text DEFAULT 'rgba(255,255,255,0.1)',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_order_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_parent_id_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_path_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_consideration_steps_locale_idx\` ON \`pages_blocks_home_consideration_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_expertise_services\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text,
+  	\`description\` text,
+  	\`href\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_expertise\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_services_order_idx\` ON \`pages_blocks_home_expertise_services\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_services_parent_id_idx\` ON \`pages_blocks_home_expertise_services\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_services_locale_idx\` ON \`pages_blocks_home_expertise_services\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_expertise\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Our Expertise',
+  	\`title\` text DEFAULT 'Comprehensive service across every stage of your property journey',
+  	\`learn_more_label\` text DEFAULT 'Learn More',
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`eyebrow_color\` text DEFAULT '#b89a5b',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`service_title_color\` text DEFAULT '#0a0a0a',
+  	\`service_description_color\` text DEFAULT '#a5a19a',
+  	\`learn_more_color\` text DEFAULT '#b89a5b',
+  	\`icon_color\` text DEFAULT '#a5a19a',
+  	\`card_border_color\` text DEFAULT '#e5e0d7',
+  	\`card_border_hover_color\` text DEFAULT '#b89a5b',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_order_idx\` ON \`pages_blocks_home_expertise\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_parent_id_idx\` ON \`pages_blocks_home_expertise\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_path_idx\` ON \`pages_blocks_home_expertise\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_expertise_locale_idx\` ON \`pages_blocks_home_expertise\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_places\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Locations We Cover',
+  	\`properties_label\` text DEFAULT 'Properties',
+  	\`explore_location_label\` text DEFAULT 'Explore Location',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 100,
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`city_name_color\` text DEFAULT '#ffffff',
+  	\`properties_count_color\` text DEFAULT 'rgba(255,255,255,0.55)',
+  	\`description_color\` text DEFAULT 'rgba(255,255,255,0.75)',
+  	\`explore_location_color\` text DEFAULT '#b89a5b',
+  	\`card_overlay_color\` text DEFAULT 'rgba(10,10,10,0.6)',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_places_order_idx\` ON \`pages_blocks_home_places\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_places_parent_id_idx\` ON \`pages_blocks_home_places\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_places_path_idx\` ON \`pages_blocks_home_places\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_places_locale_idx\` ON \`pages_blocks_home_places\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_client_testimonial\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`quote\` text DEFAULT 'Working with Andersen Properties was a revelation. They understood exactly what we were looking for and introduced us to properties we would never have found on our own. The entire process — from viewing to closing — was handled with exceptional care and professionalism.',
+  	\`attribution\` text DEFAULT 'Michael Chen, Jakarta',
+  	\`cta_label\` text DEFAULT 'Read More Client Stories',
+  	\`cta_href\` text DEFAULT '/client-stories',
+  	\`image_id\` integer,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`quote_color\` text DEFAULT '#0a0a0a',
+  	\`attribution_color\` text DEFAULT '#a5a19a',
+  	\`cta_color\` text DEFAULT '#b89a5b',
+  	\`rule_color\` text DEFAULT '#b89a5b',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_order_idx\` ON \`pages_blocks_home_client_testimonial\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_parent_id_idx\` ON \`pages_blocks_home_client_testimonial\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_path_idx\` ON \`pages_blocks_home_client_testimonial\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_locale_idx\` ON \`pages_blocks_home_client_testimonial\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_client_testimonial_image_idx\` ON \`pages_blocks_home_client_testimonial\` (\`image_id\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_path_steps\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`number\` text,
+  	\`title\` text,
+  	\`description\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_path\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_steps_order_idx\` ON \`pages_blocks_home_path_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_steps_parent_id_idx\` ON \`pages_blocks_home_path_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_steps_locale_idx\` ON \`pages_blocks_home_path_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_path\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Our Path to Your
+  Perfect Property',
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`step_number_color\` text DEFAULT '#b89a5b',
+  	\`step_number_border_color\` text DEFAULT '#b89a5b',
+  	\`step_title_color\` text DEFAULT '#0a0a0a',
+  	\`step_description_color\` text DEFAULT '#a5a19a',
+  	\`connector_color\` text DEFAULT '#b89a5b',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_order_idx\` ON \`pages_blocks_home_path\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_parent_id_idx\` ON \`pages_blocks_home_path\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_path_idx\` ON \`pages_blocks_home_path\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_path_locale_idx\` ON \`pages_blocks_home_path\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_journal_section\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'The Journal',
+  	\`title\` text DEFAULT 'Insights & Ideas',
+  	\`view_all_label\` text DEFAULT 'View All Articles',
+  	\`view_all_href\` text DEFAULT '/insights',
+  	\`read_time_label\` text DEFAULT 'min read',
+  	\`no_posts_message\` text DEFAULT 'No articles available at the moment.',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 3,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#c8b97a',
+  	\`title_color\` text DEFAULT '#1a1a1a',
+  	\`category_color\` text DEFAULT '#c8b97a',
+  	\`date_color\` text DEFAULT '#aaa',
+  	\`post_title_color\` text DEFAULT '#1a1a1a',
+  	\`post_title_hover_color\` text DEFAULT '#a8894a',
+  	\`read_time_color\` text DEFAULT '#aaa',
+  	\`view_all_color\` text DEFAULT '#1a1a1a',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_order_idx\` ON \`pages_blocks_home_journal_section\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_parent_id_idx\` ON \`pages_blocks_home_journal_section\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_path_idx\` ON \`pages_blocks_home_journal_section\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_journal_section_locale_idx\` ON \`pages_blocks_home_journal_section\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_faqs_faqs\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`question\` text,
+  	\`answer\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages_blocks_home_faqs\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_faqs_order_idx\` ON \`pages_blocks_home_faqs_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_faqs_parent_id_idx\` ON \`pages_blocks_home_faqs_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_faqs_locale_idx\` ON \`pages_blocks_home_faqs_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_faqs\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Frequently Asked
+  Questions',
+  	\`subtitle\` text DEFAULT 'Answers to common questions about working with Andersen Properties.',
+  	\`background_color\` text DEFAULT '#f5f2eb',
+  	\`title_color\` text DEFAULT '#1a1a1a',
+  	\`subtitle_color\` text DEFAULT '#888',
+  	\`question_color\` text DEFAULT '#1a1a1a',
+  	\`question_hover_color\` text DEFAULT '#a8894a',
+  	\`answer_color\` text DEFAULT '#555',
+  	\`divider_color\` text DEFAULT '#d6d0c4',
+  	\`toggle_icon_color\` text DEFAULT '#888',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_order_idx\` ON \`pages_blocks_home_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_parent_id_idx\` ON \`pages_blocks_home_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_path_idx\` ON \`pages_blocks_home_faqs\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_faqs_locale_idx\` ON \`pages_blocks_home_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`pages_blocks_home_cta\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Get Started',
+  	\`title\` text DEFAULT 'Ready to find your
+  next property?',
+  	\`subtitle\` text DEFAULT 'Schedule a private consultation to discuss your vision, explore our portfolio, and begin your property journey with Andersen.',
+  	\`cta_primary_label\` text DEFAULT 'Schedule a Consultation',
+  	\`cta_primary_href\` text DEFAULT '/contact',
+  	\`cta_secondary_label\` text DEFAULT 'Chat on WhatsApp',
+  	\`cta_secondary_href\` text DEFAULT 'https://wa.me/62812345678',
+  	\`background_image_id\` integer,
+  	\`background_color\` text DEFAULT '#0a0a0a',
+  	\`image_opacity\` text DEFAULT '0.25',
+  	\`eyebrow_color\` text DEFAULT '#b89a5b',
+  	\`title_color\` text DEFAULT '#ffffff',
+  	\`subtitle_color\` text DEFAULT 'rgba(255,255,255,0.55)',
+  	\`cta_primary_bg_color\` text DEFAULT '#b89a5b',
+  	\`cta_primary_hover_bg_color\` text DEFAULT '#a5894f',
+  	\`cta_primary_text_color\` text DEFAULT '#0a0a0a',
+  	\`cta_secondary_border_color\` text DEFAULT 'rgba(255,255,255,0.25)',
+  	\`cta_secondary_hover_border_color\` text DEFAULT 'rgba(255,255,255,0.5)',
+  	\`cta_secondary_text_color\` text DEFAULT 'rgba(255,255,255,0.8)',
+  	\`cta_secondary_hover_text_color\` text DEFAULT '#ffffff',
+  	\`block_name\` text,
+  	FOREIGN KEY (\`background_image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_order_idx\` ON \`pages_blocks_home_cta\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_parent_id_idx\` ON \`pages_blocks_home_cta\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_path_idx\` ON \`pages_blocks_home_cta\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_locale_idx\` ON \`pages_blocks_home_cta\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_blocks_home_cta_background_image_idx\` ON \`pages_blocks_home_cta\` (\`background_image_id\`);`)
   await db.run(sql`CREATE TABLE \`pages\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`published_at\` text,
@@ -460,10 +891,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`pages_id\` integer,
   	\`posts_id\` integer,
   	\`categories_id\` integer,
+  	\`properties_id\` integer,
+  	\`cities_id\` integer,
   	FOREIGN KEY (\`parent_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`pages_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`posts_id\`) REFERENCES \`posts\`(\`id\`) ON UPDATE no action ON DELETE cascade,
-  	FOREIGN KEY (\`categories_id\`) REFERENCES \`categories\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  	FOREIGN KEY (\`categories_id\`) REFERENCES \`categories\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`properties_id\`) REFERENCES \`properties\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`cities_id\`) REFERENCES \`cities\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
   await db.run(sql`CREATE INDEX \`pages_rels_order_idx\` ON \`pages_rels\` (\`order\`);`)
@@ -473,6 +908,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`pages_rels_pages_id_idx\` ON \`pages_rels\` (\`pages_id\`,\`locale\`);`)
   await db.run(sql`CREATE INDEX \`pages_rels_posts_id_idx\` ON \`pages_rels\` (\`posts_id\`,\`locale\`);`)
   await db.run(sql`CREATE INDEX \`pages_rels_categories_id_idx\` ON \`pages_rels\` (\`categories_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_rels_properties_id_idx\` ON \`pages_rels\` (\`properties_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`pages_rels_cities_id_idx\` ON \`pages_rels\` (\`cities_id\`,\`locale\`);`)
   await db.run(sql`CREATE TABLE \`_pages_v_blocks_form_block\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
@@ -695,6 +1132,455 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_steps_parent_id_idx\` ON \`_pages_v_blocks_steps\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_steps_path_idx\` ON \`_pages_v_blocks_steps\` (\`_path\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_blocks_steps_locale_idx\` ON \`_pages_v_blocks_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_hero\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Indonesia''s Premier Real Estate',
+  	\`title\` text DEFAULT 'Contemporary Living,
+  Refined by Design',
+  	\`subtitle\` text DEFAULT 'Curated properties across Indonesia''s most desirable locations — from modernist villas in Bali to architectural residences in Jakarta.',
+  	\`cta_primary_label\` text DEFAULT 'View Active Listings',
+  	\`cta_primary_href\` text DEFAULT '/active-listings',
+  	\`cta_secondary_label\` text DEFAULT 'Speak with an Advisor',
+  	\`cta_secondary_href\` text DEFAULT 'https://wa.me/62812345678',
+  	\`scroll_indicator\` text DEFAULT 'Scroll to explore',
+  	\`background_image_id\` integer,
+  	\`background_color\` text DEFAULT '#000000',
+  	\`overlay_opacity\` text DEFAULT '0.48',
+  	\`text_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#D7F205',
+  	\`cta_primary_bg_color\` text DEFAULT '#D7F205',
+  	\`cta_primary_text_color\` text DEFAULT '#0a0a0a',
+  	\`cta_secondary_border_color\` text DEFAULT 'rgba(255,255,255,0.4)',
+  	\`cta_secondary_text_color\` text DEFAULT '#ffffff',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`background_image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_hero_order_idx\` ON \`_pages_v_blocks_home_hero\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_hero_parent_id_idx\` ON \`_pages_v_blocks_home_hero\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_hero_path_idx\` ON \`_pages_v_blocks_home_hero\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_hero_locale_idx\` ON \`_pages_v_blocks_home_hero\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_hero_background_image_idx\` ON \`_pages_v_blocks_home_hero\` (\`background_image_id\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_about_stats\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`value\` text,
+  	\`label\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_about\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_stats_order_idx\` ON \`_pages_v_blocks_home_about_stats\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_stats_parent_id_idx\` ON \`_pages_v_blocks_home_about_stats\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_stats_locale_idx\` ON \`_pages_v_blocks_home_about_stats\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_about\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`headline\` text DEFAULT 'About Andersen
+  Properties',
+  	\`description\` text DEFAULT 'We represent a new standard in Indonesian luxury real estate — one built on curation, intelligence, and integrity. Our portfolio focuses exclusively on contemporary architecture and design-forward properties across the country''s most compelling markets.',
+  	\`cta_label\` text DEFAULT 'Learn More About Us',
+  	\`cta_href\` text DEFAULT '/about',
+  	\`background_color\` text DEFAULT '#f5f2eb',
+  	\`headline_color\` text DEFAULT '#1a1a1a',
+  	\`description_color\` text DEFAULT '#555',
+  	\`cta_color\` text DEFAULT '#a8894a',
+  	\`divider_color\` text DEFAULT '#d6d0c4',
+  	\`stat_value_color\` text DEFAULT '#1a1a1a',
+  	\`stat_label_color\` text DEFAULT '#888',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_order_idx\` ON \`_pages_v_blocks_home_about\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_parent_id_idx\` ON \`_pages_v_blocks_home_about\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_path_idx\` ON \`_pages_v_blocks_home_about\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_about_locale_idx\` ON \`_pages_v_blocks_home_about\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_featured_properties\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Active Listings',
+  	\`title\` text DEFAULT 'Featured Properties',
+  	\`view_all_label\` text DEFAULT 'View All Properties',
+  	\`view_all_href\` text DEFAULT '/active-listings',
+  	\`view_property_label\` text DEFAULT 'View Property',
+  	\`bed_label\` text DEFAULT 'Bed',
+  	\`no_properties_message\` text DEFAULT 'No properties available at the moment.',
+  	\`filters_all_label\` text DEFAULT 'All',
+  	\`filters_houses_label\` text DEFAULT 'Houses',
+  	\`filters_villas_label\` text DEFAULT 'Villas',
+  	\`filters_apartments_label\` text DEFAULT 'Apartments',
+  	\`filters_land_label\` text DEFAULT 'Land',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 5,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#D7F205',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`property_name_color\` text DEFAULT '#0a0a0a',
+  	\`property_location_color\` text DEFAULT '#a5a19a',
+  	\`property_stats_color\` text DEFAULT '#a5a19a',
+  	\`property_price_color\` text DEFAULT '#242424',
+  	\`filter_active_color\` text DEFAULT '#b89a5b',
+  	\`filter_inactive_color\` text DEFAULT '#a5a19a',
+  	\`filter_border_color\` text DEFAULT '#e5e0d7',
+  	\`view_all_color\` text DEFAULT '#0a0a0a',
+  	\`view_all_border_color\` text DEFAULT '#e5e0d7',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_featured_properties_order_idx\` ON \`_pages_v_blocks_home_featured_properties\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_featured_properties_parent_id_idx\` ON \`_pages_v_blocks_home_featured_properties\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_featured_properties_path_idx\` ON \`_pages_v_blocks_home_featured_properties\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_featured_properties_locale_idx\` ON \`_pages_v_blocks_home_featured_properties\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_signature_development_stats\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`label\` text,
+  	\`value\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_signature_development\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_stats_order_idx\` ON \`_pages_v_blocks_home_signature_development_stats\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_stats_parent_id_idx\` ON \`_pages_v_blocks_home_signature_development_stats\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_stats_locale_idx\` ON \`_pages_v_blocks_home_signature_development_stats\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_signature_development\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Signature Development',
+  	\`title\` text DEFAULT 'Andersen Residences
+  No. 01',
+  	\`description\` text DEFAULT 'Our first proprietary development: a collection of six architect-designed villas in Seminyak, redefining modern tropical living with considered materials and refined spatial planning.',
+  	\`cta_label\` text DEFAULT 'Explore the Development',
+  	\`cta_href\` text DEFAULT '/properties/andersen-residences-01',
+  	\`image_id\` integer,
+  	\`background_color\` text DEFAULT '#0e0e0e',
+  	\`eyebrow_color\` text DEFAULT '#D7F205',
+  	\`title_color\` text DEFAULT '#ffffff',
+  	\`description_color\` text DEFAULT 'rgba(255,255,255,0.6)',
+  	\`stat_label_color\` text DEFAULT 'rgba(255,255,255,0.4)',
+  	\`stat_value_color\` text DEFAULT 'rgba(255,255,255,0.9)',
+  	\`divider_color\` text DEFAULT 'rgba(255,255,255,0.1)',
+  	\`cta_border_color\` text DEFAULT 'rgba(208,186,122,0.7)',
+  	\`cta_text_color\` text DEFAULT '#D7F205',
+  	\`cta_hover_bg_color\` text DEFAULT '#D7F205',
+  	\`cta_hover_text_color\` text DEFAULT '#ffffff',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_order_idx\` ON \`_pages_v_blocks_home_signature_development\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_parent_id_idx\` ON \`_pages_v_blocks_home_signature_development\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_path_idx\` ON \`_pages_v_blocks_home_signature_development\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_locale_idx\` ON \`_pages_v_blocks_home_signature_development\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_signature_development_image_idx\` ON \`_pages_v_blocks_home_signature_development\` (\`image_id\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_consideration_steps_steps\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`number\` text,
+  	\`title\` text,
+  	\`description\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_consideration_steps\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_steps_order_idx\` ON \`_pages_v_blocks_home_consideration_steps_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_steps_parent_id_idx\` ON \`_pages_v_blocks_home_consideration_steps_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_steps_locale_idx\` ON \`_pages_v_blocks_home_consideration_steps_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_consideration_steps\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Why choose
+  Andersen Properties?',
+  	\`background_color\` text DEFAULT '#111110',
+  	\`title_color\` text DEFAULT '#ffffff',
+  	\`step_number_color\` text DEFAULT '#c8b97a',
+  	\`step_title_color\` text DEFAULT '#ffffff',
+  	\`step_description_color\` text DEFAULT 'rgba(255,255,255,0.4)',
+  	\`divider_color\` text DEFAULT 'rgba(255,255,255,0.1)',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_order_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_parent_id_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_path_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_consideration_steps_locale_idx\` ON \`_pages_v_blocks_home_consideration_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_expertise_services\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`title\` text,
+  	\`description\` text,
+  	\`href\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_expertise\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_services_order_idx\` ON \`_pages_v_blocks_home_expertise_services\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_services_parent_id_idx\` ON \`_pages_v_blocks_home_expertise_services\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_services_locale_idx\` ON \`_pages_v_blocks_home_expertise_services\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_expertise\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Our Expertise',
+  	\`title\` text DEFAULT 'Comprehensive service across every stage of your property journey',
+  	\`learn_more_label\` text DEFAULT 'Learn More',
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`eyebrow_color\` text DEFAULT '#b89a5b',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`service_title_color\` text DEFAULT '#0a0a0a',
+  	\`service_description_color\` text DEFAULT '#a5a19a',
+  	\`learn_more_color\` text DEFAULT '#b89a5b',
+  	\`icon_color\` text DEFAULT '#a5a19a',
+  	\`card_border_color\` text DEFAULT '#e5e0d7',
+  	\`card_border_hover_color\` text DEFAULT '#b89a5b',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_order_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_parent_id_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_path_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_expertise_locale_idx\` ON \`_pages_v_blocks_home_expertise\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_places\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Locations We Cover',
+  	\`properties_label\` text DEFAULT 'Properties',
+  	\`explore_location_label\` text DEFAULT 'Explore Location',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 100,
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`city_name_color\` text DEFAULT '#ffffff',
+  	\`properties_count_color\` text DEFAULT 'rgba(255,255,255,0.55)',
+  	\`description_color\` text DEFAULT 'rgba(255,255,255,0.75)',
+  	\`explore_location_color\` text DEFAULT '#b89a5b',
+  	\`card_overlay_color\` text DEFAULT 'rgba(10,10,10,0.6)',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_places_order_idx\` ON \`_pages_v_blocks_home_places\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_places_parent_id_idx\` ON \`_pages_v_blocks_home_places\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_places_path_idx\` ON \`_pages_v_blocks_home_places\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_places_locale_idx\` ON \`_pages_v_blocks_home_places\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_client_testimonial\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`quote\` text DEFAULT 'Working with Andersen Properties was a revelation. They understood exactly what we were looking for and introduced us to properties we would never have found on our own. The entire process — from viewing to closing — was handled with exceptional care and professionalism.',
+  	\`attribution\` text DEFAULT 'Michael Chen, Jakarta',
+  	\`cta_label\` text DEFAULT 'Read More Client Stories',
+  	\`cta_href\` text DEFAULT '/client-stories',
+  	\`image_id\` integer,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`quote_color\` text DEFAULT '#0a0a0a',
+  	\`attribution_color\` text DEFAULT '#a5a19a',
+  	\`cta_color\` text DEFAULT '#b89a5b',
+  	\`rule_color\` text DEFAULT '#b89a5b',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_order_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_parent_id_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_path_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_locale_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_client_testimonial_image_idx\` ON \`_pages_v_blocks_home_client_testimonial\` (\`image_id\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_path_steps\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`number\` text,
+  	\`title\` text,
+  	\`description\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_path\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_steps_order_idx\` ON \`_pages_v_blocks_home_path_steps\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_steps_parent_id_idx\` ON \`_pages_v_blocks_home_path_steps\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_steps_locale_idx\` ON \`_pages_v_blocks_home_path_steps\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_path\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Our Path to Your
+  Perfect Property',
+  	\`background_color\` text DEFAULT '#f7f5f0',
+  	\`title_color\` text DEFAULT '#0a0a0a',
+  	\`step_number_color\` text DEFAULT '#b89a5b',
+  	\`step_number_border_color\` text DEFAULT '#b89a5b',
+  	\`step_title_color\` text DEFAULT '#0a0a0a',
+  	\`step_description_color\` text DEFAULT '#a5a19a',
+  	\`connector_color\` text DEFAULT '#b89a5b',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_order_idx\` ON \`_pages_v_blocks_home_path\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_parent_id_idx\` ON \`_pages_v_blocks_home_path\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_path_idx\` ON \`_pages_v_blocks_home_path\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_path_locale_idx\` ON \`_pages_v_blocks_home_path\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_journal_section\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'The Journal',
+  	\`title\` text DEFAULT 'Insights & Ideas',
+  	\`view_all_label\` text DEFAULT 'View All Articles',
+  	\`view_all_href\` text DEFAULT '/insights',
+  	\`read_time_label\` text DEFAULT 'min read',
+  	\`no_posts_message\` text DEFAULT 'No articles available at the moment.',
+  	\`data_source\` text DEFAULT 'auto',
+  	\`limit\` numeric DEFAULT 3,
+  	\`background_color\` text DEFAULT '#ffffff',
+  	\`eyebrow_color\` text DEFAULT '#c8b97a',
+  	\`title_color\` text DEFAULT '#1a1a1a',
+  	\`category_color\` text DEFAULT '#c8b97a',
+  	\`date_color\` text DEFAULT '#aaa',
+  	\`post_title_color\` text DEFAULT '#1a1a1a',
+  	\`post_title_hover_color\` text DEFAULT '#a8894a',
+  	\`read_time_color\` text DEFAULT '#aaa',
+  	\`view_all_color\` text DEFAULT '#1a1a1a',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_order_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_parent_id_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_path_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_journal_section_locale_idx\` ON \`_pages_v_blocks_home_journal_section\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_faqs_faqs\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`question\` text,
+  	\`answer\` text,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v_blocks_home_faqs\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_faqs_order_idx\` ON \`_pages_v_blocks_home_faqs_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_faqs_parent_id_idx\` ON \`_pages_v_blocks_home_faqs_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_faqs_locale_idx\` ON \`_pages_v_blocks_home_faqs_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_faqs\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`title\` text DEFAULT 'Frequently Asked
+  Questions',
+  	\`subtitle\` text DEFAULT 'Answers to common questions about working with Andersen Properties.',
+  	\`background_color\` text DEFAULT '#f5f2eb',
+  	\`title_color\` text DEFAULT '#1a1a1a',
+  	\`subtitle_color\` text DEFAULT '#888',
+  	\`question_color\` text DEFAULT '#1a1a1a',
+  	\`question_hover_color\` text DEFAULT '#a8894a',
+  	\`answer_color\` text DEFAULT '#555',
+  	\`divider_color\` text DEFAULT '#d6d0c4',
+  	\`toggle_icon_color\` text DEFAULT '#888',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_order_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_parent_id_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_path_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_faqs_locale_idx\` ON \`_pages_v_blocks_home_faqs\` (\`_locale\`);`)
+  await db.run(sql`CREATE TABLE \`_pages_v_blocks_home_cta\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`eyebrow\` text DEFAULT 'Get Started',
+  	\`title\` text DEFAULT 'Ready to find your
+  next property?',
+  	\`subtitle\` text DEFAULT 'Schedule a private consultation to discuss your vision, explore our portfolio, and begin your property journey with Andersen.',
+  	\`cta_primary_label\` text DEFAULT 'Schedule a Consultation',
+  	\`cta_primary_href\` text DEFAULT '/contact',
+  	\`cta_secondary_label\` text DEFAULT 'Chat on WhatsApp',
+  	\`cta_secondary_href\` text DEFAULT 'https://wa.me/62812345678',
+  	\`background_image_id\` integer,
+  	\`background_color\` text DEFAULT '#0a0a0a',
+  	\`image_opacity\` text DEFAULT '0.25',
+  	\`eyebrow_color\` text DEFAULT '#b89a5b',
+  	\`title_color\` text DEFAULT '#ffffff',
+  	\`subtitle_color\` text DEFAULT 'rgba(255,255,255,0.55)',
+  	\`cta_primary_bg_color\` text DEFAULT '#b89a5b',
+  	\`cta_primary_hover_bg_color\` text DEFAULT '#a5894f',
+  	\`cta_primary_text_color\` text DEFAULT '#0a0a0a',
+  	\`cta_secondary_border_color\` text DEFAULT 'rgba(255,255,255,0.25)',
+  	\`cta_secondary_hover_border_color\` text DEFAULT 'rgba(255,255,255,0.5)',
+  	\`cta_secondary_text_color\` text DEFAULT 'rgba(255,255,255,0.8)',
+  	\`cta_secondary_hover_text_color\` text DEFAULT '#ffffff',
+  	\`_uuid\` text,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`background_image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_order_idx\` ON \`_pages_v_blocks_home_cta\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_parent_id_idx\` ON \`_pages_v_blocks_home_cta\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_path_idx\` ON \`_pages_v_blocks_home_cta\` (\`_path\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_locale_idx\` ON \`_pages_v_blocks_home_cta\` (\`_locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_blocks_home_cta_background_image_idx\` ON \`_pages_v_blocks_home_cta\` (\`background_image_id\`);`)
   await db.run(sql`CREATE TABLE \`_pages_v\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`parent_id\` integer,
@@ -747,10 +1633,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`pages_id\` integer,
   	\`posts_id\` integer,
   	\`categories_id\` integer,
+  	\`properties_id\` integer,
+  	\`cities_id\` integer,
   	FOREIGN KEY (\`parent_id\`) REFERENCES \`_pages_v\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`pages_id\`) REFERENCES \`pages\`(\`id\`) ON UPDATE no action ON DELETE cascade,
   	FOREIGN KEY (\`posts_id\`) REFERENCES \`posts\`(\`id\`) ON UPDATE no action ON DELETE cascade,
-  	FOREIGN KEY (\`categories_id\`) REFERENCES \`categories\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  	FOREIGN KEY (\`categories_id\`) REFERENCES \`categories\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`properties_id\`) REFERENCES \`properties\`(\`id\`) ON UPDATE no action ON DELETE cascade,
+  	FOREIGN KEY (\`cities_id\`) REFERENCES \`cities\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
   `)
   await db.run(sql`CREATE INDEX \`_pages_v_rels_order_idx\` ON \`_pages_v_rels\` (\`order\`);`)
@@ -760,6 +1650,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`_pages_v_rels_pages_id_idx\` ON \`_pages_v_rels\` (\`pages_id\`,\`locale\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_rels_posts_id_idx\` ON \`_pages_v_rels\` (\`posts_id\`,\`locale\`);`)
   await db.run(sql`CREATE INDEX \`_pages_v_rels_categories_id_idx\` ON \`_pages_v_rels\` (\`categories_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_rels_properties_id_idx\` ON \`_pages_v_rels\` (\`properties_id\`,\`locale\`);`)
+  await db.run(sql`CREATE INDEX \`_pages_v_rels_cities_id_idx\` ON \`_pages_v_rels\` (\`cities_id\`,\`locale\`);`)
   await db.run(sql`CREATE TABLE \`properties_images\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
@@ -1301,6 +2193,31 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   `)
   await db.run(sql`CREATE UNIQUE INDEX \`forms_blocks_radio_locales_locale_parent_id_unique\` ON \`forms_blocks_radio_locales\` (\`_locale\`,\`_parent_id\`);`)
+  await db.run(sql`CREATE TABLE \`forms_blocks_telephone\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`_path\` text NOT NULL,
+  	\`id\` text PRIMARY KEY NOT NULL,
+  	\`name\` text NOT NULL,
+  	\`default_dial_code\` text,
+  	\`width\` numeric,
+  	\`required\` integer DEFAULT false,
+  	\`block_name\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`forms\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`forms_blocks_telephone_order_idx\` ON \`forms_blocks_telephone\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`forms_blocks_telephone_parent_id_idx\` ON \`forms_blocks_telephone\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`forms_blocks_telephone_path_idx\` ON \`forms_blocks_telephone\` (\`_path\`);`)
+  await db.run(sql`CREATE TABLE \`forms_blocks_telephone_locales\` (
+  	\`label\` text,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`_parent_id\` text NOT NULL,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`forms_blocks_telephone\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE UNIQUE INDEX \`forms_blocks_telephone_locales_locale_parent_id_unique\` ON \`forms_blocks_telephone_locales\` (\`_locale\`,\`_parent_id\`);`)
   await db.run(sql`CREATE TABLE \`forms_blocks_date\` (
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
@@ -1675,6 +2592,24 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`pages_blocks_hero_headline\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_steps_steps\`;`)
   await db.run(sql`DROP TABLE \`pages_blocks_steps\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_hero\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_about_stats\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_about\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_featured_properties\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_signature_development_stats\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_signature_development\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_consideration_steps_steps\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_consideration_steps\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_expertise_services\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_expertise\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_places\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_client_testimonial\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_path_steps\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_path\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_journal_section\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_faqs_faqs\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_faqs\`;`)
+  await db.run(sql`DROP TABLE \`pages_blocks_home_cta\`;`)
   await db.run(sql`DROP TABLE \`pages\`;`)
   await db.run(sql`DROP TABLE \`pages_locales\`;`)
   await db.run(sql`DROP TABLE \`pages_rels\`;`)
@@ -1690,6 +2625,24 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`_pages_v_blocks_hero_headline\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_steps_steps\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_blocks_steps\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_hero\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_about_stats\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_about\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_featured_properties\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_signature_development_stats\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_signature_development\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_consideration_steps_steps\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_consideration_steps\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_expertise_services\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_expertise\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_places\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_client_testimonial\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_path_steps\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_path\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_journal_section\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_faqs_faqs\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_faqs\`;`)
+  await db.run(sql`DROP TABLE \`_pages_v_blocks_home_cta\`;`)
   await db.run(sql`DROP TABLE \`_pages_v\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_locales\`;`)
   await db.run(sql`DROP TABLE \`_pages_v_rels\`;`)
@@ -1738,6 +2691,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`forms_blocks_radio_options_locales\`;`)
   await db.run(sql`DROP TABLE \`forms_blocks_radio\`;`)
   await db.run(sql`DROP TABLE \`forms_blocks_radio_locales\`;`)
+  await db.run(sql`DROP TABLE \`forms_blocks_telephone\`;`)
+  await db.run(sql`DROP TABLE \`forms_blocks_telephone_locales\`;`)
   await db.run(sql`DROP TABLE \`forms_blocks_date\`;`)
   await db.run(sql`DROP TABLE \`forms_blocks_date_locales\`;`)
   await db.run(sql`DROP TABLE \`forms_emails\`;`)

@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "andersen-properties" generated at 2026-08-26T05:35:31.106Z.

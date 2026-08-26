@@ -25,8 +25,7 @@ import { Testimonials } from './(payload)/collections/Testimonials'
 import { plugins } from '@/(payload)/plugins'
 import { nodemailerAdapter } from '@/(payload)/email/adapter'
 import { GlobalSettings } from '@/(payload)/globals/Global_Settings'
-// import { migrations } from './migrations'
-// import migrations from './db/migrations'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -138,7 +137,7 @@ export default buildConfig({
   },
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
-    // prodMigrations: migrations as any,
+    prodMigrations: migrations as any,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
   email: nodemailerAdapter,

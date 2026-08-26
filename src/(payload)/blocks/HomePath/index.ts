@@ -1,0 +1,1 @@
+export { HomePath } from './Component'

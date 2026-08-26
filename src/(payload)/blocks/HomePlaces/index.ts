@@ -1,0 +1,1 @@
+export { HomePlaces } from './Component'

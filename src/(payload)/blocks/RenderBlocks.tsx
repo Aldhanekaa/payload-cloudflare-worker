@@ -11,6 +11,18 @@ import { Feature2 } from '@/(payload)/blocks/Features/Feature2/Component'
 import { HeroHeadline } from '@/(payload)/blocks/HeroHeadline/Component'
 import { Steps } from '@/(payload)/blocks/Steps/Component'
 import { FormBlock } from '@/(payload)/blocks/Form'
+import { HomeHero } from '@/(payload)/blocks/HomeHero'
+import { HomeAbout } from '@/(payload)/blocks/HomeAbout'
+import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment'
+import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps'
+import { HomeExpertise } from '@/(payload)/blocks/HomeExpertise'
+import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial'
+import { HomePath } from '@/(payload)/blocks/HomePath'
+import { HomeFAQs } from '@/(payload)/blocks/HomeFAQs'
+import { HomeCTA } from '@/(payload)/blocks/HomeCTA'
+import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties'
+import { HomePlaces } from '@/(payload)/blocks/HomePlaces'
+import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection'
 
 const blockComponents: Record<string, React.FC<any>> = {
   archive: ArchiveBlock,
@@ -22,6 +34,18 @@ const blockComponents: Record<string, React.FC<any>> = {
   heroHeadline: HeroHeadline,
   steps: Steps,
   formBlock: FormBlock,
+  homeHero: HomeHero,
+  homeAbout: HomeAbout,
+  homeFeaturedProperties: HomeFeaturedProperties,
+  homeSignatureDevelopment: HomeSignatureDevelopment,
+  homeConsiderationSteps: HomeConsiderationSteps,
+  homeExpertise: HomeExpertise,
+  homePlaces: HomePlaces,
+  homeClientTestimonial: HomeClientTestimonial,
+  homePath: HomePath,
+  homeJournalSection: HomeJournalSection,
+  homeFaqs: HomeFAQs,
+  homeCta: HomeCTA,
 }
 
 export const RenderBlocks: React.FC<{
