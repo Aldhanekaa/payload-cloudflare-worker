@@ -10,7 +10,7 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import RightPanelPlugin from '@shefing/right-panel'
 import { payloadEnhancedSidebar } from '@veiag/payload-enhanced-sidebar'
 // import { importExportPlugin } from '@payloadcms/plugin-import-export'
-// import { localization } from '@websolutespa/payload-plugin-localization'  ← replaced by custom plugin
+// import { localization } from '@websolutespa/payload-plugin-localization' //  ← replaced by custom plugin
 import { blurDataUrlsPlugin } from '@oversightstudio/blur-data-urls'
 import { fieldsSelect } from '@payload-enchants/fields-select'
 import { betterEditor } from 'payload-better-editor'
