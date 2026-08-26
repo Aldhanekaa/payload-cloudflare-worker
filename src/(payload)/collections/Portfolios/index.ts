@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { anyone } from '../../access/anyone'
 import { slugField } from 'payload'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 
 const PORTFOLIO_STATUSES = [
   { label: 'Active', value: 'active' },
@@ -21,6 +22,20 @@ export const Portfolios: CollectionConfig = {
   admin: {
     defaultColumns: ['name', 'category', 'city', 'status', 'completion', 'updatedAt'],
     useAsTitle: 'name',
+    // livePreview: {
+    //   url: ({ data, req }) =>
+    //     generatePreviewPath({
+    //       slug: data?.slug,
+    //       collection: 'portfolios',
+    //       req,
+    //     }),
+    // },
+    // preview: (data, { req }) =>
+    //   generatePreviewPath({
+    //     slug: data?.slug as string,
+    //     collection: 'portfolios',
+    //     req,
+    //   }),
   },
   fields: [
     // ── Primary Information ───────────────────────────────────────

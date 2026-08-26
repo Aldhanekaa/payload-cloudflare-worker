@@ -922,7 +922,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`_order\` integer NOT NULL,
   	\`_parent_id\` integer NOT NULL,
   	\`id\` text PRIMARY KEY NOT NULL,
-  	\`image_id\` integer NOT NULL,
+  	\`image_id\` integer,
   	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
   	FOREIGN KEY (\`_parent_id\`) REFERENCES \`portfolios\`(\`id\`) ON UPDATE no action ON DELETE cascade
   );
@@ -931,7 +931,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`portfolios_detail_images_parent_id_idx\` ON \`portfolios_detail_images\` (\`_parent_id\`);`)
   await db.run(sql`CREATE INDEX \`portfolios_detail_images_image_idx\` ON \`portfolios_detail_images\` (\`image_id\`);`)
   await db.run(sql`CREATE TABLE \`portfolios_detail_images_locales\` (
-  	\`alt\` text NOT NULL,
+  	\`alt\` text,
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`_locale\` text NOT NULL,
   	\`_parent_id\` text NOT NULL,
@@ -949,7 +949,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`portfolios_highlights_order_idx\` ON \`portfolios_highlights\` (\`_order\`);`)
   await db.run(sql`CREATE INDEX \`portfolios_highlights_parent_id_idx\` ON \`portfolios_highlights\` (\`_parent_id\`);`)
   await db.run(sql`CREATE TABLE \`portfolios_highlights_locales\` (
-  	\`highlight\` text NOT NULL,
+  	\`highlight\` text,
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`_locale\` text NOT NULL,
   	\`_parent_id\` text NOT NULL,
@@ -960,22 +960,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE TABLE \`portfolios\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`generate_slug\` integer DEFAULT true,
-  	\`slug\` text NOT NULL,
-  	\`status\` text DEFAULT 'active' NOT NULL,
-  	\`category_id\` integer NOT NULL,
-  	\`city_id\` integer NOT NULL,
-  	\`location\` text NOT NULL,
-  	\`units\` numeric NOT NULL,
-  	\`completion\` text NOT NULL,
-  	\`from\` text NOT NULL,
+  	\`slug\` text,
+  	\`status\` text DEFAULT 'active',
+  	\`category_id\` integer,
+  	\`city_id\` integer,
+  	\`location\` text,
+  	\`units\` numeric,
+  	\`completion\` text,
+  	\`from\` text,
   	\`enquiry_link\` text,
   	\`brochure_link\` text,
   	\`waitlist_link\` text,
   	\`visit_schedule_link\` text,
-  	\`hero_image_id\` integer NOT NULL,
-  	\`architect\` text NOT NULL,
+  	\`hero_image_id\` integer,
+  	\`architect\` text,
   	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
   	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`_status\` text DEFAULT 'draft',
   	FOREIGN KEY (\`category_id\`) REFERENCES \`portfolio_categories\`(\`id\`) ON UPDATE no action ON DELETE set null,
   	FOREIGN KEY (\`city_id\`) REFERENCES \`cities\`(\`id\`) ON UPDATE no action ON DELETE set null,
   	FOREIGN KEY (\`hero_image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null
@@ -987,11 +988,12 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.run(sql`CREATE INDEX \`portfolios_hero_image_idx\` ON \`portfolios\` (\`hero_image_id\`);`)
   await db.run(sql`CREATE INDEX \`portfolios_updated_at_idx\` ON \`portfolios\` (\`updated_at\`);`)
   await db.run(sql`CREATE INDEX \`portfolios_created_at_idx\` ON \`portfolios\` (\`created_at\`);`)
+  await db.run(sql`CREATE INDEX \`portfolios__status_idx\` ON \`portfolios\` (\`_status\`);`)
   await db.run(sql`CREATE TABLE \`portfolios_locales\` (
-  	\`name\` text NOT NULL,
-  	\`tagline\` text NOT NULL,
-  	\`image_alt\` text NOT NULL,
-  	\`description\` text NOT NULL,
+  	\`name\` text,
+  	\`tagline\` text,
+  	\`image_alt\` text,
+  	\`description\` text,
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`_locale\` text NOT NULL,
   	\`_parent_id\` integer NOT NULL,
@@ -999,6 +1001,106 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   );
   `)
   await db.run(sql`CREATE UNIQUE INDEX \`portfolios_locales_locale_parent_id_unique\` ON \`portfolios_locales\` (\`_locale\`,\`_parent_id\`);`)
+  await db.run(sql`CREATE TABLE \`_portfolios_v_version_detail_images\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`image_id\` integer,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_portfolios_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_detail_images_order_idx\` ON \`_portfolios_v_version_detail_images\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_detail_images_parent_id_idx\` ON \`_portfolios_v_version_detail_images\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_detail_images_image_idx\` ON \`_portfolios_v_version_detail_images\` (\`image_id\`);`)
+  await db.run(sql`CREATE TABLE \`_portfolios_v_version_detail_images_locales\` (
+  	\`alt\` text,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_portfolios_v_version_detail_images\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE UNIQUE INDEX \`_portfolios_v_version_detail_images_locales_locale_parent_id\` ON \`_portfolios_v_version_detail_images_locales\` (\`_locale\`,\`_parent_id\`);`)
+  await db.run(sql`CREATE TABLE \`_portfolios_v_version_highlights\` (
+  	\`_order\` integer NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`_uuid\` text,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_portfolios_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_highlights_order_idx\` ON \`_portfolios_v_version_highlights\` (\`_order\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_highlights_parent_id_idx\` ON \`_portfolios_v_version_highlights\` (\`_parent_id\`);`)
+  await db.run(sql`CREATE TABLE \`_portfolios_v_version_highlights_locales\` (
+  	\`highlight\` text,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_portfolios_v_version_highlights\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE UNIQUE INDEX \`_portfolios_v_version_highlights_locales_locale_parent_id_un\` ON \`_portfolios_v_version_highlights_locales\` (\`_locale\`,\`_parent_id\`);`)
+  await db.run(sql`CREATE TABLE \`_portfolios_v\` (
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`parent_id\` integer,
+  	\`version_generate_slug\` integer DEFAULT true,
+  	\`version_slug\` text,
+  	\`version_status\` text DEFAULT 'active',
+  	\`version_category_id\` integer,
+  	\`version_city_id\` integer,
+  	\`version_location\` text,
+  	\`version_units\` numeric,
+  	\`version_completion\` text,
+  	\`version_from\` text,
+  	\`version_enquiry_link\` text,
+  	\`version_brochure_link\` text,
+  	\`version_waitlist_link\` text,
+  	\`version_visit_schedule_link\` text,
+  	\`version_hero_image_id\` integer,
+  	\`version_architect\` text,
+  	\`version_updated_at\` text,
+  	\`version_created_at\` text,
+  	\`version__status\` text DEFAULT 'draft',
+  	\`created_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`updated_at\` text DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) NOT NULL,
+  	\`snapshot\` integer,
+  	\`published_locale\` text,
+  	\`latest\` integer,
+  	\`autosave\` integer,
+  	FOREIGN KEY (\`parent_id\`) REFERENCES \`portfolios\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`version_category_id\`) REFERENCES \`portfolio_categories\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`version_city_id\`) REFERENCES \`cities\`(\`id\`) ON UPDATE no action ON DELETE set null,
+  	FOREIGN KEY (\`version_hero_image_id\`) REFERENCES \`media\`(\`id\`) ON UPDATE no action ON DELETE set null
+  );
+  `)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_parent_idx\` ON \`_portfolios_v\` (\`parent_id\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version_slug_idx\` ON \`_portfolios_v\` (\`version_slug\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version_category_idx\` ON \`_portfolios_v\` (\`version_category_id\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version_city_idx\` ON \`_portfolios_v\` (\`version_city_id\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version_hero_image_idx\` ON \`_portfolios_v\` (\`version_hero_image_id\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version_updated_at_idx\` ON \`_portfolios_v\` (\`version_updated_at\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version_created_at_idx\` ON \`_portfolios_v\` (\`version_created_at\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_version_version__status_idx\` ON \`_portfolios_v\` (\`version__status\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_created_at_idx\` ON \`_portfolios_v\` (\`created_at\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_updated_at_idx\` ON \`_portfolios_v\` (\`updated_at\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_snapshot_idx\` ON \`_portfolios_v\` (\`snapshot\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_published_locale_idx\` ON \`_portfolios_v\` (\`published_locale\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_latest_idx\` ON \`_portfolios_v\` (\`latest\`);`)
+  await db.run(sql`CREATE INDEX \`_portfolios_v_autosave_idx\` ON \`_portfolios_v\` (\`autosave\`);`)
+  await db.run(sql`CREATE TABLE \`_portfolios_v_locales\` (
+  	\`version_name\` text,
+  	\`version_tagline\` text,
+  	\`version_image_alt\` text,
+  	\`version_description\` text,
+  	\`id\` integer PRIMARY KEY NOT NULL,
+  	\`_locale\` text NOT NULL,
+  	\`_parent_id\` integer NOT NULL,
+  	FOREIGN KEY (\`_parent_id\`) REFERENCES \`_portfolios_v\`(\`id\`) ON UPDATE no action ON DELETE cascade
+  );
+  `)
+  await db.run(sql`CREATE UNIQUE INDEX \`_portfolios_v_locales_locale_parent_id_unique\` ON \`_portfolios_v_locales\` (\`_locale\`,\`_parent_id\`);`)
   await db.run(sql`CREATE TABLE \`testimonials\` (
   	\`id\` integer PRIMARY KEY NOT NULL,
   	\`name\` text NOT NULL,
@@ -1715,6 +1817,12 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await db.run(sql`DROP TABLE \`portfolios_highlights_locales\`;`)
   await db.run(sql`DROP TABLE \`portfolios\`;`)
   await db.run(sql`DROP TABLE \`portfolios_locales\`;`)
+  await db.run(sql`DROP TABLE \`_portfolios_v_version_detail_images\`;`)
+  await db.run(sql`DROP TABLE \`_portfolios_v_version_detail_images_locales\`;`)
+  await db.run(sql`DROP TABLE \`_portfolios_v_version_highlights\`;`)
+  await db.run(sql`DROP TABLE \`_portfolios_v_version_highlights_locales\`;`)
+  await db.run(sql`DROP TABLE \`_portfolios_v\`;`)
+  await db.run(sql`DROP TABLE \`_portfolios_v_locales\`;`)
   await db.run(sql`DROP TABLE \`testimonials\`;`)
   await db.run(sql`DROP TABLE \`redirects\`;`)
   await db.run(sql`DROP TABLE \`redirects_rels\`;`)

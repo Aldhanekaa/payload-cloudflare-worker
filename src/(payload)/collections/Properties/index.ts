@@ -3,6 +3,8 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '../../access/authenticated'
 import { anyone } from '../../access/anyone'
 import { slugField } from 'payload'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { revalidateDelete, revalidateProperties } from './hooks/revalidateProperties'
 
 const LISTING_TYPES = [
   { label: 'For Sale', value: 'sale' },
@@ -20,8 +22,28 @@ export const Properties: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    // custom: {
+    //   rightPanel: true,
+    //   comments: true,
+    //   drafts: true,
+    // },
+
     defaultColumns: ['title', 'location', 'city', 'listingType', 'updatedAt'],
     useAsTitle: 'title',
+    // livePreview: {
+    //   url: ({ data, req }) =>
+    //     generatePreviewPath({
+    //       slug: data?.slug,
+    //       collection: 'properties',
+    //       req,
+    //     }),
+    // },
+    // preview: (data, { req }) =>
+    //   generatePreviewPath({
+    //     slug: data?.slug as string,
+    //     collection: 'properties',
+    //     req,
+    //   }),
   },
   fields: [
     // ── Primary Information ───────────────────────────────────────
@@ -368,4 +390,18 @@ export const Properties: CollectionConfig = {
     },
   ],
   timestamps: true,
+  // hooks: {
+  //   afterChange: [revalidateProperties],
+  //   // afterRead: [revalidateProperties],
+  //   afterDelete: [revalidateDelete],
+  // },
+  // versions: {
+  //   drafts: {
+  //     autosave: {
+  //       interval: 100, // We set this interval for optimal live preview
+  //     },
+  //     schedulePublish: true,
+  //   },
+  //   maxPerDoc: 50,
+  // },
 }
