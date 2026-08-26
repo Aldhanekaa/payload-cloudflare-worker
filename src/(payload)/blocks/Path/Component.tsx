@@ -1,6 +1,6 @@
 import PageContainer from '@/components/PageContainer'
 
-interface HomePathProps {
+interface PathProps {
   title?: string
   steps?: Array<{
     number: string
@@ -17,7 +17,7 @@ interface HomePathProps {
   connectorColor?: string
 }
 
-export const HomePath = ({
+export const Path = ({
   title = 'Our Path to Your\nPerfect Property',
   steps = [
     {

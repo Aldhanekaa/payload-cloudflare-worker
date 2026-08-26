@@ -9,7 +9,7 @@ interface FAQ {
   id?: string
 }
 
-interface HomeFAQsProps {
+interface FAQsProps {
   title?: string
   subtitle?: string
   faqs?: FAQ[]
@@ -23,7 +23,7 @@ interface HomeFAQsProps {
   toggleIconColor?: string
 }
 
-export const HomeFAQs = ({
+export const FAQs = ({
   title = 'Frequently Asked\nQuestions',
   subtitle = 'Answers to common questions about working with Andersen Properties.',
   faqs = [
@@ -66,7 +66,7 @@ export const HomeFAQs = ({
   answerColor = '#555',
   dividerColor = '#d6d0c4',
   toggleIconColor = '#888',
-}: HomeFAQsProps) => {
+}: FAQsProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const toggle = (index: number) => {

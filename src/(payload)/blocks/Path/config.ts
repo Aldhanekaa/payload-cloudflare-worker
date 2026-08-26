@@ -1,9 +1,9 @@
 import { colorPickerField } from '@/(payload)/plugins/colorPicker'
 import type { Block } from 'payload'
 
-export const HomePath: Block = {
-  slug: 'homePath',
-  interfaceName: 'HomePathBlock',
+export const Path: Block = {
+  slug: 'path',
+  interfaceName: 'PathBlock',
   fields: [
     {
       name: 'title',

@@ -1,9 +1,9 @@
 import { colorPickerField } from '@/(payload)/plugins/colorPicker'
 import type { Block } from 'payload'
 
-export const HomeCTA: Block = {
-  slug: 'homeCta',
-  interfaceName: 'HomeCTABlock',
+export const CTA: Block = {
+  slug: 'cta',
+  interfaceName: 'CTABlock',
   fields: [
     {
       name: 'eyebrow',

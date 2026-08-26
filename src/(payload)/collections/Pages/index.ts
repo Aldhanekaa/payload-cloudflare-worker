@@ -29,13 +29,13 @@ import { HomeAbout } from '@/(payload)/blocks/HomeAbout/config'
 import { HomeFeaturedProperties } from '@/(payload)/blocks/HomeFeaturedProperties/config'
 import { HomeSignatureDevelopment } from '@/(payload)/blocks/HomeSignatureDevelopment/config'
 import { HomeConsiderationSteps } from '@/(payload)/blocks/HomeConsiderationSteps/config'
-import { HomeExpertise } from '@/(payload)/blocks/HomeExpertise/config'
+import { Expertise } from '@/(payload)/blocks/Expertise/config'
 import { HomePlaces } from '@/(payload)/blocks/HomePlaces/config'
 import { HomeClientTestimonial } from '@/(payload)/blocks/HomeClientTestimonial/config'
-import { HomePath } from '@/(payload)/blocks/HomePath/config'
+import { Path } from '@/(payload)/blocks/Path/config'
 import { HomeJournalSection } from '@/(payload)/blocks/HomeJournalSection/config'
-import { HomeFAQs } from '@/(payload)/blocks/HomeFAQs/config'
-import { HomeCTA } from '@/(payload)/blocks/HomeCTA/config'
+import { FAQs } from '@/(payload)/blocks/FAQs/config'
+import { CTA } from '@/(payload)/blocks/CTA/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -114,13 +114,13 @@ export const Pages: CollectionConfig<'pages'> = {
                 HomeFeaturedProperties,
                 HomeSignatureDevelopment,
                 HomeConsiderationSteps,
-                HomeExpertise,
                 HomePlaces,
                 HomeClientTestimonial,
-                HomePath,
+                Expertise,
+                Path,
+                FAQs,
+                CTA,
                 HomeJournalSection,
-                HomeFAQs,
-                HomeCTA,
               ],
               required: true,
               localized: true,
