@@ -33,25 +33,20 @@ const getImageURL = (image?: number | string | Media | null): string => {
     return `${serverUrl}${image.startsWith('/') ? '' : '/'}${image}`
   }
 
-  if (typeof image === 'object' && 'url' in image && image.url) {
-    // Prefer og size if available
-    const ogUrl =
-      'sizes' in image &&
-      image.sizes &&
-      typeof image.sizes === 'object' &&
-      'og' in image.sizes &&
-      image.sizes.og &&
-      typeof image.sizes.og === 'object' &&
-      'url' in image.sizes.og &&
-      image.sizes.og.url
-        ? image.sizes.og.url
-        : undefined
-
-    const relativeUrl = ogUrl || image.url
-    if (relativeUrl.startsWith('http://') || relativeUrl.startsWith('https://')) {
-      return relativeUrl
+  if (typeof image === 'object') {
+    const mediaObj = image as Media & {
+      sizes?: Record<string, { url?: string | null } | undefined>
     }
-    return `${serverUrl}${relativeUrl.startsWith('/') ? '' : '/'}${relativeUrl}`
+
+    const ogUrl = mediaObj.sizes?.og?.url
+    const relativeUrl = ogUrl || mediaObj.url
+
+    if (typeof relativeUrl === 'string' && relativeUrl) {
+      if (relativeUrl.startsWith('http://') || relativeUrl.startsWith('https://')) {
+        return relativeUrl
+      }
+      return `${serverUrl}${relativeUrl.startsWith('/') ? '' : '/'}${relativeUrl}`
+    }
   }
 
   return fallbackUrl

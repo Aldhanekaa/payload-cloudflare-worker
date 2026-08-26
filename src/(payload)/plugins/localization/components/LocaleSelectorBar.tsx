@@ -142,7 +142,6 @@ export function LocaleSelectorBar({ hasAutotranslate }: LocaleSelectorBarProps) 
   // Switch handler — only switches when selecting a locale OTHER than the current selected locale
   const handleLocaleSwitch = useCallback(
     (targetCode: string) => {
-      console.log('targetCode', targetCode)
       // Do nothing if user clicks the currently active locale
       if (targetCode === activeLocaleCode) return
 
@@ -187,20 +186,20 @@ export function LocaleSelectorBar({ hasAutotranslate }: LocaleSelectorBarProps) 
               aria-label={`Switch to ${label} locale`}
               aria-pressed={isActive}
             >
-              {isActive && <span className="loc-bar__active-dot" title="Current Active Locale" />}
               <span>{label}</span>
-              {progress !== undefined && localizedPaths.length > 0 && (
+              {localizedPaths.length > 0 && (
                 <span
                   className={`loc-bar__progress-badge ${
                     progress === 100
                       ? 'loc-bar__progress-badge--complete'
-                      : progress > 0
+                      : progress !== undefined && progress > 0
                         ? 'loc-bar__progress-badge--partial'
                         : ''
                   }`}
+                  style={{ opacity: progress !== undefined ? 1 : 0.4 }}
                 >
                   {progress === 100 ? <CheckCircle2 size={10} style={{ marginRight: 2 }} /> : null}
-                  {progress}%
+                  {progress !== undefined ? `${progress}%` : '...'}
                 </span>
               )}
             </button>

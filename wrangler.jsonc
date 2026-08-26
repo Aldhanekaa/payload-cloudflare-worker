@@ -4,7 +4,6 @@
   "name": "andersen-properties",
   "compatibility_date": "2025-08-15",
   "account_id": "f50e92329e6f8728de1bf9cf42c4e268",
-
   "minify": true,
   "compatibility_flags": [
     // Enable Node.js API
@@ -25,7 +24,8 @@
   "d1_databases": [
     {
       "binding": "D1",
-      "database_id": "cc2f22b4-1d32-46eb-8c9b-6857f11fdfee",
+      "database_name": "andersen-properties",
+      "database_id": "7e7c480c-c434-40eb-bf05-c10d39c68750",
       "remote": true,
       "migrations_dir": "./src/migrations",
     },
@@ -51,11 +51,9 @@
       "invocation_logs": true,
     },
   },
-
   "limits": {
     "cpu_ms": 300000,
   },
-
   // Here's how to configure an additional environment
   // It can be deployed with `CLOUDFLARE_ENV=staging pnpm run deploy`
   // "env": {
