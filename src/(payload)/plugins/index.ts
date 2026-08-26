@@ -14,7 +14,7 @@ import { payloadEnhancedSidebar } from '@veiag/payload-enhanced-sidebar'
 // import { localization } from '@websolutespa/payload-plugin-localization' //  ← replaced by custom plugin
 import { blurDataUrlsPlugin } from '@oversightstudio/blur-data-urls'
 import { fieldsSelect } from '@payload-enchants/fields-select'
-import { betterEditor } from 'payload-better-editor'
+import { betterEditor } from './better-editor/index'
 
 import { localizationPlugin } from './localization'
 
@@ -51,6 +51,7 @@ export const plugins: Plugin[] = [
 
   betterEditor({
     collections: ['pages'], // collection slugs where the toggle appears
+    showSettingsBanner: false,
   }),
 
   // // importExportPlugin({

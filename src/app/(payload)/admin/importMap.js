@@ -35,9 +35,8 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_a8a977ebc872c5d5ea
 import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 } from '@payloadcms/plugin-seo/client'
 import { default as default_622ee6d751a3251c92e383ed88de1c86 } from '@shefing/right-panel/components/RightPanelEditView'
 import { ColorPickerFieldComponent as ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912 } from '@/(payload)/plugins/colorPicker/component'
-import { LiveEditorToggle as LiveEditorToggle_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
+import { LiveEditorToggle as LiveEditorToggle_4dbb2f0e33b39cb16b7874d8698cdae2 } from '@/(payload)/plugins/better-editor/client'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
-import { SettingsBanner as SettingsBanner_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
 import { EnhancedSidebar as EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371 } from '@veiag/payload-enhanced-sidebar/rsc'
 import { default as default_5c0c2f026d3023312882037f7709f993 } from '@/components/(payload)/Header'
 import { default as default_792e9fb6e08f2d6e579fcb97a3c488e2 } from '@/components/(payload)/Icon'
@@ -93,9 +92,8 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@shefing/right-panel/components/RightPanelEditView#default": default_622ee6d751a3251c92e383ed88de1c86,
   "@/(payload)/plugins/colorPicker/component#ColorPickerFieldComponent": ColorPickerFieldComponent_6839496dc44f44c2a2a1fb9c27ee2912,
-  "payload-better-editor/client#LiveEditorToggle": LiveEditorToggle_d26de2934fab2f5e50b16fb3e402473a,
+  "@/(payload)/plugins/better-editor/client#LiveEditorToggle": LiveEditorToggle_4dbb2f0e33b39cb16b7874d8698cdae2,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
-  "payload-better-editor/client#SettingsBanner": SettingsBanner_d26de2934fab2f5e50b16fb3e402473a,
   "@veiag/payload-enhanced-sidebar/rsc#EnhancedSidebar": EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371,
   "@/components/(payload)/Header#default": default_5c0c2f026d3023312882037f7709f993,
   "@/components/(payload)/Icon#default": default_792e9fb6e08f2d6e579fcb97a3c488e2,
