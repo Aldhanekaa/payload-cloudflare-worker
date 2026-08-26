@@ -36,12 +36,18 @@ export const FormBlock: React.FC<
     id?: string
   }
 > = (props) => {
+  const { enableIntro, form: formFromProps, introContent } = props
+
+  // Guard: if form is missing or has no id, don't render at all (avoids 500 errors)
+  if (!formFromProps || !formFromProps.id) return null
+
   const {
-    enableIntro,
-    form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
-    introContent,
-  } = props
+    id: formID,
+    confirmationMessage,
+    confirmationType,
+    redirect,
+    submitButtonLabel,
+  } = formFromProps
 
   const formMethods = useForm({
     defaultValues: buildInitialFormState(formFromProps.fields),
@@ -156,6 +162,7 @@ export const FormBlock: React.FC<
               {formFromProps &&
                 formFromProps.fields &&
                 formFromProps.fields.map((field, index) => {
+                  console.log('field.blockType', field.blockType)
                   const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                   if (Field) {
                     return (

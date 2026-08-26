@@ -113,6 +113,7 @@ export const plugins: Plugin[] = [
       country: true,
       checkbox: true,
       number: true,
+      telephone: true,
       message: true,
       date: true,
       payment: false,
