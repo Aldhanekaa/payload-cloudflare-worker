@@ -107,14 +107,14 @@ export default buildConfig({
       // Actions
       actions: ['@/components/(payload)/Actions'],
       // Settings Menu
-      settingsMenu: [
-        '@/components/(payload)/SettingsMenu#SettingsMenu',
-        '@/components/(payload)/SettingsMenu#SystemActions',
-      ],
+      // settingsMenu: [
+      //   '@/components/(payload)/SettingsMenu#SettingsMenu',
+      //   '@/components/(payload)/SettingsMenu#SystemActions',
+      // ],
       // Logout
-      logout: {
-        Button: '@/components/(payload)/LogoutButton',
-      },
+      // logout: {
+      //   Button: '@/components/(payload)/LogoutButton',
+      // },
     },
   },
   collections: [

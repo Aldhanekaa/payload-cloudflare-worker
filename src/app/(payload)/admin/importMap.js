@@ -40,9 +40,6 @@ import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } f
 import { SettingsBanner as SettingsBanner_d26de2934fab2f5e50b16fb3e402473a } from 'payload-better-editor/client'
 import { EnhancedSidebar as EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371 } from '@veiag/payload-enhanced-sidebar/rsc'
 import { default as default_5c0c2f026d3023312882037f7709f993 } from '@/components/(payload)/Header'
-import { default as default_008e8b984045f6649ae74d03500fd9b7 } from '@/components/(payload)/LogoutButton'
-import { SettingsMenu as SettingsMenu_c1db16d1424dd2e233e655894a0d83a1 } from '@/components/(payload)/SettingsMenu'
-import { SystemActions as SystemActions_c1db16d1424dd2e233e655894a0d83a1 } from '@/components/(payload)/SettingsMenu'
 import { default as default_792e9fb6e08f2d6e579fcb97a3c488e2 } from '@/components/(payload)/Icon'
 import { default as default_4fdf16dcf0b8f0d040d608c9955f3b99 } from '@/components/(payload)/Logo'
 import { default as default_af3ffb99e1c90de4033ccda8c5ff25aa } from '@/components/(payload)/Actions'
@@ -101,9 +98,6 @@ export const importMap = {
   "payload-better-editor/client#SettingsBanner": SettingsBanner_d26de2934fab2f5e50b16fb3e402473a,
   "@veiag/payload-enhanced-sidebar/rsc#EnhancedSidebar": EnhancedSidebar_1991e0cd7459bf6a1f4021425d377371,
   "@/components/(payload)/Header#default": default_5c0c2f026d3023312882037f7709f993,
-  "@/components/(payload)/LogoutButton#default": default_008e8b984045f6649ae74d03500fd9b7,
-  "@/components/(payload)/SettingsMenu#SettingsMenu": SettingsMenu_c1db16d1424dd2e233e655894a0d83a1,
-  "@/components/(payload)/SettingsMenu#SystemActions": SystemActions_c1db16d1424dd2e233e655894a0d83a1,
   "@/components/(payload)/Icon#default": default_792e9fb6e08f2d6e579fcb97a3c488e2,
   "@/components/(payload)/Logo#default": default_4fdf16dcf0b8f0d040d608c9955f3b99,
   "@/components/(payload)/Actions#default": default_af3ffb99e1c90de4033ccda8c5ff25aa,
