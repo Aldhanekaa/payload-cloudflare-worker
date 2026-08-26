@@ -150,6 +150,17 @@ export const Portfolios: CollectionConfig = {
     },
 
     {
+      name: 'brochureLink',
+      type: 'text',
+      label: 'Brochure Link',
+      required: false,
+      admin: {
+        position: 'sidebar',
+        description: 'URL for brochure link',
+      },
+    },
+
+    {
       name: 'waitlistLink',
       type: 'text',
       label: 'Waitlist Link',

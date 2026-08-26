@@ -6,7 +6,19 @@ const baseConfig = defineCloudflareConfig({})
 export default {
   ...baseConfig,
   build: {
-    externals: ['drizzle-kit*', 'jose', 'pg-cloudflare', 'jsdom', 'undici', 'cssstyle', 'css-tree'],
+    externals: [
+      'drizzle-kit*',
+      'jose',
+      'pg-cloudflare',
+      'jsdom',
+      'undici',
+      'cssstyle',
+      'css-tree',
+      'sharp',
+      '@img/sharp-darwin-arm64',
+      '@img/sharp-wasm32',
+      '*.node',
+    ],
   },
   edgeExternals: [
     ...(baseConfig.edgeExternals || []),
@@ -17,5 +29,9 @@ export default {
     'undici',
     'cssstyle',
     'css-tree',
+    'sharp',
+    '@img/sharp-darwin-arm64',
+    '@img/sharp-wasm32',
+    '*.node',
   ],
 }

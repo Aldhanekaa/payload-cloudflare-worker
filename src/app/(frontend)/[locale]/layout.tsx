@@ -3,19 +3,22 @@ import type { Metadata } from 'next'
 import './styles.css'
 
 import { NextIntlClientProvider } from 'next-intl'
+import localization from '@/i18n/localization'
 import { routing } from '@/i18n/routing'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 import { cormorant_garamond, inter } from '@/app/fonts'
 import Footer from '@/components/Footer'
-import NavbarWrapper from '@/components/NavbarWrapper'
+import Navbar from '@/components/Navbar'
 import { getGlobalSettings } from '@/(payload)/globals/Global_Settings'
 import { getActiveAnnouncements } from '@/(payload)/globals/Global_Settings/types'
 import { AnnouncementBanner } from '@/components/AnnouncementBanner'
+import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { getServerSideURL } from '@/utilities/getURL'
 import JoinUrl from '@/utilities/joinUrl'
 import { JsonLd } from '@/components/JsonLd'
+import NavbarWrapper from '@/components/NavbarWrapper'
 
 export async function generateMetadata({
   params,
@@ -102,7 +105,7 @@ export default async function RootLayout({
   }
 
   const messages = await getMessages()
-  await draftMode()
+  const { isEnabled } = await draftMode()
 
   // Fetch global settings
   const settings = await getGlobalSettings()

@@ -69,8 +69,8 @@ export function LocalizeFieldButton({
     typeof fieldState?.value === 'string'
       ? fieldState.value
       : fieldState?.value != null
-      ? String(fieldState.value)
-      : undefined
+        ? String(fieldState.value)
+        : undefined
 
   // ── Unsaved state: disabled button with tooltip ──────────────────────────
   if (!isSaved) {
@@ -121,6 +121,10 @@ export function LocalizeFieldButton({
             initialReferenceValue={currentFieldValue}
             hasAutotranslate={hasAutotranslate}
             onClose={handleClose}
+            onUpdate={(newValue: string) => {
+              // Update the form field value after successful save
+              fieldState.setValue(newValue)
+            }}
           />,
           document.body,
         )}

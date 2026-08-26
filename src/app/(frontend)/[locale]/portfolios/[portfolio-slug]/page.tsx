@@ -258,6 +258,7 @@ export default async function PortfolioPage({ params }: PageProps) {
                 completion={portfolio.completion}
                 enquiryLink={enquiryLink}
                 waitlistLink={waitlistLink}
+                brochureLink={cmsPortfolio.brochureLink}
               />
             </div>
           </div>

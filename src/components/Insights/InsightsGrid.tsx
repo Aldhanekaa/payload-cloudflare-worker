@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import PageContainer from '@/components/PageContainer'
 import { CATEGORIES, POSTS, type InsightCategory, type InsightPost } from './insights.data'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
@@ -59,12 +60,45 @@ function ArticleMeta({ post }: { post: InsightPost }) {
   )
 }
 
-// ── Featured article (large, 16/9) ────────────────────────────────────────────
+// ── Featured article carousel (large, 16/9) ──────────────────────────────────
 
-function FeaturedArticle({ post }: { post: InsightPost }) {
+function FeaturedArticle({ posts }: { posts: InsightPost[] }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  // Reset to first when posts change
+  useEffect(() => {
+    setActiveIndex(0)
+  }, [posts.length])
+
+  // Auto-rotate every 10 seconds if multiple posts
+  useEffect(() => {
+    if (posts.length <= 1) return
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((previousIndex) => (previousIndex + 1) % posts.length)
+    }, 10000)
+
+    return () => window.clearInterval(intervalId)
+  }, [activeIndex, posts.length])
+
+  const post = posts[activeIndex]
+
+  const goToPrevious = () => {
+    setActiveIndex((previousIndex) => (previousIndex === 0 ? posts.length - 1 : previousIndex - 1))
+  }
+
+  const goToNext = () => {
+    setActiveIndex((previousIndex) => (previousIndex + 1) % posts.length)
+  }
+
+  if (!post) return null
+
   return (
     <div className="mb-16 pb-16 border-b border-[#e5e0d7]">
-      <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-10 md:gap-15 items-start">
+      <div
+        key={`featured-${activeIndex}`}
+        className="animate-signature-swap grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-10 md:gap-15 items-start"
+      >
         {/* Image + meta + title */}
         <Link href={`/insights/${post.slug}`} className="no-underline group cursor-pointer block">
           <div className="relative overflow-hidden rounded-sm bg-[#e5e0d7] aspect-video mb-5">
@@ -77,6 +111,13 @@ function FeaturedArticle({ post }: { post: InsightPost }) {
               priority
             />
           </div>
+        </Link>
+
+        {/* Right — label + excerpt */}
+        <div className="pt-2">
+          <p className="text-[10px] tracking-[0.18em] uppercase text-[#a5a19a] font-medium mb-5">
+            Featured Article
+          </p>
           <ArticleMeta post={post} />
           <h2
             className="font-medium text-[#0a0a0a] leading-tight m-0 group-hover:text-[#b89a5b] transition-colors duration-200"
@@ -87,14 +128,44 @@ function FeaturedArticle({ post }: { post: InsightPost }) {
           >
             {post.title}
           </h2>
-        </Link>
-
-        {/* Right — label + excerpt */}
-        <div className="pt-2">
-          <p className="text-[10px] tracking-[0.18em] uppercase text-[#a5a19a] font-medium mb-5">
-            Featured Article
+          <p className="text-[#242424] text-[15px] leading-[1.75] font-light m-0 mb-6">
+            {post.excerpt}
           </p>
-          <p className="text-[#242424] text-[15px] leading-[1.75] font-light m-0">{post.excerpt}</p>
+
+          {/* Carousel controls - only show if multiple featured posts */}
+          {posts.length > 1 && (
+            <div className="mt-10 flex items-center gap-5" aria-label="Featured articles carousel">
+              <div className="h-px flex-1 bg-[#e5e0d7]" aria-hidden="true">
+                <div
+                  key={`featured-progress-${activeIndex}`}
+                  className="animate-signature-progress h-full origin-left bg-[#b89a5b]"
+                />
+              </div>
+
+              <span className="text-[#a5a19a] text-[10px] tracking-[0.2em] tabular-nums">
+                {String(activeIndex + 1).padStart(2, '0')} / {String(posts.length).padStart(2, '0')}
+              </span>
+
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={goToPrevious}
+                  aria-label="Previous featured article"
+                  className="flex size-9 items-center justify-center border border-[#e5e0d7] text-[#0a0a0a] transition-colors hover:border-[#b89a5b] hover:text-[#b89a5b]"
+                >
+                  <ChevronLeft size={16} strokeWidth={1.5} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={goToNext}
+                  aria-label="Next featured article"
+                  className="flex size-9 items-center justify-center border border-[#e5e0d7] text-[#0a0a0a] transition-colors hover:border-[#b89a5b] hover:text-[#b89a5b]"
+                >
+                  <ChevronRight size={16} strokeWidth={1.5} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -186,10 +257,10 @@ export default function InsightsGrid({ posts: cmsPosts }: Props) {
   const filtered =
     activeCategory === 'All' ? posts : posts.filter((p) => p.category === activeCategory)
 
-  // In "All" view: pull the featured post out and show it large, rest go to grid
+  // In "All" view: pull the featured posts out and show them in carousel, rest go to grid
   // In category view: show every matching post as a regular card
   const isAllView = activeCategory === 'All'
-  const featuredPost = isAllView ? (filtered.find((p) => p.featured) ?? null) : null
+  const featuredPosts = isAllView ? filtered.filter((p) => p.featured) : []
   const gridPosts = isAllView ? filtered.filter((p) => !p.featured) : filtered
 
   return (
@@ -197,8 +268,8 @@ export default function InsightsGrid({ posts: cmsPosts }: Props) {
       <FilterBar active={activeCategory} onChange={setActiveCategory} />
 
       <PageContainer className="pt-14" style={{ paddingBottom: 'clamp(80px, 10vw, 120px)' }}>
-        {/* Featured article — only in "All" view */}
-        {featuredPost && <FeaturedArticle post={featuredPost} />}
+        {/* Featured articles carousel — only in "All" view */}
+        {featuredPosts.length > 0 && <FeaturedArticle posts={featuredPosts} />}
 
         {/* Articles grid */}
         {gridPosts.length > 0 ? (

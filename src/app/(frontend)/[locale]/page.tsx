@@ -113,6 +113,7 @@ export default async function HomePage({ params }: PageProps) {
   console.log('globalSettings?.signatureDevelopments', globalSettings?.signatureDevelopments)
   console.log('globalSettings', globalSettings)
 
+  console.log('posts', posts)
   return (
     <main>
       <HomePageHero />

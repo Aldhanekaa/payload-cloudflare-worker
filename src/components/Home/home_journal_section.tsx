@@ -37,7 +37,7 @@ function transformPostData(posts: Post[], t: any): JournalPost[] {
 
     // Format category with translation
     const categoryKey = `categories.${categoryValue}` as const
-    const category = t(categoryKey, { default: categoryValue })
+    const category = typeof post.category !== 'number' && post.category.title
 
     // Format date
     const formatDate = (dateString: string | undefined) => {

@@ -21,6 +21,8 @@ export type LocalizationModalProps = {
   hasAutotranslate?: boolean
   /** Callback to close the modal */
   onClose: () => void
+  /** Callback to update the form field value after successful save */
+  onUpdate?: (newValue: string) => void
 }
 
 type SaveStatus = 'idle' | 'saving' | 'success' | 'error'
@@ -33,8 +35,9 @@ type LocaleItem = {
 /**
  * LocalizationModal — side-by-side editor for managing field translations.
  *
- * Left panel: reference locale value (read-only)
- * Right panel: editable value for the selected target locale
+ * Left panel: editable value for the selected left locale
+ * Right panel: editable value for the selected right locale
+ * Users can switch which locale appears on each side
  * Footer: "Save drafts" | "Publish changes" | optional "Autotranslate"
  */
 export function LocalizationModal({
@@ -45,6 +48,7 @@ export function LocalizationModal({
   initialReferenceValue,
   hasAutotranslate = false,
   onClose,
+  onUpdate,
 }: LocalizationModalProps) {
   const { config } = useConfig()
   const currentLocale = useLocale()
@@ -59,16 +63,15 @@ export function LocalizationModal({
     }))
   }, [config.localization])
 
-  const referenceCode = currentLocale?.code ?? localeList[0]?.code ?? 'en'
-  const otherLocales = useMemo(
-    () => localeList.filter((l: LocaleItem) => l.code !== referenceCode),
-    [localeList, referenceCode],
+  // Two active locales for side-by-side editing (no reference/target distinction)
+  const currentCode = currentLocale?.code ?? localeList[0]?.code ?? 'en'
+  const otherCode = useMemo(
+    () => localeList.find((l: LocaleItem) => l.code !== currentCode)?.code ?? currentCode,
+    [localeList, currentCode],
   )
 
-  // Active target locale (not the reference)
-  const [activeTargetCode, setActiveTargetCode] = useState(
-    () => otherLocales[0]?.code ?? referenceCode,
-  )
+  const [leftLocaleCode, setLeftLocaleCode] = useState(currentCode)
+  const [rightLocaleCode, setRightLocaleCode] = useState(otherCode)
 
   // ── Fetch all locale values for this field ───────────────────────────────
   const allCodes = useMemo(() => localeList.map((l: LocaleItem) => l.code), [localeList])
@@ -84,7 +87,7 @@ export function LocalizationModal({
   // ── Local edits per locale ───────────────────────────────────────────────
   const [edits, setEdits] = useState<Record<string, string>>(() => {
     if (initialReferenceValue !== undefined) {
-      return { [referenceCode]: initialReferenceValue }
+      return { [currentCode]: initialReferenceValue }
     }
     return {}
   })
@@ -99,14 +102,14 @@ export function LocalizationModal({
           const fetchedVal = localeData[code]?.value
           if (fetchedVal != null) {
             next[code] = fetchedVal
-          } else if (code === referenceCode && initialReferenceValue !== undefined) {
+          } else if (code === currentCode && initialReferenceValue !== undefined) {
             next[code] = initialReferenceValue
           }
         }
       }
       return next
     })
-  }, [isFetching, localeData, allCodes, referenceCode, initialReferenceValue])
+  }, [isFetching, localeData, allCodes, currentCode, initialReferenceValue])
 
   // ── Save / Publish ───────────────────────────────────────────────────────
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
@@ -114,10 +117,9 @@ export function LocalizationModal({
 
   const getEditedLocales = useCallback(() => {
     return allCodes.filter(
-      (code: string) =>
-        code !== referenceCode && (edits[code] ?? '') !== (localeData[code]?.value ?? ''),
+      (code: string) => (edits[code] ?? '') !== (localeData[code]?.value ?? ''),
     )
-  }, [allCodes, edits, localeData, referenceCode])
+  }, [allCodes, edits, localeData])
 
   const saveAll = useCallback(
     async (publish: boolean) => {
@@ -164,6 +166,13 @@ export function LocalizationModal({
         setSaveStatus('success')
         setSaveMessage(publish ? 'Published!' : 'Saved as draft!')
         await refetch()
+
+        // Update the form field if the current locale was edited
+        if (onUpdate && edited.includes(currentCode)) {
+          const updatedValue = edits[currentCode] ?? ''
+          onUpdate(updatedValue)
+        }
+
         setTimeout(() => setSaveStatus('idle'), 3000)
       } catch (err) {
         setSaveStatus('error')
@@ -171,16 +180,25 @@ export function LocalizationModal({
         setTimeout(() => setSaveStatus('idle'), 4000)
       }
     },
-    [collectionSlug, docId, edits, fieldPath, getEditedLocales, refetch, token],
+    [
+      collectionSlug,
+      docId,
+      edits,
+      fieldPath,
+      getEditedLocales,
+      refetch,
+      token,
+      onUpdate,
+      currentCode,
+    ],
   )
 
   // ── Autotranslate ────────────────────────────────────────────────────────
   const [isTranslating, setIsTranslating] = useState(false)
 
   const handleAutotranslate = useCallback(async () => {
-    const referenceText =
-      edits[referenceCode] ?? localeData[referenceCode]?.value ?? initialReferenceValue ?? ''
-    if (!referenceText) return
+    const sourceText = edits[leftLocaleCode] ?? localeData[leftLocaleCode]?.value ?? ''
+    if (!sourceText) return
 
     setIsTranslating(true)
     try {
@@ -196,17 +214,17 @@ export function LocalizationModal({
         headers,
         credentials: 'include',
         body: JSON.stringify({
-          text: referenceText,
-          fromLocale: referenceCode,
-          toLocale: activeTargetCode,
+          text: sourceText,
+          fromLocale: leftLocaleCode,
+          toLocale: rightLocaleCode,
         }),
       })
 
       if (res.ok) {
         const data = (await res.json()) as { translated?: string }
         if (data.translated) {
-          touchedRef.current[activeTargetCode] = true
-          setEdits((prev) => ({ ...prev, [activeTargetCode]: data.translated! }))
+          touchedRef.current[rightLocaleCode] = true
+          setEdits((prev) => ({ ...prev, [rightLocaleCode]: data.translated! }))
         }
       }
     } catch {
@@ -214,7 +232,7 @@ export function LocalizationModal({
     } finally {
       setIsTranslating(false)
     }
-  }, [activeTargetCode, edits, initialReferenceValue, localeData, referenceCode, token])
+  }, [leftLocaleCode, rightLocaleCode, edits, localeData, token])
 
   // ── Close on Escape ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -226,13 +244,16 @@ export function LocalizationModal({
   }, [onClose])
 
   // ── Values ────────────────────────────────────────────────────────────────
-  const referenceValue =
-    edits[referenceCode] ?? localeData[referenceCode]?.value ?? initialReferenceValue ?? ''
-  const targetValue =
-    edits[activeTargetCode] !== undefined
-      ? edits[activeTargetCode]
-      : (localeData[activeTargetCode]?.value ?? '')
-  const activeLocale = localeList.find((l: LocaleItem) => l.code === activeTargetCode)
+  const leftValue =
+    edits[leftLocaleCode] !== undefined
+      ? edits[leftLocaleCode]
+      : (localeData[leftLocaleCode]?.value ?? '')
+  const rightValue =
+    edits[rightLocaleCode] !== undefined
+      ? edits[rightLocaleCode]
+      : (localeData[rightLocaleCode]?.value ?? '')
+  const leftLocale = localeList.find((l: LocaleItem) => l.code === leftLocaleCode)
+  const rightLocale = localeList.find((l: LocaleItem) => l.code === rightLocaleCode)
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -274,35 +295,31 @@ export function LocalizationModal({
         </div>
 
         {/* Locale tabs */}
-        {otherLocales.length > 0 && (
-          <div className="loc-modal__tabs" role="tablist">
-            {/* Reference locale — always visible, non-clickable */}
-            <button
-              type="button"
-              className="loc-modal__tab"
-              style={{ opacity: 0.3, cursor: 'default' }}
-              disabled
-            >
-              {localeList.find((l: LocaleItem) => l.code === referenceCode)?.label ?? referenceCode}
-              &nbsp;(ref)
-            </button>
-
-            {otherLocales.map((locale: LocaleItem) => {
+        {/* <div className="loc-modal__tabs" role="tablist">
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1 }}>
+            <span style={{ fontSize: '0.75rem', opacity: 0.6, fontWeight: 500 }}>Left:</span>
+            {localeList.map((locale: LocaleItem) => {
+              const isActive = leftLocaleCode === locale.code
               const hasValue = Boolean(edits[locale.code] ?? localeData[locale.code]?.value)
               return (
                 <button
                   key={locale.code}
                   type="button"
                   role="tab"
-                  aria-selected={activeTargetCode === locale.code}
+                  aria-selected={isActive}
                   className={[
                     'loc-modal__tab',
-                    activeTargetCode === locale.code ? 'loc-modal__tab--active' : '',
+                    isActive ? 'loc-modal__tab--active' : '',
                     hasValue ? 'loc-modal__tab--has-value' : '',
                   ]
                     .filter(Boolean)
                     .join(' ')}
-                  onClick={() => setActiveTargetCode(locale.code)}
+                  onClick={() => {
+                    if (locale.code !== rightLocaleCode) {
+                      setLeftLocaleCode(locale.code)
+                    }
+                  }}
+                  disabled={locale.code === rightLocaleCode}
                 >
                   <span className="loc-modal__tab-dot" aria-hidden="true" />
                   {locale.label}
@@ -310,46 +327,101 @@ export function LocalizationModal({
               )
             })}
           </div>
-        )}
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flex: 1 }}>
+            <span style={{ fontSize: '0.75rem', opacity: 0.6, fontWeight: 500 }}>Right:</span>
+            {localeList.map((locale: LocaleItem) => {
+              const isActive = rightLocaleCode === locale.code
+              const hasValue = Boolean(edits[locale.code] ?? localeData[locale.code]?.value)
+              return (
+                <button
+                  key={locale.code}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={[
+                    'loc-modal__tab',
+                    isActive ? 'loc-modal__tab--active' : '',
+                    hasValue ? 'loc-modal__tab--has-value' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  onClick={() => {
+                    if (locale.code !== leftLocaleCode) {
+                      setRightLocaleCode(locale.code)
+                    }
+                  }}
+                  disabled={locale.code === leftLocaleCode}
+                >
+                  <span className="loc-modal__tab-dot" aria-hidden="true" />
+                  {locale.label}
+                </button>
+              )
+            })}
+          </div>
+        </div> */}
 
         {/* Body */}
         <div className="loc-modal__body">
-          {/* Reference locale panel */}
-          <div className="loc-modal__pane loc-modal__pane--reference">
-            <div className="loc-modal__pane-label">
-              Reference language&nbsp;
-              {(
-                localeList.find((l: LocaleItem) => l.code === referenceCode)?.label ?? referenceCode
-              ).toUpperCase()}
-            </div>
-            {isFetching && !referenceValue ? (
-              <div className="loc-modal__reference-value loc-modal__reference-value--empty">
+          {/* Left locale panel */}
+          <div className="loc-modal__pane">
+            <div className="loc-modal__pane-label">{leftLocale?.label ?? leftLocaleCode}</div>
+            {isFetching && !leftValue ? (
+              <div
+                className="loc-modal__textarea"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: 0.5,
+                }}
+              >
                 <span className="loc-spinner" style={{ marginRight: 6 }} />
                 Loading…
               </div>
             ) : (
-              <div
-                className={`loc-modal__reference-value${!referenceValue ? ' loc-modal__reference-value--empty' : ''}`}
-              >
-                {referenceValue || 'No content in reference locale'}
-              </div>
+              <textarea
+                className="loc-modal__textarea"
+                placeholder={`Enter ${leftLocale?.label ?? leftLocaleCode} text…`}
+                value={leftValue}
+                onChange={(e) => {
+                  const val = e.target.value
+                  touchedRef.current[leftLocaleCode] = true
+                  setEdits((prev) => ({ ...prev, [leftLocaleCode]: val }))
+                }}
+                rows={6}
+              />
             )}
           </div>
 
-          {/* Target locale panel */}
+          {/* Right locale panel */}
           <div className="loc-modal__pane">
-            <div className="loc-modal__pane-label">{activeLocale?.label ?? activeTargetCode}</div>
-            <textarea
-              className="loc-modal__textarea"
-              placeholder={`Enter ${activeLocale?.label ?? activeTargetCode} translation…`}
-              value={targetValue}
-              onChange={(e) => {
-                const val = e.target.value
-                touchedRef.current[activeTargetCode] = true
-                setEdits((prev) => ({ ...prev, [activeTargetCode]: val }))
-              }}
-              rows={6}
-            />
+            <div className="loc-modal__pane-label">{rightLocale?.label ?? rightLocaleCode}</div>
+            {isFetching && !rightValue ? (
+              <div
+                className="loc-modal__textarea"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: 0.5,
+                }}
+              >
+                <span className="loc-spinner" style={{ marginRight: 6 }} />
+                Loading…
+              </div>
+            ) : (
+              <textarea
+                className="loc-modal__textarea"
+                placeholder={`Enter ${rightLocale?.label ?? rightLocaleCode} translation…`}
+                value={rightValue}
+                onChange={(e) => {
+                  const val = e.target.value
+                  touchedRef.current[rightLocaleCode] = true
+                  setEdits((prev) => ({ ...prev, [rightLocaleCode]: val }))
+                }}
+                rows={6}
+              />
+            )}
           </div>
         </div>
 
@@ -362,11 +434,12 @@ export function LocalizationModal({
                 type="button"
                 className="loc-btn loc-btn--auto"
                 onClick={handleAutotranslate}
-                disabled={isTranslating || isFetching || !referenceValue}
-                title="Generate translation automatically"
+                disabled={isTranslating || isFetching || !leftValue}
+                title={`Translate from ${leftLocale?.label ?? leftLocaleCode} to ${rightLocale?.label ?? rightLocaleCode}`}
               >
                 {isTranslating ? <span className="loc-spinner" /> : <Wand2 size={13} />}
-                Autotranslate
+                Translate {leftLocale?.label ?? leftLocaleCode} →{' '}
+                {rightLocale?.label ?? rightLocaleCode}
               </button>
             )}
 

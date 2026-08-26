@@ -969,6 +969,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	\`completion\` text NOT NULL,
   	\`from\` text NOT NULL,
   	\`enquiry_link\` text,
+  	\`brochure_link\` text,
   	\`waitlist_link\` text,
   	\`visit_schedule_link\` text,
   	\`hero_image_id\` integer NOT NULL,

@@ -43,7 +43,7 @@ import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
   labels: {
-    plural: 'posts',
+    plural: 'Posts',
     singular: 'Post',
   },
   access: {

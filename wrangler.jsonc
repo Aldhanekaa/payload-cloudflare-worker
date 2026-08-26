@@ -28,7 +28,7 @@
       "migrations_dir": "./src/migrations",
 
       "database_name": "andersen-properties",
-      "database_id": "216f1396-2ab3-49ee-bd93-23347e41b006",
+      "database_id": "1a3656c9-3e2b-47fb-b9d5-4f1c462db1e5",
     },
   ],
   "services": [

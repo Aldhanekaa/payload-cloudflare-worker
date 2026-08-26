@@ -13,7 +13,7 @@ import { LISTING_DETAILS } from '@/components/Active_Listings/listing-details-da
 import { getCachedCollection } from '@/utilities/getCollection'
 import { ENABLE_DUMMY_FALLBACK } from '@/config/fallback'
 import type { LocaleCodes } from '@/i18n/localization'
-import type { Media } from '@/payload-types'
+import type { Media, Property } from '@/payload-types'
 import { generateLocalizedMeta } from '@/utilities/generateLocalizedMeta'
 import { JsonLd } from '@/components/JsonLd'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -90,7 +90,7 @@ export default async function ActiveListingPage({ params }: PageProps) {
     locale,
   )()
 
-  const cmsProperty = result.docs[0] as any // Use 'any' until types are regenerated
+  const cmsProperty = result.docs[0] as Property // Use 'any' until types are regenerated
 
   // Use CMS data or fallback to dummy data
   let listing: (typeof LISTINGS)[0] | null = null

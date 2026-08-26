@@ -11,6 +11,7 @@ interface PortfolioSidebarProps {
   completion: string
   enquiryLink?: string | null
   waitlistLink?: string | null
+  brochureLink?: string | null
 }
 
 export function PortfolioSidebar({
@@ -22,6 +23,7 @@ export function PortfolioSidebar({
   completion,
   enquiryLink,
   waitlistLink,
+  brochureLink,
 }: PortfolioSidebarProps) {
   const isSoldOut = status === 'Sold Out'
 
@@ -111,9 +113,20 @@ export function PortfolioSidebar({
               Enquire Now
             </button>
           )}
-          <button className="w-full px-0 py-4 bg-transparent border border-white/20 text-white/70 font-sans text-[11px] tracking-[0.14em] uppercase font-medium cursor-pointer transition-all hover:border-white/40 hover:text-white/90">
-            Download Brochure
-          </button>
+          {brochureLink ? (
+            <Link
+              href={brochureLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full px-0 py-4 bg-transparent border border-white/20 text-white/70 font-sans text-[11px] tracking-[0.14em] uppercase font-medium cursor-pointer transition-all hover:border-white/40 hover:text-white/90"
+            >
+              Enquire Now
+            </Link>
+          ) : (
+            <button className="w-full px-0 py-4 bg-transparent border border-white/20 text-white/70 font-sans text-[11px] tracking-[0.14em] uppercase font-medium cursor-pointer transition-all hover:border-white/40 hover:text-white/90">
+              Download Brochure
+            </button>
+          )}
         </div>
       )}
 

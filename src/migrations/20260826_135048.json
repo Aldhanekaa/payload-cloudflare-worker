@@ -6847,6 +6847,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "brochure_link": {
+          "name": "brochure_link",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "waitlist_link": {
           "name": "waitlist_link",
           "type": "text",
@@ -11580,6 +11587,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "8b0b1518-432b-4a4d-8a21-435867e39c0a",
+  "id": "d8b71913-301c-4b24-a99b-6ac0d66c5d63",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

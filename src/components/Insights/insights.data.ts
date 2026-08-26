@@ -46,6 +46,7 @@ export const POSTS: InsightPost[] = [
     imageUrl:
       'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&h=480&fit=crop&auto=format',
     imageAlt: 'Where Luxury Property Is Moving in Indonesia',
+    featured: true,
   },
   {
     slug: 'buying-guide-bali',

@@ -1252,6 +1252,10 @@ export interface Portfolio {
    */
   enquiryLink?: string | null;
   /**
+   * URL for brochure link
+   */
+  brochureLink?: string | null;
+  /**
    * URL for project waitlist form or registration page
    */
   waitlistLink?: string | null;
@@ -1977,6 +1981,7 @@ export interface PortfoliosSelect<T extends boolean = true> {
   completion?: T;
   from?: T;
   enquiryLink?: T;
+  brochureLink?: T;
   waitlistLink?: T;
   visitScheduleLink?: T;
   heroImage?: T;
