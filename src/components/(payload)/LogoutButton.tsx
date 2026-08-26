@@ -8,7 +8,14 @@ export default function CustomLogoutButton() {
 
   const handleLogout = async () => {
     if (window.confirm('Are you sure you want to log out?')) {
-      await logOut()
+      try {
+        await logOut()
+      } catch {
+        // ignore stale token error on logout
+      } finally {
+        // Always force redirect to login page to clear stale browser state
+        window.location.href = '/admin/login'
+      }
     }
   }
 

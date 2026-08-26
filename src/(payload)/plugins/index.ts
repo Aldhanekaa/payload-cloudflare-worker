@@ -42,7 +42,7 @@ export const plugins: Plugin[] = [
     //   // Example: call DeepL or Google Translate here
     //   return text // stub: return original text
     // },
-    // excludedCollections: ['media'], // skip media from locale bar if desired
+    excludedCollections: ['media'], // skip media from locale bar if desired
   }),
 
   // localization(),  ← replaced by the custom plugin above
