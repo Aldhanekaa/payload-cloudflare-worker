@@ -26,7 +26,7 @@ export const betterAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  plugins: [nextCookies() as any],
+  plugins: [admin(), nextCookies() as any],
 } satisfies BetterAuthOptions
 
 export const payloadAuthOptions = {
@@ -49,6 +49,18 @@ export const payloadAuthOptions = {
       } catch (error) {
         return { success: false, message: 'Could not send invitation email' }
       }
+    },
+    collectionOverrides({ collection }) {
+      collection.fields = collection.fields.map((field) => {
+        if ('name' in field && field.name === 'expiresAt') {
+          return {
+            ...field,
+            defaultValue: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          } as any
+        }
+        return field
+      })
+      return collection
     },
   },
 
