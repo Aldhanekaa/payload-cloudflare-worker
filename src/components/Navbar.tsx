@@ -6,6 +6,7 @@ import { Link, usePathname } from '@/i18n/routing'
 import NavbarLogo from '@/assets/Horizontal_Andersen_Properties_Logo.svg'
 import FooterLogo from '@/assets/Square_Andersen_Properties_Logo.svg'
 import LanguageToggle from '@/components/LanguageToggle'
+import type { GlobalSettings } from '@/(payload)/globals/Global_Settings/types'
 
 // ── Nav links ──────────────────────────────────────────────────────────────────
 
@@ -14,18 +15,24 @@ const NAV_LINKS = [
   { label: 'Portfolios', href: '/portfolios' },
   { label: 'Services', href: '/services' },
   { label: 'About', href: '/about' },
-  { label: 'Insights', href: '/insights' },
+  { label: 'posts', href: '/insights' },
 ]
 
 const MOBILE_NAV_LINKS = [{ label: 'Home', href: '/' }, ...NAV_LINKS]
 
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function Navbar() {
+interface NavbarProps {
+  settings: GlobalSettings | null
+}
+
+export default function Navbar({ settings }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const consultationLink =
+    settings?.scheduleConsultationLink?.trim() || 'https://wa.me/6281234567890'
 
   const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/id' || pathname === ''
   const SCROLL_THRESHOLD = 100 // pixels to scroll before background changes
@@ -64,9 +71,33 @@ export default function Navbar() {
 
   return (
     <>
+      <div
+        className="fixed top-0 left-0 right-0 z-101 h-9 flex items-center justify-center gap-4 px-5 bg-[#0a0a0a]"
+        style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
+      >
+        <span className="hidden sm:inline uppercase text-[#a5a19a] text-[11px] tracking-[0.08em]">
+          Private property consultation available across Indonesia
+        </span>
+        <a
+          href={consultationLink}
+          className="uppercase flex items-center gap-1.5 text-[#b89a5b] text-[11px] tracking-[0.08em] no-underline hover:opacity-80 transition-opacity"
+        >
+          Schedule a consultation
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true">
+            <path
+              d="M7 1L11 5M11 5L7 9M11 5H1"
+              stroke="#B89A5B"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
+      </div>
+
       {/* ── Desktop / tablet header ── */}
       <header
-        className={`fixed top-0 left-0 right-0 z-100 border-b transition-all duration-400 ${
+        className={`fixed top-9 left-0 right-0 z-100 border-b transition-all duration-400 ${
           isHomePage && !scrolled ? 'bg-transparent border-transparent' : 'bg-black border-white/6'
         }`}
         style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
@@ -117,13 +148,13 @@ export default function Navbar() {
             </button>
 
             {/* CTA */}
-            <Link
-              href="/active-listings"
+            <a
+              href={consultationLink}
               className="border border-primary text-primary text-[10px] tracking-[0.14em] px-4 py-2 no-underline uppercase font-medium bg-transparent hover:bg-primary hover:text-black transition-colors duration-200"
               style={{ fontFamily: 'var(--font-inter, sans-serif)' }}
             >
               Private Consultation
-            </Link>
+            </a>
 
             {/* Hamburger — tablet & lg (md to xl), hidden on desktop */}
             <button
@@ -206,7 +237,7 @@ export default function Navbar() {
       {mounted && (
         <div
           aria-hidden={!menuOpen}
-          className="fixed inset-0 z-99 flex flex-col px-8 pt-24 pb-12 transition-all duration-500 ease-in-out overflow-y-auto"
+          className="fixed top-9 right-0 bottom-0 left-0 z-99 flex flex-col px-8 pt-24 pb-12 transition-all duration-500 ease-in-out overflow-y-auto"
           style={{
             fontFamily: 'var(--font-inter, sans-serif)',
             backgroundColor: 'rgb(10, 10, 10)',
@@ -266,13 +297,13 @@ export default function Navbar() {
               className="text-white/50 text-[11px] tracking-[0.12em] bg-transparent border-none cursor-pointer"
               inactiveClassName="text-white/50 hover:text-white/70 transition-colors duration-200"
             />
-            <Link
-              href="/active-listings"
+            <a
+              href={consultationLink}
               onClick={() => setMenuOpen(false)}
               className="border border-primary text-primary text-[10px] tracking-[0.14em] px-5 py-2.5 no-underline uppercase hover:bg-primary hover:text-black transition-colors duration-200"
             >
               Private Consultation
-            </Link>
+            </a>
           </div>
         </div>
       )}

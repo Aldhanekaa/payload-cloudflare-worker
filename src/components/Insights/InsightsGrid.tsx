@@ -17,8 +17,7 @@ type Props = {
 function transformPostData(posts: Post[]): InsightPost[] {
   return posts.map((p: any) => {
     const heroImageData = typeof p.heroImage === 'object' ? (p.heroImage as Media) : null
-    const firstCategory = p.categories?.[0]
-    const categoryData = typeof firstCategory === 'object' ? (firstCategory as Category) : null
+    const categoryData = typeof p.category === 'object' ? (p.category as Category) : null
 
     return {
       slug: p.slug || String(p.id),

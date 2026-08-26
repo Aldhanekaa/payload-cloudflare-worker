@@ -19,8 +19,6 @@ export default function Error({
 
   return (
     <>
-      <Navbar />
-
       <main className="  min-h-[70vh] flex flex-col items-center justify-center bg-[#f7f5f0] text-center px-6 py-15">
         {/* Large code numeral */}
         <span

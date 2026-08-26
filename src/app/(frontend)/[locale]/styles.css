@@ -92,8 +92,6 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-
-
 /* ─── Content sources ───────────────────────────────────────────────────────
    Tell Tailwind where to scan for class usage.
    By default v4 auto-detects, but explicit sources are more reliable.
@@ -182,4 +180,32 @@ h6 {
 
 .font-display {
   font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+@keyframes signatureSwap {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-signature-swap {
+  animation: signatureSwap 600ms ease-out;
+}
+
+@keyframes signatureProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-signature-progress {
+  animation: signatureProgress 10s linear;
 }

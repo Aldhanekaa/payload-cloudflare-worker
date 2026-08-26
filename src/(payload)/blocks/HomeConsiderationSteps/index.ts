@@ -1,0 +1,1 @@
+export { HomeConsiderationSteps } from './Component'

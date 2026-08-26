@@ -3,18 +3,16 @@ import type { Metadata } from 'next'
 import './styles.css'
 
 import { NextIntlClientProvider } from 'next-intl'
-import localization from '@/i18n/localization'
 import { routing } from '@/i18n/routing'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { draftMode } from 'next/headers'
 import { cormorant_garamond, inter } from '@/app/fonts'
 import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
+import NavbarWrapper from '@/components/NavbarWrapper'
 import { getGlobalSettings } from '@/(payload)/globals/Global_Settings'
 import { getActiveAnnouncements } from '@/(payload)/globals/Global_Settings/types'
 import { AnnouncementBanner } from '@/components/AnnouncementBanner'
-import { WhatsAppButton } from '@/components/WhatsAppButton'
 import { getServerSideURL } from '@/utilities/getURL'
 import JoinUrl from '@/utilities/joinUrl'
 import { JsonLd } from '@/components/JsonLd'
@@ -77,6 +75,14 @@ export async function generateMetadata({
         'max-snippet': -1,
       },
     },
+    icons: {
+      icon: [
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      ],
+      apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    },
+    manifest: '/site.webmanifest',
   }
 }
 
@@ -96,7 +102,7 @@ export default async function RootLayout({
   }
 
   const messages = await getMessages()
-  const { isEnabled } = await draftMode()
+  await draftMode()
 
   // Fetch global settings
   const settings = await getGlobalSettings()
@@ -132,7 +138,7 @@ export default async function RootLayout({
             />
           )}
 
-          <Navbar />
+          <NavbarWrapper />
           <main>{children}</main>
           <Footer />
 

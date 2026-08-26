@@ -91,15 +91,15 @@ export default async function InsightDetailPage({ params }: PageProps) {
     // Transform CMS data
     const heroImageData =
       typeof cmsPost.heroImage === 'object' ? (cmsPost.heroImage as Media) : null
-    const firstCategory = cmsPost.categories?.[0]
-    const categoryData = typeof firstCategory === 'object' ? (firstCategory as Category) : null
+    const categoryData =
+      typeof cmsPost.category === 'object' ? (cmsPost.category as Category) : null
 
     post = {
       slug: cmsPost.slug || String(cmsPost.id),
       title: cmsPost.title || '',
       subTitle: cmsPost.subTitle || '',
       subTitleItalic: cmsPost.subTitleItalic || '',
-      category: categoryData?.title || 'Insights',
+      category: categoryData?.title || 'posts',
       date: cmsPost.publishedAt
         ? new Date(cmsPost.publishedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -194,7 +194,7 @@ export default async function InsightDetailPage({ params }: PageProps) {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Insights',
+        name: 'posts',
         item: `${serverUrl}/${locale}/insights`,
       },
       {

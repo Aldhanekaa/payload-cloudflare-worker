@@ -83,8 +83,14 @@ function transformCityData(cities: City[], t: any): Place[] {
   return cities.map((city) => {
     const mediaData = typeof city.media === 'object' ? (city.media as Media) : null
 
-    // Count properties from join field
-    const propertyCount = Array.isArray(city.properties) ? city.properties.length : 0
+    // Join fields are paginated objects; prefer totalDocs for full counts.
+    const propertyJoinCount =
+      city.properties?.totalDocs ??
+      (Array.isArray(city.properties?.docs) ? city.properties.docs.length : 0)
+    const portfolioJoinCount =
+      city.portfolios?.totalDocs ??
+      (Array.isArray(city.portfolios?.docs) ? city.portfolios.docs.length : 0)
+    const propertyCount = propertyJoinCount + portfolioJoinCount
 
     // Get dummy description based on city name if available
     const cityNameLower = city.name.toLowerCase()

@@ -20,7 +20,7 @@ export const Feature2: Block = {
       name: 'media',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
     },
     {
       name: 'buttonPrimary',

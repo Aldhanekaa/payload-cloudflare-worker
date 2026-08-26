@@ -21,7 +21,10 @@ const HOVER_COLOR_RE = /^(?:#[0-9a-fA-F]{3,8}|rgba?\([^()\n\r]*\))$/i
 const lookupSetting = (path: string): string =>
   path
     .split('.')
-    .reduce<unknown>((value, key) => (value as Record<string, unknown> | undefined)?.[key], en.settings) as string
+    .reduce<unknown>(
+      (value, key) => (value as Record<string, unknown> | undefined)?.[key],
+      en.settings,
+    ) as string
 
 const translatedLabel = (path: string): string => lookupSetting(path)
 
@@ -32,8 +35,10 @@ const validateHoverColor = (value: unknown): string | true => {
 }
 
 const validateHoverOutline = (value: unknown): string | true => {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return en.settings.validation.mustBeNumber
-  if (value < HOVER_OUTLINE_MIN || value > HOVER_OUTLINE_MAX) return en.settings.validation.outlineRange
+  if (typeof value !== 'number' || !Number.isFinite(value))
+    return en.settings.validation.mustBeNumber
+  if (value < HOVER_OUTLINE_MIN || value > HOVER_OUTLINE_MAX)
+    return en.settings.validation.outlineRange
   return true
 }
 

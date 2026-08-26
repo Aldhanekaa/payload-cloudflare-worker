@@ -30,7 +30,7 @@ export default async function PortfoliosPage({ params }: PageProps) {
   const result = await getCachedCollection(
     {
       collection: 'portfolios',
-      depth: 1,
+      depth: 3,
       limit: 100,
       sort: '-createdAt',
     },

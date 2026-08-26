@@ -22,13 +22,34 @@ const nextConfig: NextConfig = {
       sharp: './stubs/sharp.js',
     },
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       'drizzle-kit': stubPath,
       'drizzle-kit/api': stubPath,
       sharp: sharpStubPath,
     }
+
+    // Mark Node.js-only modules as external for client bundles
+    if (!isServer) {
+      config.externals = config.externals || []
+      config.externals.push({
+        'fs/promises': 'commonjs fs/promises',
+        fs: 'commonjs fs',
+        net: 'commonjs net',
+        tls: 'commonjs tls',
+        dns: 'commonjs dns',
+        readline: 'commonjs readline',
+        module: 'commonjs module',
+        worker_threads: 'commonjs worker_threads',
+        // Server-only packages
+        nodemailer: 'commonjs nodemailer',
+        payload: 'commonjs payload',
+        '@payloadcms/db-d1-sqlite': 'commonjs @payloadcms/db-d1-sqlite',
+        '@payloadcms/drizzle': 'commonjs @payloadcms/drizzle',
+      })
+    }
+
     return config
   },
   images: {
@@ -87,6 +108,12 @@ const nextConfig: NextConfig = {
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
   serverExternalPackages: [
     'sharp',
+    'nodemailer',
+    '@payloadcms/db-d1-sqlite',
+    '@payloadcms/drizzle',
+    'payload',
+    'drizzle-orm',
+    'drizzle-kit',
     // 'jose',
     // 'pg-cloudflare',
     // 'jsdom',
@@ -96,7 +123,6 @@ const nextConfig: NextConfig = {
     // 'css-tree',
     // 'pino',
     // 'pino-pretty',
-    // 'nodemailer', // Can't send emails from Workers anyway
     // 'graphql', // If disabling GraphQL
   ],
   redirects,

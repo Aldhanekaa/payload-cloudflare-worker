@@ -1,8 +1,13 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import PageContainer from '../PageContainer'
 import HeroImg from '@/assets/ANDERSEN_PROPERTIES_HERO.avif'
+import type { Media, Portfolio, PortfolioCategory } from '@/payload-types'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -24,12 +29,19 @@ type FeaturedProperty = {
   }
 }
 
+type HomeSignatureDevelopmentProps = {
+  featuredPortfolios?: Portfolio[] | null
+}
+
 // ── Component ──────────────────────────────────────────────────────────────────
 
-export default function HomeSignatureDevelopment() {
+export default function HomeSignatureDevelopment({
+  featuredPortfolios,
+}: HomeSignatureDevelopmentProps = {}) {
   const t = useTranslations('home-page.signature-development')
+  const [activeIndex, setActiveIndex] = useState(0)
 
-  const FEATURED: FeaturedProperty = {
+  const defaultFeatured: FeaturedProperty = {
     eyebrow: t('eyebrow'),
     title: t('title'),
     description: t('description'),
@@ -48,7 +60,63 @@ export default function HomeSignatureDevelopment() {
     },
   }
 
-  const p = FEATURED
+  const featuredItems = useMemo<FeaturedProperty[]>(() => {
+    if (!featuredPortfolios || featuredPortfolios.length === 0) {
+      return [defaultFeatured]
+    }
+
+    return featuredPortfolios.map((portfolio) => {
+      const heroImage =
+        portfolio && typeof portfolio.heroImage === 'object' ? (portfolio.heroImage as Media) : null
+      const categoryData =
+        typeof portfolio.category === 'object' ? (portfolio.category as PortfolioCategory) : null
+
+      return {
+        eyebrow: t('eyebrow'),
+        title: portfolio.name,
+        description: portfolio.description || t('description'),
+        stats: [
+          { label: t('stats.location'), value: portfolio.location || '-' },
+          { label: t('stats.property-type'), value: categoryData?.name || '-' },
+          { label: t('stats.residences'), value: `${portfolio.units} Units` },
+          { label: t('stats.completion'), value: portfolio.completion || '-' },
+          { label: t('stats.starting-price'), value: portfolio.from || '-' },
+        ],
+        ctaLabel: t('cta'),
+        ctaHref: `/portfolios/${portfolio.slug}`,
+        image: {
+          src: heroImage?.url || HeroImg,
+          alt: portfolio.imageAlt || portfolio.name,
+        },
+      }
+    })
+  }, [defaultFeatured, featuredPortfolios, t])
+
+  useEffect(() => {
+    setActiveIndex(0)
+  }, [featuredItems.length])
+
+  useEffect(() => {
+    if (featuredItems.length <= 1) return
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((previousIndex) => (previousIndex + 1) % featuredItems.length)
+    }, 10000)
+
+    return () => window.clearInterval(intervalId)
+  }, [activeIndex, featuredItems.length])
+
+  const p = featuredItems[activeIndex] || defaultFeatured
+
+  const goToPrevious = () => {
+    setActiveIndex((previousIndex) =>
+      previousIndex === 0 ? featuredItems.length - 1 : previousIndex - 1,
+    )
+  }
+
+  const goToNext = () => {
+    setActiveIndex((previousIndex) => (previousIndex + 1) % featuredItems.length)
+  }
 
   return (
     <section className="bg-[#0e0e0e] overflow-hidden">
@@ -56,7 +124,9 @@ export default function HomeSignatureDevelopment() {
         <div className="grid grid-cols-1 lg:grid-cols-2">
           {/* ── Image — breaks out to the left ──────────────────────────── */}
           <div
+            key={`signature-image-${activeIndex}`}
             className="
+              animate-signature-swap
               relative w-full aspect-4/3
               lg:aspect-auto lg:min-h-150
               order-last lg:order-first
@@ -77,7 +147,10 @@ export default function HomeSignatureDevelopment() {
           </div>
 
           {/* ── Content — aligned to container ──────────────────────────── */}
-          <div className="flex items-center order-first lg:order-last py-16 px-4 sm:px-6 md:px-12 lg:pl-16 xl:pl-20">
+          <div
+            key={`signature-content-${activeIndex}`}
+            className="animate-signature-swap flex items-center order-first lg:order-last py-16 px-4 sm:px-6 md:px-12 lg:pl-16 xl:pl-20"
+          >
             <div className="w-full">
               {/* Eyebrow */}
               <p className="text-primary text-[10px] tracking-[0.25em] uppercase mb-5">
@@ -119,6 +192,44 @@ export default function HomeSignatureDevelopment() {
               >
                 {p.ctaLabel}
               </Link>
+
+              {featuredItems.length > 1 && (
+                <div
+                  className="mt-10 flex items-center gap-5"
+                  aria-label="Signature developments carousel"
+                >
+                  <div className="h-px flex-1 bg-white/15" aria-hidden="true">
+                    <div
+                      key={`signature-progress-${activeIndex}`}
+                      className="animate-signature-progress h-full origin-left bg-primary"
+                    />
+                  </div>
+
+                  <span className="text-white/40 text-[10px] tracking-[0.2em] tabular-nums">
+                    {String(activeIndex + 1).padStart(2, '0')} /{' '}
+                    {String(featuredItems.length).padStart(2, '0')}
+                  </span>
+
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={goToPrevious}
+                      aria-label="Previous signature development"
+                      className="flex size-9 items-center justify-center border border-white/20 text-white transition-colors hover:border-primary hover:text-primary"
+                    >
+                      <ChevronLeft size={16} strokeWidth={1.5} aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goToNext}
+                      aria-label="Next signature development"
+                      className="flex size-9 items-center justify-center border border-white/20 text-white transition-colors hover:border-primary hover:text-primary"
+                    >
+                      <ChevronRight size={16} strokeWidth={1.5} aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

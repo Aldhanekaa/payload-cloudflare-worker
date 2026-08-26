@@ -24,9 +24,8 @@ export default function PortfoliosHero({ portfolios }: Props) {
 
   return (
     <div
-      className="bg-black"
+      className="bg-black pt-56"
       style={{
-        paddingTop: 'clamp(60px, 8vw, 100px)',
         paddingBottom: 'clamp(48px, 6vw, 72px)',
       }}
     >
